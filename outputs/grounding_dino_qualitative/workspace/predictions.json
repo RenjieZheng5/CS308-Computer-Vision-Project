@@ -1,0 +1,56 @@
+{
+  "model": "IDEA-Research/grounding-dino-tiny",
+  "device": "cuda",
+  "queries": [
+    "laptop",
+    "keyboard",
+    "mouse",
+    "tv"
+  ],
+  "prompt": "laptop. keyboard. mouse. tv.",
+  "box_threshold": 0.25,
+  "text_threshold": 0.2,
+  "nms_threshold": 0.5,
+  "predictions": [
+    {
+      "label": "keyboard",
+      "score": 0.9364,
+      "box_xyxy": [
+        161.98,
+        152.27,
+        315.39,
+        196.73
+      ]
+    },
+    {
+      "label": "mouse",
+      "score": 0.9199,
+      "box_xyxy": [
+        122.26,
+        179.29,
+        158.31,
+        199.86
+      ]
+    },
+    {
+      "label": "laptop",
+      "score": 0.8775,
+      "box_xyxy": [
+        0.07,
+        98.88,
+        125.36,
+        239.03
+      ]
+    },
+    {
+      "label": "tv",
+      "score": 0.4755,
+      "box_xyxy": [
+        123.73,
+        9.72,
+        245.41,
+        159.29
+      ]
+    }
+  ]
+}

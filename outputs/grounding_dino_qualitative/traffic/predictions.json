@@ -1,0 +1,45 @@
+{
+  "model": "IDEA-Research/grounding-dino-tiny",
+  "device": "cuda",
+  "queries": [
+    "car",
+    "truck",
+    "stop sign"
+  ],
+  "prompt": "car. truck. stop sign.",
+  "box_threshold": 0.25,
+  "text_threshold": 0.2,
+  "nms_threshold": 0.5,
+  "predictions": [
+    {
+      "label": "stop sign",
+      "score": 0.8038,
+      "box_xyxy": [
+        119.56,
+        69.76,
+        255.34,
+        226.49
+      ]
+    },
+    {
+      "label": "truck",
+      "score": 0.4854,
+      "box_xyxy": [
+        18.03,
+        258.99,
+        144.94,
+        315.48
+      ]
+    },
+    {
+      "label": "car",
+      "score": 0.2856,
+      "box_xyxy": [
+        3.28,
+        297.57,
+        20.18,
+        309.86
+      ]
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "model": "IDEA-Research/grounding-dino-tiny",
+  "device": "cuda",
+  "queries": [
+    "cat",
+    "keyboard",
+    "cat on keyboard"
+  ],
+  "prompt": "cat. keyboard. cat on keyboard.",
+  "box_threshold": 0.2,
+  "text_threshold": 0.2,
+  "nms_threshold": 0.5,
+  "predictions": [
+    {
+      "label": "cat cat",
+      "score": 0.4208,
+      "box_xyxy": [
+        1.25,
+        11.17,
+        638.03,
+        435.15
+      ]
+    },
+    {
+      "label": "keyboard",
+      "score": 0.4147,
+      "box_xyxy": [
+        115.88,
+        397.88,
+        511.55,
+        478.56
+      ]
+    }
+  ]
+}

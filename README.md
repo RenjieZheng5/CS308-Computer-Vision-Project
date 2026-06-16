@@ -7,6 +7,8 @@ detection. The pipeline accepts arbitrary text prompts, predicts bounding boxes,
 exports JSON predictions, draws visualizations, and evaluates on a COCO val2017
 subset with standard COCO bbox metrics.
 
+It also includes a Grounding DINO tiny comparison model.
+
 ## Environment
 
 Current local environment:
@@ -16,7 +18,7 @@ Current local environment:
 - Torchvision: `0.26.0+cu128`
 - CUDA available in PyTorch: `True`
 - Transformers: `5.5.3`
-- Model: `google/owlvit-base-patch32`
+- Models: `google/owlvit-base-patch32`, `IDEA-Research/grounding-dino-tiny`
 
 Verify GPU:
 
@@ -32,6 +34,8 @@ python -m pip install --force-reinstall --no-cache-dir torch==2.11.0+cu128 torch
 
 ## Single Image Demo
 
+OWL-ViT:
+
 ```powershell
 python scripts\owlvit_demo.py `
   --image-url "http://images.cocodataset.org/val2017/000000039769.jpg" `
@@ -43,6 +47,15 @@ The script writes:
 
 - `predictions.json`
 - `visualization.jpg`
+
+Grounding DINO:
+
+```powershell
+python scripts\grounding_dino_demo.py `
+  --image-url "http://images.cocodataset.org/val2017/000000039769.jpg" `
+  --queries "cat, remote control, couch" `
+  --output-dir outputs\grounding_dino_demo_default
+```
 
 For local COCO images, run the COCO subset evaluation once first. That command
 downloads the annotations and selected images into `data/coco`.
@@ -74,22 +87,31 @@ python scripts\evaluate_coco_owlvit.py `
   --top-k 100
 ```
 
-Current 100-image result without NMS:
+Grounding DINO comparison:
 
-| Metric | Value |
-| --- | ---: |
-| AP@[IoU=.50:.95] | 0.336 |
-| AP@0.50 | 0.510 |
-| AP@0.75 | 0.353 |
-| AP small | 0.178 |
-| AP medium | 0.368 |
-| AP large | 0.563 |
-| AR@100 | 0.520 |
+```powershell
+python scripts\evaluate_coco_grounding_dino.py `
+  --data-dir data\coco `
+  --output-dir outputs\coco_grounding_dino_eval_100 `
+  --max-images 100 `
+  --box-threshold 0.2 `
+  --text-threshold 0.2 `
+  --top-k 100
+```
+
+Current 100-image results:
+
+| Model | AP@[IoU=.50:.95] | AP@0.50 | AP@0.75 | AP small | AP medium | AP large | AR@100 |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| OWL-ViT base | 0.336 | 0.510 | 0.353 | 0.178 | 0.368 | 0.563 | 0.520 |
+| Grounding DINO tiny | 0.468 | 0.601 | 0.498 | 0.274 | 0.526 | 0.634 | 0.536 |
 
 Full metrics:
 
 - `outputs/coco_owlvit_eval_100/metrics.json`
 - `outputs/coco_owlvit_eval_100/coco_predictions.json`
+- `outputs/coco_grounding_dino_eval_100/metrics.json`
+- `outputs/coco_grounding_dino_eval_100/coco_predictions.json`
 
 These output files are also intentionally not committed. Re-run the command
 above to regenerate them.
@@ -118,6 +140,13 @@ slides:
 - `outputs/qualitative_clean/tennis/visualization.jpg`
 - `outputs/qualitative_clean/cat_keyboard/visualization.jpg`
 
+Grounding DINO comparison visualizations:
+
+- `outputs/grounding_dino_qualitative/workspace/visualization.jpg`
+- `outputs/grounding_dino_qualitative/traffic/visualization.jpg`
+- `outputs/grounding_dino_qualitative/tennis/visualization.jpg`
+- `outputs/grounding_dino_qualitative/cat_keyboard/visualization.jpg`
+
 Lower-threshold visualizations for failure analysis:
 
 - `outputs/qualitative_nms/workspace/visualization.jpg`
@@ -129,5 +158,6 @@ Report notes are summarized in:
 
 - `report_notes.md`
 
-Because `outputs/` is ignored, regenerate the visualizations locally with
-`scripts/owlvit_demo.py` before preparing the final report package.
+Because `outputs/` may be ignored in some workflows, regenerate the
+visualizations locally with `scripts/owlvit_demo.py` or
+`scripts/grounding_dino_demo.py` before preparing the final report package.

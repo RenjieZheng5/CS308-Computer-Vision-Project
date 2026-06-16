@@ -1,0 +1,65 @@
+{
+  "model": "IDEA-Research/grounding-dino-tiny",
+  "device": "cuda",
+  "queries": [
+    "cat",
+    "remote control",
+    "couch"
+  ],
+  "prompt": "cat. remote control. couch.",
+  "box_threshold": 0.3,
+  "text_threshold": 0.25,
+  "nms_threshold": 0.5,
+  "predictions": [
+    {
+      "label": "cat",
+      "score": 0.8419,
+      "box_xyxy": [
+        9.69,
+        54.04,
+        316.71,
+        474.94
+      ]
+    },
+    {
+      "label": "cat",
+      "score": 0.8127,
+      "box_xyxy": [
+        345.56,
+        23.81,
+        639.14,
+        372.77
+      ]
+    },
+    {
+      "label": "couch",
+      "score": 0.6441,
+      "box_xyxy": [
+        0.68,
+        0.57,
+        639.5,
+        479.19
+      ]
+    },
+    {
+      "label": "remote control",
+      "score": 0.522,
+      "box_xyxy": [
+        40.15,
+        72.22,
+        176.2,
+        117.65
+      ]
+    },
+    {
+      "label": "remote control",
+      "score": 0.514,
+      "box_xyxy": [
+        333.13,
+        75.9,
+        370.81,
+        187.13
+      ]
+    }
+  ]
+}

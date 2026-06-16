@@ -1,0 +1,22 @@
+{
+  "model": "IDEA-Research/grounding-dino-tiny",
+  "device": "cuda",
+  "max_images": 100,
+  "box_threshold": 0.2,
+  "text_threshold": 0.2,
+  "top_k": 100,
+  "metrics": {
+    "AP@[IoU=.50:.95]": 0.4681770506757949,
+    "AP@0.50": 0.6011922038141356,
+    "AP@0.75": 0.4983380750935067,
+    "AP small": 0.27357681531868355,
+    "AP medium": 0.5263303411312502,
+    "AP large": 0.6335093082735548,
+    "AR maxDets=1": 0.353425049038275,
+    "AR maxDets=10": 0.5325284265796152,
+    "AR maxDets=100": 0.5358251636097238,
+    "AR small": 0.3062530454872134,
+    "AR medium": 0.5998472116119176,
+    "AR large": 0.6842791875522138
+  }
+}
