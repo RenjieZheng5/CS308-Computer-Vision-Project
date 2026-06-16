@@ -147,6 +147,33 @@ Grounding DINO comparison visualizations:
 - `outputs/grounding_dino_qualitative/tennis/visualization.jpg`
 - `outputs/grounding_dino_qualitative/cat_keyboard/visualization.jpg`
 
+Full 100-image visualized outputs:
+
+- `outputs/coco_owlvit_eval_100_visualized/`
+- `outputs/coco_grounding_dino_eval_100_visualized/`
+
+Regenerate them with:
+
+```powershell
+python scripts\visualize_coco_predictions.py `
+  --annotation-file data\coco\annotations\instances_val2017.json `
+  --image-dir data\coco\val2017 `
+  --predictions outputs\coco_owlvit_eval_100\coco_predictions.json `
+  --output-dir outputs\coco_owlvit_eval_100_visualized `
+  --max-images 100 `
+  --score-threshold 0.20 `
+  --top-k 20
+
+python scripts\visualize_coco_predictions.py `
+  --annotation-file data\coco\annotations\instances_val2017.json `
+  --image-dir data\coco\val2017 `
+  --predictions outputs\coco_grounding_dino_eval_100\coco_predictions.json `
+  --output-dir outputs\coco_grounding_dino_eval_100_visualized `
+  --max-images 100 `
+  --score-threshold 0.20 `
+  --top-k 20
+```
+
 Lower-threshold visualizations for failure analysis:
 
 - `outputs/qualitative_nms/workspace/visualization.jpg`
@@ -160,4 +187,5 @@ Report notes are summarized in:
 
 Because `outputs/` may be ignored in some workflows, regenerate the
 visualizations locally with `scripts/owlvit_demo.py` or
-`scripts/grounding_dino_demo.py` before preparing the final report package.
+`scripts/grounding_dino_demo.py` before preparing the final report package. For
+full COCO-subset visualizations, use `scripts/visualize_coco_predictions.py`.
