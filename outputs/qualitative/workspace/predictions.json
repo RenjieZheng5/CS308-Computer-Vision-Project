@@ -1,0 +1,63 @@
+{
+  "model": "google/owlvit-base-patch32",
+  "device": "cuda",
+  "queries": [
+    "laptop",
+    "keyboard",
+    "mouse",
+    "tv"
+  ],
+  "score_threshold": 0.08,
+  "predictions": [
+    {
+      "label": "mouse",
+      "score": 0.1454,
+      "box_xyxy": [
+        136.0,
+        109.5,
+        204.38,
+        160.62
+      ]
+    },
+    {
+      "label": "laptop",
+      "score": 0.3098,
+      "box_xyxy": [
+        -1.56,
+        94.0,
+        133.75,
+        236.75
+      ]
+    },
+    {
+      "label": "keyboard",
+      "score": 0.2647,
+      "box_xyxy": [
+        158.5,
+        151.12,
+        316.0,
+        199.25
+      ]
+    },
+    {
+      "label": "keyboard",
+      "score": 0.0825,
+      "box_xyxy": [
+        -0.43,
+        170.12,
+        102.38,
+        215.62
+      ]
+    },
+    {
+      "label": "mouse",
+      "score": 0.4102,
+      "box_xyxy": [
+        124.25,
+        179.25,
+        158.88,
+        200.12
+      ]
+    }
+  ]
+}

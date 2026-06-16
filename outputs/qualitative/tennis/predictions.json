@@ -1,0 +1,213 @@
+{
+  "model": "google/owlvit-base-patch32",
+  "device": "cuda",
+  "queries": [
+    "person",
+    "backpack",
+    "handbag",
+    "tennis racket"
+  ],
+  "score_threshold": 0.08,
+  "predictions": [
+    {
+      "label": "person",
+      "score": 0.083,
+      "box_xyxy": [
+        193.62,
+        125.62,
+        269.5,
+        275.5
+      ]
+    },
+    {
+      "label": "person",
+      "score": 0.1074,
+      "box_xyxy": [
+        265.25,
+        99.12,
+        357.25,
+        407.5
+      ]
+    },
+    {
+      "label": "person",
+      "score": 0.1019,
+      "box_xyxy": [
+        426.0,
+        110.62,
+        499.0,
+        231.5
+      ]
+    },
+    {
+      "label": "person",
+      "score": 0.1184,
+      "box_xyxy": [
+        195.5,
+        122.12,
+        276.0,
+        398.75
+      ]
+    },
+    {
+      "label": "person",
+      "score": 0.1093,
+      "box_xyxy": [
+        119.62,
+        152.38,
+        199.25,
+        382.5
+      ]
+    },
+    {
+      "label": "tennis racket",
+      "score": 0.1132,
+      "box_xyxy": [
+        121.19,
+        209.25,
+        150.12,
+        252.88
+      ]
+    },
+    {
+      "label": "person",
+      "score": 0.0924,
+      "box_xyxy": [
+        203.12,
+        175.88,
+        287.75,
+        413.0
+      ]
+    },
+    {
+      "label": "person",
+      "score": 0.1071,
+      "box_xyxy": [
+        36.91,
+        184.0,
+        115.5,
+        392.5
+      ]
+    },
+    {
+      "label": "tennis racket",
+      "score": 0.1636,
+      "box_xyxy": [
+        198.88,
+        209.5,
+        282.0,
+        326.25
+      ]
+    },
+    {
+      "label": "person",
+      "score": 0.1132,
+      "box_xyxy": [
+        331.0,
+        153.88,
+        416.0,
+        462.25
+      ]
+    },
+    {
+      "label": "backpack",
+      "score": 0.0932,
+      "box_xyxy": [
+        41.75,
+        232.5,
+        72.12,
+        287.75
+      ]
+    },
+    {
+      "label": "person",
+      "score": 0.097,
+      "box_xyxy": [
+        382.75,
+        162.38,
+        478.5,
+        477.5
+      ]
+    },
+    {
+      "label": "person",
+      "score": 0.1058,
+      "box_xyxy": [
+        504.5,
+        190.38,
+        643.0,
+        481.0
+      ]
+    },
+    {
+      "label": "handbag",
+      "score": 0.2251,
+      "box_xyxy": [
+        195.5,
+        224.0,
+        268.25,
+        338.0
+      ]
+    },
+    {
+      "label": "person",
+      "score": 0.0853,
+      "box_xyxy": [
+        408.0,
+        216.5,
+        523.0,
+        480.5
+      ]
+    },
+    {
+      "label": "handbag",
+      "score": 0.2088,
+      "box_xyxy": [
+        18.03,
+        263.5,
+        74.75,
+        347.25
+      ]
+    },
+    {
+      "label": "tennis racket",
+      "score": 0.0979,
+      "box_xyxy": [
+        42.34,
+        287.5,
+        100.31,
+        390.25
+      ]
+    },
+    {
+      "label": "tennis racket",
+      "score": 0.2256,
+      "box_xyxy": [
+        43.12,
+        292.5,
+        88.5,
+        392.0
+      ]
+    },
+    {
+      "label": "tennis racket",
+      "score": 0.0825,
+      "box_xyxy": [
+        44.5,
+        303.5,
+        85.31,
+        394.0
+      ]
+    },
+    {
+      "label": "handbag",
+      "score": 0.082,
+      "box_xyxy": [
+        415.0,
+        407.0,
+        463.75,
+        456.75
+      ]
+    }
+  ]
+}

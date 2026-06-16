@@ -1,0 +1,103 @@
+{
+  "model": "google/owlvit-base-patch32",
+  "device": "cuda",
+  "queries": [
+    "car",
+    "truck",
+    "stop sign"
+  ],
+  "score_threshold": 0.15,
+  "nms_threshold": 0.5,
+  "predictions": [
+    {
+      "label": "stop sign",
+      "score": 0.6211,
+      "box_xyxy": [
+        123.94,
+        74.75,
+        254.38,
+        229.5
+      ]
+    },
+    {
+      "label": "car",
+      "score": 0.3813,
+      "box_xyxy": [
+        99.12,
+        271.75,
+        144.75,
+        309.25
+      ]
+    },
+    {
+      "label": "truck",
+      "score": 0.2933,
+      "box_xyxy": [
+        24.17,
+        256.75,
+        133.38,
+        319.25
+      ]
+    },
+    {
+      "label": "truck",
+      "score": 0.2712,
+      "box_xyxy": [
+        103.25,
+        272.5,
+        124.12,
+        305.25
+      ]
+    },
+    {
+      "label": "truck",
+      "score": 0.2402,
+      "box_xyxy": [
+        82.56,
+        271.5,
+        151.0,
+        332.0
+      ]
+    },
+    {
+      "label": "stop sign",
+      "score": 0.1924,
+      "box_xyxy": [
+        114.06,
+        76.56,
+        254.12,
+        498.0
+      ]
+    },
+    {
+      "label": "stop sign",
+      "score": 0.1784,
+      "box_xyxy": [
+        130.25,
+        116.94,
+        241.38,
+        178.75
+      ]
+    },
+    {
+      "label": "car",
+      "score": 0.1723,
+      "box_xyxy": [
+        163.5,
+        266.75,
+        186.25,
+        277.0
+      ]
+    },
+    {
+      "label": "truck",
+      "score": 0.1613,
+      "box_xyxy": [
+        98.62,
+        267.75,
+        141.5,
+        309.75
+      ]
+    }
+  ]
+}

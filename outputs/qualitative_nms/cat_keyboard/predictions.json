@@ -1,0 +1,23 @@
+{
+  "model": "google/owlvit-base-patch32",
+  "device": "cuda",
+  "queries": [
+    "cat",
+    "keyboard",
+    "cat on keyboard"
+  ],
+  "score_threshold": 0.05,
+  "nms_threshold": 0.5,
+  "predictions": [
+    {
+      "label": "cat",
+      "score": 0.1257,
+      "box_xyxy": [
+        0.47,
+        4.22,
+        639.5,
+        448.75
+      ]
+    }
+  ]
+}

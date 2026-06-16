@@ -1,0 +1,54 @@
+{
+  "model": "google/owlvit-base-patch32",
+  "device": "cuda",
+  "queries": [
+    "person",
+    "backpack",
+    "handbag",
+    "tennis racket"
+  ],
+  "score_threshold": 0.12,
+  "nms_threshold": 0.5,
+  "predictions": [
+    {
+      "label": "tennis racket",
+      "score": 0.2256,
+      "box_xyxy": [
+        43.12,
+        292.5,
+        88.5,
+        392.0
+      ]
+    },
+    {
+      "label": "handbag",
+      "score": 0.2251,
+      "box_xyxy": [
+        195.5,
+        224.0,
+        268.25,
+        338.0
+      ]
+    },
+    {
+      "label": "handbag",
+      "score": 0.2088,
+      "box_xyxy": [
+        18.03,
+        263.5,
+        74.75,
+        347.25
+      ]
+    },
+    {
+      "label": "tennis racket",
+      "score": 0.1636,
+      "box_xyxy": [
+        198.88,
+        209.5,
+        282.0,
+        326.25
+      ]
+    }
+  ]
+}

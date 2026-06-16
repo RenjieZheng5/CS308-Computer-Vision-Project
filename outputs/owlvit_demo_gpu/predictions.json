@@ -1,0 +1,62 @@
+{
+  "model": "google/owlvit-base-patch32",
+  "device": "cuda",
+  "queries": [
+    "cat",
+    "remote control",
+    "couch"
+  ],
+  "score_threshold": 0.1,
+  "predictions": [
+    {
+      "label": "remote control",
+      "score": 0.3314,
+      "box_xyxy": [
+        39.94,
+        72.5,
+        177.75,
+        115.62
+      ]
+    },
+    {
+      "label": "remote control",
+      "score": 0.1593,
+      "box_xyxy": [
+        335.5,
+        74.19,
+        372.0,
+        187.62
+      ]
+    },
+    {
+      "label": "cat",
+      "score": 0.2868,
+      "box_xyxy": [
+        325.0,
+        20.5,
+        640.5,
+        373.0
+      ]
+    },
+    {
+      "label": "cat",
+      "score": 0.2568,
+      "box_xyxy": [
+        1.17,
+        55.19,
+        315.5,
+        472.0
+      ]
+    },
+    {
+      "label": "couch",
+      "score": 0.1222,
+      "box_xyxy": [
+        4.38,
+        0.7,
+        643.0,
+        477.0
+      ]
+    }
+  ]
+}

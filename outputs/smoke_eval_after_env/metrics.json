@@ -1,0 +1,22 @@
+{
+  "model": "google/owlvit-base-patch32",
+  "device": "cuda",
+  "max_images": 2,
+  "score_threshold": 0.01,
+  "nms_threshold": 0.5,
+  "top_k": 50,
+  "metrics": {
+    "AP@[IoU=.50:.95]": 0.3269836074516542,
+    "AP@0.50": 0.49098546218258193,
+    "AP@0.75": 0.3064806480648064,
+    "AP small": 0.1294200848656294,
+    "AP medium": 0.4165016501650165,
+    "AP large": 0.9499999999999998,
+    "AR maxDets=1": 0.28454545454545455,
+    "AR maxDets=10": 0.32954545454545453,
+    "AR maxDets=100": 0.33636363636363636,
+    "AR small": 0.15238095238095237,
+    "AR medium": 0.4222222222222222,
+    "AR large": 0.95
+  }
+}
