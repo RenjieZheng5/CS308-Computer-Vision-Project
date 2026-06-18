@@ -4,3 +4,7 @@ __pycache__/
 .vscode/
 tmp_pip/
 data/
+.hf_cache/
+*.pt
+outputs/protocol_smoke_*/
+outputs/refcoco_smoke_*/

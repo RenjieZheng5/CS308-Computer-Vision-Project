@@ -55,16 +55,19 @@ def post_process_detections(processor, outputs, threshold, target_sizes, text_la
     return method(**kwargs)
 
 
-def detections_to_rows(results: dict, nms_threshold: float) -> list[tuple[float, int, list[float]]]:
+def detections_to_rows(results: dict, nms_threshold: float | None) -> list[tuple[float, int, list[float]]]:
     scores = results["scores"].detach().cpu().float()
     labels = results["labels"].detach().cpu()
     boxes = results["boxes"].detach().cpu().float()
 
-    keep_indices = []
-    for label in labels.unique():
-        label_indices = torch.where(labels == label)[0]
-        selected = nms(boxes[label_indices], scores[label_indices], nms_threshold)
-        keep_indices.extend(label_indices[selected].tolist())
+    if nms_threshold is None or nms_threshold < 0:
+        keep_indices = list(range(len(scores)))
+    else:
+        keep_indices = []
+        for label in labels.unique():
+            label_indices = torch.where(labels == label)[0]
+            selected = nms(boxes[label_indices], scores[label_indices], nms_threshold)
+            keep_indices.extend(label_indices[selected].tolist())
 
     keep_indices.sort(key=lambda idx: float(scores[idx]), reverse=True)
     rows = []
