@@ -1,0 +1,24 @@
+{
+  "dataset": "RefCOCO validation mirror (lmms-lab/RefCOCO)",
+  "protocol": "first 100 region rows; first human expression per region; top-1 box",
+  "model_type": "yolo-world",
+  "model": "yolov8s-worldv2.pt",
+  "device": "cuda",
+  "samples": 100,
+  "accuracy_at_iou_0.5": 0.46,
+  "accuracy_at_iou_0.75": 0.41,
+  "mean_iou": 0.4679535039141644,
+  "median_iou": 0.40526357297145016,
+  "runtime": {
+    "images": 100,
+    "preprocess_seconds": 0.09709379997730139,
+    "inference_seconds": 1.1727341999940109,
+    "postprocess_seconds": 0.11462240000764723,
+    "pipeline_seconds": 1.3844503999789595,
+    "inference_ms_per_image": 11.727341999940109,
+    "pipeline_ms_per_image": 13.844503999789595,
+    "inference_fps": 85.27081413717679,
+    "pipeline_fps": 72.23082892786897,
+    "peak_gpu_memory_mb": 714.02294921875
+  }
+}

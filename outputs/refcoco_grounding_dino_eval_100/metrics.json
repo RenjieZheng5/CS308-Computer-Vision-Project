@@ -1,0 +1,24 @@
+{
+  "dataset": "RefCOCO validation mirror (lmms-lab/RefCOCO)",
+  "protocol": "first 100 region rows; first human expression per region; top-1 box",
+  "model_type": "grounding-dino",
+  "model": "IDEA-Research/grounding-dino-tiny",
+  "device": "cuda",
+  "samples": 100,
+  "accuracy_at_iou_0.5": 0.59,
+  "accuracy_at_iou_0.75": 0.56,
+  "mean_iou": 0.5906467628931401,
+  "median_iou": 0.8558673314012109,
+  "runtime": {
+    "images": 100,
+    "preprocess_seconds": 1.1838923000104842,
+    "inference_seconds": 28.13101100001586,
+    "postprocess_seconds": 21.322200300004624,
+    "pipeline_seconds": 50.63710360003097,
+    "inference_ms_per_image": 281.3101100001586,
+    "pipeline_ms_per_image": 506.3710360003097,
+    "inference_fps": 3.554795808794203,
+    "pipeline_fps": 1.9748364912391798,
+    "peak_gpu_memory_mb": 1964.9990234375
+  }
+}

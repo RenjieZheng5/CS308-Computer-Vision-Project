@@ -1,0 +1,3194 @@
+[
+  {
+    "row_idx": 0,
+    "question_id": "1537681",
+    "file_name": "COCO_train2014_000000580957.jpg",
+    "expression": "bowl behind the others can only see part",
+    "all_expressions": [
+      "bowl behind the others can only see part",
+      "Dish in top right corner",
+      "White dish in the top right corner.",
+      "white pot upper right corner"
+    ],
+    "bbox_xywh": [
+      468.29998779296875,
+      0.9100000262260437,
+      171.6999969482422,
+      116.12000274658203
+    ],
+    "ground_truth_xyxy": [
+      468.29998779296875,
+      0.9100000262260437,
+      639.9999847412109,
+      117.03000277280807
+    ],
+    "predicted_xyxy": [
+      138.75,
+      0.496337890625,
+      443.75,
+      97.3125
+    ],
+    "score": 0.015483989380300045,
+    "iou": 0.0,
+    "correct_at_0.5": false
+  },
+  {
+    "row_idx": 1,
+    "question_id": "710706",
+    "file_name": "COCO_train2014_000000580957.jpg",
+    "expression": "front bowl w/carrots in it",
+    "all_expressions": [
+      "front bowl w/carrots in it",
+      "bowl of carrots",
+      "bowl of carrots",
+      "carrots"
+    ],
+    "bbox_xywh": [
+      151.9600067138672,
+      139.4600067138672,
+      454.92999267578125,
+      283.7300109863281
+    ],
+    "ground_truth_xyxy": [
+      151.9600067138672,
+      139.4600067138672,
+      606.8899993896484,
+      423.1900177001953
+    ],
+    "predicted_xyxy": [
+      196.875,
+      134.125,
+      577.5,
+      397.5
+    ],
+    "score": 0.05717659741640091,
+    "iou": 0.7491268711256577,
+    "correct_at_0.5": true
+  },
+  {
+    "row_idx": 2,
+    "question_id": "480908",
+    "file_name": "COCO_train2014_000000580905.jpg",
+    "expression": "little girl",
+    "all_expressions": [
+      "little girl",
+      "pink",
+      "Your monitor's color's off, friend. ;p Pink shirt girl..."
+    ],
+    "bbox_xywh": [
+      117.81999969482422,
+      300.489990234375,
+      175.10000610351562,
+      180.50999450683594
+    ],
+    "ground_truth_xyxy": [
+      117.81999969482422,
+      300.489990234375,
+      292.92000579833984,
+      480.99998474121094
+    ],
+    "predicted_xyxy": [
+      108.875,
+      300.5,
+      294.5,
+      480.25
+    ],
+    "score": 0.2040245532989502,
+    "iou": 0.9395524495486954,
+    "correct_at_0.5": true
+  },
+  {
+    "row_idx": 3,
+    "question_id": "469475",
+    "file_name": "COCO_train2014_000000580905.jpg",
+    "expression": "green woman",
+    "all_expressions": [
+      "green woman",
+      "person holding umbrella",
+      "woman"
+    ],
+    "bbox_xywh": [
+      289.67999267578125,
+      110.25,
+      290.760009765625,
+      365.3500061035156
+    ],
+    "ground_truth_xyxy": [
+      289.67999267578125,
+      110.25,
+      580.4400024414062,
+      475.6000061035156
+    ],
+    "predicted_xyxy": [
+      165.5,
+      85.75,
+      223.625,
+      152.25
+    ],
+    "score": 0.06536578387022018,
+    "iou": 0.0,
+    "correct_at_0.5": false
+  },
+  {
+    "row_idx": 4,
+    "question_id": "1746473",
+    "file_name": "COCO_train2014_000000580785.jpg",
+    "expression": "mom",
+    "all_expressions": [
+      "mom",
+      "adult",
+      "lady sitting"
+    ],
+    "bbox_xywh": [
+      151.6999969482422,
+      173.8300018310547,
+      218.0800018310547,
+      434.57000732421875
+    ],
+    "ground_truth_xyxy": [
+      151.6999969482422,
+      173.8300018310547,
+      369.7799987792969,
+      608.4000091552734
+    ],
+    "predicted_xyxy": [
+      149.125,
+      175.5,
+      383.5,
+      601.0
+    ],
+    "score": 0.0768222063779831,
+    "iou": 0.9123784633054235,
+    "correct_at_0.5": true
+  },
+  {
+    "row_idx": 5,
+    "question_id": "1741008",
+    "file_name": "COCO_train2014_000000580785.jpg",
+    "expression": "child sitting on womans lap",
+    "all_expressions": [
+      "child sitting on womans lap",
+      "small girl on lap",
+      "child"
+    ],
+    "bbox_xywh": [
+      160.0,
+      246.33999633789062,
+      110.88999938964844,
+      240.7899932861328
+    ],
+    "ground_truth_xyxy": [
+      160.0,
+      246.33999633789062,
+      270.88999938964844,
+      487.12998962402344
+    ],
+    "predicted_xyxy": [
+      157.625,
+      248.75,
+      284.5,
+      473.0
+    ],
+    "score": 0.07668380439281464,
+    "iou": 0.821079538041991,
+    "correct_at_0.5": true
+  },
+  {
+    "row_idx": 6,
+    "question_id": "190137",
+    "file_name": "COCO_train2014_000000580374.jpg",
+    "expression": "left guy",
+    "all_expressions": [
+      "left guy",
+      "man on left"
+    ],
+    "bbox_xywh": [
+      0.0,
+      31.510000228881836,
+      318.489990234375,
+      344.95001220703125
+    ],
+    "ground_truth_xyxy": [
+      0.0,
+      31.510000228881836,
+      318.489990234375,
+      376.4600124359131
+    ],
+    "predicted_xyxy": [
+      105.75,
+      74.25,
+      644.5,
+      428.25
+    ],
+    "score": 0.02161533385515213,
+    "iou": 0.27209179881993817,
+    "correct_at_0.5": false
+  },
+  {
+    "row_idx": 7,
+    "question_id": "514243",
+    "file_name": "COCO_train2014_000000580008.jpg",
+    "expression": "lady on right",
+    "all_expressions": [
+      "lady on right",
+      "upper right woman"
+    ],
+    "bbox_xywh": [
+      213.47999572753906,
+      6.400000095367432,
+      138.2100067138672,
+      223.58999633789062
+    ],
+    "ground_truth_xyxy": [
+      213.47999572753906,
+      6.400000095367432,
+      351.69000244140625,
+      229.98999643325806
+    ],
+    "predicted_xyxy": [
+      212.75,
+      5.67578125,
+      349.0,
+      238.75
+    ],
+    "score": 0.10613343119621277,
+    "iou": 0.9364325938679163,
+    "correct_at_0.5": true
+  },
+  {
+    "row_idx": 8,
+    "question_id": "2159030",
+    "file_name": "COCO_train2014_000000580008.jpg",
+    "expression": "bottom box left dude",
+    "all_expressions": [
+      "bottom box left dude",
+      "guy wearing glasses",
+      "bottom pic..left guy"
+    ],
+    "bbox_xywh": [
+      31.200000762939453,
+      291.6099853515625,
+      167.0399932861328,
+      207.4499969482422
+    ],
+    "ground_truth_xyxy": [
+      31.200000762939453,
+      291.6099853515625,
+      198.23999404907227,
+      499.0599822998047
+    ],
+    "predicted_xyxy": [
+      30.015625,
+      398.75,
+      70.3125,
+      423.0
+    ],
+    "score": 0.024053551256656647,
+    "iou": 0.02734850591284609,
+    "correct_at_0.5": false
+  },
+  {
+    "row_idx": 9,
+    "question_id": "507653",
+    "file_name": "COCO_train2014_000000580008.jpg",
+    "expression": "Woman in top picture on the left.",
+    "all_expressions": [
+      "Woman in top picture on the left.",
+      "woman upper left",
+      "top left woman"
+    ],
+    "bbox_xywh": [
+      38.20000076293945,
+      73.02999877929688,
+      162.9199981689453,
+      167.4199981689453
+    ],
+    "ground_truth_xyxy": [
+      38.20000076293945,
+      73.02999877929688,
+      201.11999893188477,
+      240.4499969482422
+    ],
+    "predicted_xyxy": [
+      212.75,
+      5.67578125,
+      349.0,
+      238.75
+    ],
+    "score": 0.24617071449756622,
+    "iou": 0.0,
+    "correct_at_0.5": false
+  },
+  {
+    "row_idx": 10,
+    "question_id": "442199",
+    "file_name": "COCO_train2014_000000580008.jpg",
+    "expression": "bottom right guy",
+    "all_expressions": [
+      "bottom right guy",
+      "man on bottom right",
+      "Man right bottom"
+    ],
+    "bbox_xywh": [
+      115.20999908447266,
+      257.3800048828125,
+      256.7900085449219,
+      234.8000030517578
+    ],
+    "ground_truth_xyxy": [
+      115.20999908447266,
+      257.3800048828125,
+      372.00000762939453,
+      492.1800079345703
+    ],
+    "predicted_xyxy": [
+      61.75,
+      257.75,
+      369.0,
+      497.5
+    ],
+    "score": 0.06878728419542313,
+    "iou": 0.7990169366657008,
+    "correct_at_0.5": true
+  },
+  {
+    "row_idx": 11,
+    "question_id": "50194",
+    "file_name": "COCO_train2014_000000579667.jpg",
+    "expression": "cat on top",
+    "all_expressions": [
+      "cat on top",
+      "cat on the top",
+      "Cat at faucet"
+    ],
+    "bbox_xywh": [
+      157.36000061035156,
+      64.41000366210938,
+      119.02999877929688,
+      136.19000244140625
+    ],
+    "ground_truth_xyxy": [
+      157.36000061035156,
+      64.41000366210938,
+      276.38999938964844,
+      200.60000610351562
+    ],
+    "predicted_xyxy": [
+      160.125,
+      477.5,
+      426.25,
+      639.0
+    ],
+    "score": 0.22371606528759003,
+    "iou": 0.0,
+    "correct_at_0.5": false
+  },
+  {
+    "row_idx": 12,
+    "question_id": "49369",
+    "file_name": "COCO_train2014_000000579667.jpg",
+    "expression": "black cat under sink",
+    "all_expressions": [
+      "black cat under sink",
+      "under",
+      "Bottom cat"
+    ],
+    "bbox_xywh": [
+      161.1999969482422,
+      478.2200012207031,
+      262.19000244140625,
+      161.77999877929688
+    ],
+    "ground_truth_xyxy": [
+      161.1999969482422,
+      478.2200012207031,
+      423.38999938964844,
+      640.0
+    ],
+    "predicted_xyxy": [
+      160.125,
+      477.5,
+      426.25,
+      639.0
+    ],
+    "score": 0.44755083322525024,
+    "iou": 0.9748743150028715,
+    "correct_at_0.5": true
+  },
+  {
+    "row_idx": 13,
+    "question_id": "473903",
+    "file_name": "COCO_train2014_000000579440.jpg",
+    "expression": "Man standing",
+    "all_expressions": [
+      "Man standing",
+      "man",
+      "guy standing playing wiifit"
+    ],
+    "bbox_xywh": [
+      307.29998779296875,
+      25.540000915527344,
+      128.11000061035156,
+      310.5400085449219
+    ],
+    "ground_truth_xyxy": [
+      307.29998779296875,
+      25.540000915527344,
+      435.4099884033203,
+      336.0800094604492
+    ],
+    "predicted_xyxy": [
+      309.75,
+      24.078125,
+      444.0,
+      331.5
+    ],
+    "score": 0.1651887148618698,
+    "iou": 0.9023461986777577,
+    "correct_at_0.5": true
+  },
+  {
+    "row_idx": 14,
+    "question_id": "466635",
+    "file_name": "COCO_train2014_000000579440.jpg",
+    "expression": "person in chair at left",
+    "all_expressions": [
+      "person in chair at left",
+      "guy sitting on left",
+      "black shirt in chair on left"
+    ],
+    "bbox_xywh": [
+      76.04000091552734,
+      88.18000030517578,
+      251.60000610351562,
+      266.9700012207031
+    ],
+    "ground_truth_xyxy": [
+      76.04000091552734,
+      88.18000030517578,
+      327.64000701904297,
+      355.1500015258789
+    ],
+    "predicted_xyxy": [
+      412.5,
+      162.25,
+      632.5,
+      313.5
+    ],
+    "score": 0.13892841339111328,
+    "iou": 0.0,
+    "correct_at_0.5": false
+  },
+  {
+    "row_idx": 15,
+    "question_id": "2162742",
+    "file_name": "COCO_train2014_000000578808.jpg",
+    "expression": "gurl",
+    "all_expressions": [
+      "gurl",
+      "girl in purple",
+      "child in front"
+    ],
+    "bbox_xywh": [
+      145.22999572753906,
+      439.94000244140625,
+      192.6699981689453,
+      200.05999755859375
+    ],
+    "ground_truth_xyxy": [
+      145.22999572753906,
+      439.94000244140625,
+      337.8999938964844,
+      640.0
+    ],
+    "predicted_xyxy": [
+      136.25,
+      437.0,
+      342.25,
+      640.5
+    ],
+    "score": 0.2693256139755249,
+    "iou": 0.9194809132247194,
+    "correct_at_0.5": true
+  },
+  {
+    "row_idx": 16,
+    "question_id": "513538",
+    "file_name": "COCO_train2014_000000578808.jpg",
+    "expression": "woman in shorts",
+    "all_expressions": [
+      "woman in shorts",
+      "right chick",
+      "man on right in shorts, elephant wants to charge"
+    ],
+    "bbox_xywh": [
+      331.9700012207031,
+      267.989990234375,
+      94.02999877929688,
+      364.7799987792969
+    ],
+    "ground_truth_xyxy": [
+      331.9700012207031,
+      267.989990234375,
+      426.0,
+      632.7699890136719
+    ],
+    "predicted_xyxy": [
+      329.0,
+      261.0,
+      426.0,
+      640.5
+    ],
+    "score": 0.09756221622228622,
+    "iou": 0.931781178162509,
+    "correct_at_0.5": true
+  },
+  {
+    "row_idx": 17,
+    "question_id": "1743532",
+    "file_name": "COCO_train2014_000000578805.jpg",
+    "expression": "psn boy",
+    "all_expressions": [
+      "psn boy",
+      "left kid",
+      "kid on left in blue"
+    ],
+    "bbox_xywh": [
+      34.22999954223633,
+      120.45999908447266,
+      158.14999389648438,
+      247.86000061035156
+    ],
+    "ground_truth_xyxy": [
+      34.22999954223633,
+      120.45999908447266,
+      192.3799934387207,
+      368.3199996948242
+    ],
+    "predicted_xyxy": [
+      98.4375,
+      268.25,
+      147.75,
+      323.75
+    ],
+    "score": 0.09417666494846344,
+    "iou": 0.06981912113972284,
+    "correct_at_0.5": false
+  },
+  {
+    "row_idx": 18,
+    "question_id": "485679",
+    "file_name": "COCO_train2014_000000578805.jpg",
+    "expression": "boy in black shirt front right",
+    "all_expressions": [
+      "boy in black shirt front right",
+      "boy on right"
+    ],
+    "bbox_xywh": [
+      382.6099853515625,
+      244.47999572753906,
+      241.14999389648438,
+      226.13999938964844
+    ],
+    "ground_truth_xyxy": [
+      382.6099853515625,
+      244.47999572753906,
+      623.7599792480469,
+      470.6199951171875
+    ],
+    "predicted_xyxy": [
+      356.0,
+      239.0,
+      620.5,
+      479.5
+    ],
+    "score": 0.06584469974040985,
+    "iou": 0.8360046275738205,
+    "correct_at_0.5": true
+  },
+  {
+    "row_idx": 19,
+    "question_id": "477161",
+    "file_name": "COCO_train2014_000000578805.jpg",
+    "expression": "kid on right in back, blondish hair",
+    "all_expressions": [
+      "kid on right in back, blondish hair",
+      "blonde boy on right",
+      "top right kid"
+    ],
+    "bbox_xywh": [
+      414.4800109863281,
+      116.2699966430664,
+      194.86000061035156,
+      144.25999450683594
+    ],
+    "ground_truth_xyxy": [
+      414.4800109863281,
+      116.2699966430664,
+      609.3400115966797,
+      260.52999114990234
+    ],
+    "predicted_xyxy": [
+      207.375,
+      92.875,
+      295.25,
+      176.625
+    ],
+    "score": 0.1977541446685791,
+    "iou": 0.0,
+    "correct_at_0.5": false
+  },
+  {
+    "row_idx": 20,
+    "question_id": "2151037",
+    "file_name": "COCO_train2014_000000578805.jpg",
+    "expression": "girl pink",
+    "all_expressions": [
+      "girl pink",
+      "Pink gir",
+      "girl back left pink"
+    ],
+    "bbox_xywh": [
+      184.94000244140625,
+      91.27999877929688,
+      127.9000015258789,
+      181.83999633789062
+    ],
+    "ground_truth_xyxy": [
+      184.94000244140625,
+      91.27999877929688,
+      312.84000396728516,
+      273.1199951171875
+    ],
+    "predicted_xyxy": [
+      181.5,
+      89.5,
+      308.5,
+      275.0
+    ],
+    "score": 0.42763569951057434,
+    "iou": 0.922804295308866,
+    "correct_at_0.5": true
+  },
+  {
+    "row_idx": 21,
+    "question_id": "512572",
+    "file_name": "COCO_train2014_000000577583.jpg",
+    "expression": "person in white sleeping far away",
+    "all_expressions": [
+      "person in white sleeping far away",
+      "SLEEPING GUY IN BACK",
+      "man sleeping top"
+    ],
+    "bbox_xywh": [
+      0.0,
+      43.36000061035156,
+      240.57000732421875,
+      101.62999725341797
+    ],
+    "ground_truth_xyxy": [
+      0.0,
+      43.36000061035156,
+      240.57000732421875,
+      144.98999786376953
+    ],
+    "predicted_xyxy": [
+      0.3125,
+      39.78125,
+      237.5,
+      153.875
+    ],
+    "score": 0.03096751682460308,
+    "iou": 0.879585282089979,
+    "correct_at_0.5": true
+  },
+  {
+    "row_idx": 22,
+    "question_id": "506210",
+    "file_name": "COCO_train2014_000000577583.jpg",
+    "expression": "LADY ON LEFT LAYING ON BED",
+    "all_expressions": [
+      "LADY ON LEFT LAYING ON BED",
+      "asleep",
+      "sleeping woman"
+    ],
+    "bbox_xywh": [
+      1.8600000143051147,
+      110.70999908447266,
+      223.27999877929688,
+      245.61000061035156
+    ],
+    "ground_truth_xyxy": [
+      1.8600000143051147,
+      110.70999908447266,
+      225.139998793602,
+      356.3199996948242
+    ],
+    "predicted_xyxy": [
+      -1.5625,
+      43.0625,
+      239.375,
+      359.5
+    ],
+    "score": 0.05634009838104248,
+    "iou": 0.7192891724035582,
+    "correct_at_0.5": true
+  },
+  {
+    "row_idx": 23,
+    "question_id": "310197",
+    "file_name": "COCO_train2014_000000577558.jpg",
+    "expression": "left sandwich",
+    "all_expressions": [
+      "left sandwich",
+      "left sandwich"
+    ],
+    "bbox_xywh": [
+      47.349998474121094,
+      25.399999618530273,
+      216.3300018310547,
+      317.489990234375
+    ],
+    "ground_truth_xyxy": [
+      47.349998474121094,
+      25.399999618530273,
+      263.6800003051758,
+      342.8899898529053
+    ],
+    "predicted_xyxy": [
+      50.875,
+      27.421875,
+      252.25,
+      355.25
+    ],
+    "score": 0.14199377596378326,
+    "iou": 0.8925945909746147,
+    "correct_at_0.5": true
+  },
+  {
+    "row_idx": 24,
+    "question_id": "308201",
+    "file_name": "COCO_train2014_000000577558.jpg",
+    "expression": "green vegetable with leaves",
+    "all_expressions": [
+      "green vegetable with leaves",
+      "green vegie",
+      "sandwich on right"
+    ],
+    "bbox_xywh": [
+      261.0299987792969,
+      182.2899932861328,
+      339.7799987792969,
+      290.1600036621094
+    ],
+    "ground_truth_xyxy": [
+      261.0299987792969,
+      182.2899932861328,
+      600.8099975585938,
+      472.4499969482422
+    ],
+    "predicted_xyxy": [
+      282.0,
+      174.375,
+      588.0,
+      409.25
+    ],
+    "score": 0.169956237077713,
+    "iou": 0.6875359502833089,
+    "correct_at_0.5": true
+  },
+  {
+    "row_idx": 25,
+    "question_id": "2229146",
+    "file_name": "COCO_train2014_000000577399.jpg",
+    "expression": "left person with elbow bent",
+    "all_expressions": [
+      "left person with elbow bent",
+      "girl at the sink",
+      "smaller child over sink"
+    ],
+    "bbox_xywh": [
+      95.0,
+      198.99000549316406,
+      155.17999267578125,
+      258.010009765625
+    ],
+    "ground_truth_xyxy": [
+      95.0,
+      198.99000549316406,
+      250.17999267578125,
+      457.00001525878906
+    ],
+    "predicted_xyxy": [
+      100.625,
+      305.75,
+      197.75,
+      383.75
+    ],
+    "score": 0.012100386433303356,
+    "iou": 0.1892140372240476,
+    "correct_at_0.5": false
+  },
+  {
+    "row_idx": 26,
+    "question_id": "2229114",
+    "file_name": "COCO_train2014_000000577399.jpg",
+    "expression": "girl brushing teeth",
+    "all_expressions": [
+      "girl brushing teeth",
+      "girl brushing teeth",
+      "girl brush front"
+    ],
+    "bbox_xywh": [
+      174.89999389648438,
+      129.42999267578125,
+      278.7099914550781,
+      321.5899963378906
+    ],
+    "ground_truth_xyxy": [
+      174.89999389648438,
+      129.42999267578125,
+      453.6099853515625,
+      451.0199890136719
+    ],
+    "predicted_xyxy": [
+      313.25,
+      211.75,
+      348.5,
+      232.25
+    ],
+    "score": 0.06730107218027115,
+    "iou": 0.008062280681178247,
+    "correct_at_0.5": false
+  },
+  {
+    "row_idx": 27,
+    "question_id": "1612703",
+    "file_name": "COCO_train2014_000000576829.jpg",
+    "expression": "BOTTOM R.",
+    "all_expressions": [
+      "BOTTOM R.",
+      "bed on right bottom corner",
+      "the sheets on the bed in the bottom right corner"
+    ],
+    "bbox_xywh": [
+      358.6400146484375,
+      351.9599914550781,
+      241.36000061035156,
+      98.04000091552734
+    ],
+    "ground_truth_xyxy": [
+      358.6400146484375,
+      351.9599914550781,
+      600.0000152587891,
+      449.99999237060547
+    ],
+    "predicted_xyxy": [
+      153.625,
+      253.75,
+      596.5,
+      388.25
+    ],
+    "score": 0.011508148163557053,
+    "iou": 0.11571326015502013,
+    "correct_at_0.5": false
+  },
+  {
+    "row_idx": 28,
+    "question_id": "318326",
+    "file_name": "COCO_train2014_000000576829.jpg",
+    "expression": "quilt",
+    "all_expressions": [
+      "quilt",
+      "bed",
+      "bedspread"
+    ],
+    "bbox_xywh": [
+      86.58000183105469,
+      145.11000061035156,
+      513.4199829101562,
+      298.989990234375
+    ],
+    "ground_truth_xyxy": [
+      86.58000183105469,
+      145.11000061035156,
+      599.9999847412109,
+      444.09999084472656
+    ],
+    "predicted_xyxy": [
+      90.8125,
+      140.75,
+      602.0,
+      396.5
+    ],
+    "score": 0.19284319877624512,
+    "iou": 0.8192873973299541,
+    "correct_at_0.5": true
+  },
+  {
+    "row_idx": 29,
+    "question_id": "592560",
+    "file_name": "COCO_train2014_000000576581.jpg",
+    "expression": "zebra on left",
+    "all_expressions": [
+      "zebra on left",
+      "A black and white striped animal on the left",
+      "The fully visible zebra"
+    ],
+    "bbox_xywh": [
+      48.540000915527344,
+      9.710000038146973,
+      540.4000244140625,
+      464.8999938964844
+    ],
+    "ground_truth_xyxy": [
+      48.540000915527344,
+      9.710000038146973,
+      588.9400253295898,
+      474.60999393463135
+    ],
+    "predicted_xyxy": [
+      59.0625,
+      5.625,
+      608.0,
+      481.0
+    ],
+    "score": 0.46790915727615356,
+    "iou": 0.9266371124490997,
+    "correct_at_0.5": true
+  },
+  {
+    "row_idx": 30,
+    "question_id": "589225",
+    "file_name": "COCO_train2014_000000576581.jpg",
+    "expression": "right zebra",
+    "all_expressions": [
+      "right zebra",
+      "right zebra",
+      "butt zebra, cut in half"
+    ],
+    "bbox_xywh": [
+      432.1099853515625,
+      145.85000610351562,
+      205.7100067138672,
+      327.6199951171875
+    ],
+    "ground_truth_xyxy": [
+      432.1099853515625,
+      145.85000610351562,
+      637.8199920654297,
+      473.4700012207031
+    ],
+    "predicted_xyxy": [
+      59.0625,
+      5.625,
+      608.0,
+      481.0
+    ],
+    "score": 0.48729977011680603,
+    "iou": 0.212857999566428,
+    "correct_at_0.5": false
+  },
+  {
+    "row_idx": 31,
+    "question_id": "1737905",
+    "file_name": "COCO_train2014_000000575826.jpg",
+    "expression": "man in black coat",
+    "all_expressions": [
+      "man in black coat",
+      "referee",
+      "guy in khakis"
+    ],
+    "bbox_xywh": [
+      545.0399780273438,
+      133.19000244140625,
+      94.95999908447266,
+      249.75999450683594
+    ],
+    "ground_truth_xyxy": [
+      545.0399780273438,
+      133.19000244140625,
+      639.9999771118164,
+      382.9499969482422
+    ],
+    "predicted_xyxy": [
+      549.0,
+      131.375,
+      640.5,
+      384.25
+    ],
+    "score": 0.021044565364718437,
+    "iou": 0.9420169533831277,
+    "correct_at_0.5": true
+  },
+  {
+    "row_idx": 32,
+    "question_id": "503052",
+    "file_name": "COCO_train2014_000000575826.jpg",
+    "expression": "hitter",
+    "all_expressions": [
+      "hitter",
+      "player",
+      "tennis player in white shirt"
+    ],
+    "bbox_xywh": [
+      341.94000244140625,
+      86.91999816894531,
+      166.3000030517578,
+      366.8999938964844
+    ],
+    "ground_truth_xyxy": [
+      341.94000244140625,
+      86.91999816894531,
+      508.24000549316406,
+      453.8199920654297
+    ],
+    "predicted_xyxy": [
+      332.5,
+      88.6875,
+      513.0,
+      457.0
+    ],
+    "score": 0.06359858065843582,
+    "iou": 0.9093542953616318,
+    "correct_at_0.5": true
+  },
+  {
+    "row_idx": 33,
+    "question_id": "507574",
+    "file_name": "COCO_train2014_000000575461.jpg",
+    "expression": "U2! Man on left",
+    "all_expressions": [
+      "U2! Man on left",
+      "dude in blue shirt tie",
+      "Man"
+    ],
+    "bbox_xywh": [
+      0.0,
+      27.329999923706055,
+      247.3699951171875,
+      612.6699829101562
+    ],
+    "ground_truth_xyxy": [
+      0.0,
+      27.329999923706055,
+      247.3699951171875,
+      639.9999828338623
+    ],
+    "predicted_xyxy": [
+      -1.66796875,
+      26.71875,
+      222.0,
+      638.0
+    ],
+    "score": 0.021165618672966957,
+    "iou": 0.8877443416816629,
+    "correct_at_0.5": true
+  },
+  {
+    "row_idx": 34,
+    "question_id": "462898",
+    "file_name": "COCO_train2014_000000575461.jpg",
+    "expression": "lady",
+    "all_expressions": [
+      "lady",
+      "pink",
+      "woman"
+    ],
+    "bbox_xywh": [
+      245.60000610351562,
+      122.08000183105469,
+      181.39999389648438,
+      515.75
+    ],
+    "ground_truth_xyxy": [
+      245.60000610351562,
+      122.08000183105469,
+      427.0,
+      637.8300018310547
+    ],
+    "predicted_xyxy": [
+      228.25,
+      108.0,
+      427.0,
+      639.5
+    ],
+    "score": 0.1114344522356987,
+    "iou": 0.8856580992644462,
+    "correct_at_0.5": true
+  },
+  {
+    "row_idx": 35,
+    "question_id": "522236",
+    "file_name": "COCO_train2014_000000574870.jpg",
+    "expression": "Woman on left",
+    "all_expressions": [
+      "Woman on left",
+      "The lady on the left",
+      "woman"
+    ],
+    "bbox_xywh": [
+      73.70999908447266,
+      56.060001373291016,
+      260.5899963378906,
+      400.75
+    ],
+    "ground_truth_xyxy": [
+      73.70999908447266,
+      56.060001373291016,
+      334.2999954223633,
+      456.810001373291
+    ],
+    "predicted_xyxy": [
+      68.6875,
+      54.03125,
+      323.75,
+      460.75
+    ],
+    "score": 0.09301681071519852,
+    "iou": 0.9280973873461752,
+    "correct_at_0.5": true
+  },
+  {
+    "row_idx": 36,
+    "question_id": "517830",
+    "file_name": "COCO_train2014_000000574870.jpg",
+    "expression": "man right",
+    "all_expressions": [
+      "man right",
+      "Guy on right"
+    ],
+    "bbox_xywh": [
+      215.72000122070312,
+      14.9399995803833,
+      419.1499938964844,
+      447.05999755859375
+    ],
+    "ground_truth_xyxy": [
+      215.72000122070312,
+      14.9399995803833,
+      634.8699951171875,
+      461.99999713897705
+    ],
+    "predicted_xyxy": [
+      233.875,
+      17.25,
+      621.0,
+      461.0
+    ],
+    "score": 0.05242456495761871,
+    "iou": 0.9167571564156989,
+    "correct_at_0.5": true
+  },
+  {
+    "row_idx": 37,
+    "question_id": "1187884",
+    "file_name": "COCO_train2014_000000574251.jpg",
+    "expression": "bag on far left",
+    "all_expressions": [
+      "bag on far left",
+      "first case on left"
+    ],
+    "bbox_xywh": [
+      24.670000076293945,
+      96.11000061035156,
+      146.44000244140625,
+      195.77999877929688
+    ],
+    "ground_truth_xyxy": [
+      24.670000076293945,
+      96.11000061035156,
+      171.1100025177002,
+      291.88999938964844
+    ],
+    "predicted_xyxy": [
+      18.984375,
+      89.875,
+      177.5,
+      295.75
+    ],
+    "score": 0.14915917813777924,
+    "iou": 0.878521429054065,
+    "correct_at_0.5": true
+  },
+  {
+    "row_idx": 38,
+    "question_id": "1187343",
+    "file_name": "COCO_train2014_000000574251.jpg",
+    "expression": "second bag from left",
+    "all_expressions": [
+      "second bag from left",
+      "second suitcase from left",
+      "second suitcase from left"
+    ],
+    "bbox_xywh": [
+      164.9499969482422,
+      106.37000274658203,
+      114.06999969482422,
+      187.3000030517578
+    ],
+    "ground_truth_xyxy": [
+      164.9499969482422,
+      106.37000274658203,
+      279.0199966430664,
+      293.67000579833984
+    ],
+    "predicted_xyxy": [
+      262.75,
+      97.5,
+      384.25,
+      293.5
+    ],
+    "score": 0.14116297662258148,
+    "iou": 0.07225882541369093,
+    "correct_at_0.5": false
+  },
+  {
+    "row_idx": 39,
+    "question_id": "1186557",
+    "file_name": "COCO_train2014_000000574251.jpg",
+    "expression": "3rd from left",
+    "all_expressions": [
+      "3rd from left",
+      "suitcase 2nd from right",
+      "3rd from left"
+    ],
+    "bbox_xywh": [
+      268.8399963378906,
+      97.72000122070312,
+      108.1500015258789,
+      196.22000122070312
+    ],
+    "ground_truth_xyxy": [
+      268.8399963378906,
+      97.72000122070312,
+      376.98999786376953,
+      293.94000244140625
+    ],
+    "predicted_xyxy": [
+      19.6875,
+      5.12890625,
+      88.25,
+      31.5625
+    ],
+    "score": 0.0629042387008667,
+    "iou": 0.0,
+    "correct_at_0.5": false
+  },
+  {
+    "row_idx": 40,
+    "question_id": "1183421",
+    "file_name": "COCO_train2014_000000574251.jpg",
+    "expression": "right one",
+    "all_expressions": [
+      "right one",
+      "far right luggage",
+      "right suitcase"
+    ],
+    "bbox_xywh": [
+      374.6000061035156,
+      96.22000122070312,
+      110.22000122070312,
+      186.52999877929688
+    ],
+    "ground_truth_xyxy": [
+      374.6000061035156,
+      96.22000122070312,
+      484.82000732421875,
+      282.75
+    ],
+    "predicted_xyxy": [
+      371.5,
+      95.3125,
+      479.0,
+      289.25
+    ],
+    "score": 0.05136750638484955,
+    "iou": 0.8878376435712896,
+    "correct_at_0.5": true
+  },
+  {
+    "row_idx": 41,
+    "question_id": "152712",
+    "file_name": "COCO_train2014_000000573875.jpg",
+    "expression": "bike on right",
+    "all_expressions": [
+      "bike on right",
+      "CYCLE IN BACK",
+      "BACK CYCLE"
+    ],
+    "bbox_xywh": [
+      429.6600036621094,
+      112.36000061035156,
+      196.86000061035156,
+      181.57000732421875
+    ],
+    "ground_truth_xyxy": [
+      429.6600036621094,
+      112.36000061035156,
+      626.5200042724609,
+      293.9300079345703
+    ],
+    "predicted_xyxy": [
+      70.0,
+      117.875,
+      405.25,
+      376.5
+    ],
+    "score": 0.1901218295097351,
+    "iou": 0.0,
+    "correct_at_0.5": false
+  },
+  {
+    "row_idx": 42,
+    "question_id": "152563",
+    "file_name": "COCO_train2014_000000573875.jpg",
+    "expression": "first bike",
+    "all_expressions": [
+      "first bike",
+      "left bike",
+      "front bike"
+    ],
+    "bbox_xywh": [
+      81.9800033569336,
+      113.95999908447266,
+      319.82000732421875,
+      258.55999755859375
+    ],
+    "ground_truth_xyxy": [
+      81.9800033569336,
+      113.95999908447266,
+      401.80001068115234,
+      372.5199966430664
+    ],
+    "predicted_xyxy": [
+      70.0,
+      117.875,
+      405.25,
+      376.5
+    ],
+    "score": 0.29533153772354126,
+    "iou": 0.925922588774996,
+    "correct_at_0.5": true
+  },
+  {
+    "row_idx": 43,
+    "question_id": "711120",
+    "file_name": "COCO_train2014_000000573632.jpg",
+    "expression": "top left bowl",
+    "all_expressions": [
+      "top left bowl",
+      "yogart on left",
+      "top left bowl"
+    ],
+    "bbox_xywh": [
+      106.5,
+      37.040000915527344,
+      161.80999755859375,
+      107.87000274658203
+    ],
+    "ground_truth_xyxy": [
+      106.5,
+      37.040000915527344,
+      268.30999755859375,
+      144.91000366210938
+    ],
+    "predicted_xyxy": [
+      373.0,
+      30.8125,
+      532.0,
+      131.625
+    ],
+    "score": 0.07004895806312561,
+    "iou": 0.0,
+    "correct_at_0.5": false
+  },
+  {
+    "row_idx": 44,
+    "question_id": "710670",
+    "file_name": "COCO_train2014_000000573632.jpg",
+    "expression": "top right bowl",
+    "all_expressions": [
+      "top right bowl",
+      "upper right bowl",
+      "top right bowl"
+    ],
+    "bbox_xywh": [
+      381.07000732421875,
+      35.34000015258789,
+      148.99000549316406,
+      99.31999969482422
+    ],
+    "ground_truth_xyxy": [
+      381.07000732421875,
+      35.34000015258789,
+      530.0600128173828,
+      134.6599998474121
+    ],
+    "predicted_xyxy": [
+      373.0,
+      30.8125,
+      532.0,
+      131.625
+    ],
+    "score": 0.08993301540613174,
+    "iou": 0.8704070590052124,
+    "correct_at_0.5": true
+  },
+  {
+    "row_idx": 45,
+    "question_id": "309992",
+    "file_name": "COCO_train2014_000000573632.jpg",
+    "expression": "right sandwhich, left half",
+    "all_expressions": [
+      "right sandwhich, left half",
+      "left half of right sandwich"
+    ],
+    "bbox_xywh": [
+      388.7900085449219,
+      182.00999450683594,
+      135.30999755859375,
+      142.92999267578125
+    ],
+    "ground_truth_xyxy": [
+      388.7900085449219,
+      182.00999450683594,
+      524.1000061035156,
+      324.9399871826172
+    ],
+    "predicted_xyxy": [
+      104.5,
+      161.25,
+      296.5,
+      326.75
+    ],
+    "score": 0.15127839148044586,
+    "iou": 0.0,
+    "correct_at_0.5": false
+  },
+  {
+    "row_idx": 46,
+    "question_id": "309964",
+    "file_name": "COCO_train2014_000000573632.jpg",
+    "expression": "the first half of the sandwich to the left",
+    "all_expressions": [
+      "the first half of the sandwich to the left",
+      "left sandwich bottom"
+    ],
+    "bbox_xywh": [
+      104.81999969482422,
+      198.2100067138672,
+      175.33999633789062,
+      124.83000183105469
+    ],
+    "ground_truth_xyxy": [
+      104.81999969482422,
+      198.2100067138672,
+      280.15999603271484,
+      323.0400085449219
+    ],
+    "predicted_xyxy": [
+      385.25,
+      169.125,
+      544.5,
+      325.25
+    ],
+    "score": 0.3469837009906769,
+    "iou": 0.0,
+    "correct_at_0.5": false
+  },
+  {
+    "row_idx": 47,
+    "question_id": "1206800",
+    "file_name": "COCO_train2014_000000573125.jpg",
+    "expression": "blue shirt",
+    "all_expressions": [
+      "blue shirt",
+      "man in blue shirt holding scissors",
+      "man in blue shirt"
+    ],
+    "bbox_xywh": [
+      340.8500061035156,
+      86.29000091552734,
+      161.8000030517578,
+      273.9800109863281
+    ],
+    "ground_truth_xyxy": [
+      340.8500061035156,
+      86.29000091552734,
+      502.65000915527344,
+      360.27001190185547
+    ],
+    "predicted_xyxy": [
+      375.0,
+      134.75,
+      496.25,
+      267.0
+    ],
+    "score": 0.20055769383907318,
+    "iou": 0.3617262480644699,
+    "correct_at_0.5": false
+  },
+  {
+    "row_idx": 48,
+    "question_id": "1313153",
+    "file_name": "COCO_train2014_000000573125.jpg",
+    "expression": "guy in middle of pic white shirt",
+    "all_expressions": [
+      "guy in middle of pic white shirt",
+      "dude in white shirt in middle",
+      "guy white shirt with shorts and strap"
+    ],
+    "bbox_xywh": [
+      216.80999755859375,
+      104.9000015258789,
+      121.88999938964844,
+      358.1099853515625
+    ],
+    "ground_truth_xyxy": [
+      216.80999755859375,
+      104.9000015258789,
+      338.6999969482422,
+      463.0099868774414
+    ],
+    "predicted_xyxy": [
+      563.0,
+      103.25,
+      638.0,
+      187.125
+    ],
+    "score": 0.06383160501718521,
+    "iou": 0.0,
+    "correct_at_0.5": false
+  },
+  {
+    "row_idx": 49,
+    "question_id": "1308939",
+    "file_name": "COCO_train2014_000000573125.jpg",
+    "expression": "back of head of person at the bottom",
+    "all_expressions": [
+      "back of head of person at the bottom",
+      "head in front taking picure",
+      "back of head"
+    ],
+    "bbox_xywh": [
+      431.4599914550781,
+      279.3699951171875,
+      202.7899932861328,
+      190.9199981689453
+    ],
+    "ground_truth_xyxy": [
+      431.4599914550781,
+      279.3699951171875,
+      634.2499847412109,
+      470.2899932861328
+    ],
+    "predicted_xyxy": [
+      424.75,
+      287.25,
+      642.5,
+      477.75
+    ],
+    "score": 0.15102779865264893,
+    "iou": 0.8616348532027489,
+    "correct_at_0.5": true
+  },
+  {
+    "row_idx": 50,
+    "question_id": "505817",
+    "file_name": "COCO_train2014_000000572960.jpg",
+    "expression": "catcher",
+    "all_expressions": [
+      "catcher",
+      "cather",
+      "catcher"
+    ],
+    "bbox_xywh": [
+      400.739990234375,
+      233.72999572753906,
+      239.25999450683594,
+      201.14999389648438
+    ],
+    "ground_truth_xyxy": [
+      400.739990234375,
+      233.72999572753906,
+      639.9999847412109,
+      434.87998962402344
+    ],
+    "predicted_xyxy": [
+      446.0,
+      236.75,
+      638.0,
+      433.5
+    ],
+    "score": 0.24889914691448212,
+    "iou": 0.7849208357124877,
+    "correct_at_0.5": true
+  },
+  {
+    "row_idx": 51,
+    "question_id": "497378",
+    "file_name": "COCO_train2014_000000572960.jpg",
+    "expression": "the batter",
+    "all_expressions": [
+      "the batter",
+      "BATTER",
+      "batter"
+    ],
+    "bbox_xywh": [
+      357.82000732421875,
+      109.41000366210938,
+      105.9000015258789,
+      302.29998779296875
+    ],
+    "ground_truth_xyxy": [
+      357.82000732421875,
+      109.41000366210938,
+      463.72000885009766,
+      411.7099914550781
+    ],
+    "predicted_xyxy": [
+      357.75,
+      115.0625,
+      472.25,
+      405.25
+    ],
+    "score": 0.23988313972949982,
+    "iou": 0.890512483960458,
+    "correct_at_0.5": true
+  },
+  {
+    "row_idx": 52,
+    "question_id": "497043",
+    "file_name": "COCO_train2014_000000572949.jpg",
+    "expression": "2nd person from right",
+    "all_expressions": [
+      "2nd person from right",
+      "2nd person from right",
+      "second guy from right white shirt"
+    ],
+    "bbox_xywh": [
+      408.0,
+      190.91000366210938,
+      117.16000366210938,
+      184.6999969482422
+    ],
+    "ground_truth_xyxy": [
+      408.0,
+      190.91000366210938,
+      525.1600036621094,
+      375.61000061035156
+    ],
+    "predicted_xyxy": [
+      1.12109375,
+      205.25,
+      185.625,
+      464.0
+    ],
+    "score": 0.1985298991203308,
+    "iou": 0.0,
+    "correct_at_0.5": false
+  },
+  {
+    "row_idx": 53,
+    "question_id": "426784",
+    "file_name": "COCO_train2014_000000572949.jpg",
+    "expression": "man on right",
+    "all_expressions": [
+      "man on right",
+      "guy iwth glasses on right",
+      "man on the far right"
+    ],
+    "bbox_xywh": [
+      439.30999755859375,
+      211.02000427246094,
+      172.69000244140625,
+      259.7200012207031
+    ],
+    "ground_truth_xyxy": [
+      439.30999755859375,
+      211.02000427246094,
+      612.0,
+      470.74000549316406
+    ],
+    "predicted_xyxy": [
+      429.75,
+      211.0,
+      612.0,
+      440.0
+    ],
+    "score": 0.30756595730781555,
+    "iou": 0.8405487033227756,
+    "correct_at_0.5": true
+  },
+  {
+    "row_idx": 54,
+    "question_id": "114430",
+    "file_name": "COCO_train2014_000000572949.jpg",
+    "expression": "swirly rug on floor at bottom right area",
+    "all_expressions": [
+      "swirly rug on floor at bottom right area",
+      "swirly couch front right side",
+      "the paisley right bottom corner"
+    ],
+    "bbox_xywh": [
+      280.3399963378906,
+      517.239990234375,
+      330.3399963378906,
+      94.76000213623047
+    ],
+    "ground_truth_xyxy": [
+      280.3399963378906,
+      517.239990234375,
+      610.6799926757812,
+      611.9999923706055
+    ],
+    "predicted_xyxy": [
+      250.0,
+      492.75,
+      296.25,
+      534.0
+    ],
+    "score": 0.09877259284257889,
+    "iou": 0.008094049427403202,
+    "correct_at_0.5": false
+  },
+  {
+    "row_idx": 55,
+    "question_id": "2160383",
+    "file_name": "COCO_train2014_000000572949.jpg",
+    "expression": "man in jersey",
+    "all_expressions": [
+      "man in jersey",
+      "guy in back with arm on chair",
+      "guy back navy 07"
+    ],
+    "bbox_xywh": [
+      9.1899995803833,
+      203.83999633789062,
+      269.19000244140625,
+      139.86000061035156
+    ],
+    "ground_truth_xyxy": [
+      9.1899995803833,
+      203.83999633789062,
+      278.38000202178955,
+      343.6999969482422
+    ],
+    "predicted_xyxy": [
+      1.12109375,
+      205.25,
+      185.625,
+      464.0
+    ],
+    "score": 0.08570927381515503,
+    "iou": 0.40070003619115446,
+    "correct_at_0.5": false
+  },
+  {
+    "row_idx": 56,
+    "question_id": "1946115",
+    "file_name": "COCO_train2014_000000572949.jpg",
+    "expression": "BOTTOM RIGHT SWIRL",
+    "all_expressions": [
+      "BOTTOM RIGHT SWIRL",
+      "partial chair front bottom",
+      "Chair on far right in foreground"
+    ],
+    "bbox_xywh": [
+      271.5,
+      517.0800170898438,
+      340.5,
+      94.87000274658203
+    ],
+    "ground_truth_xyxy": [
+      271.5,
+      517.0800170898438,
+      612.0,
+      611.9500198364258
+    ],
+    "predicted_xyxy": [
+      46.875,
+      478.75,
+      78.5625,
+      497.75
+    ],
+    "score": 0.0928521603345871,
+    "iou": 0.0,
+    "correct_at_0.5": false
+  },
+  {
+    "row_idx": 57,
+    "question_id": "1940800",
+    "file_name": "COCO_train2014_000000572949.jpg",
+    "expression": "bottom left portion of couch on left",
+    "all_expressions": [
+      "bottom left portion of couch on left",
+      "chair on front left",
+      "chair on left"
+    ],
+    "bbox_xywh": [
+      0.0,
+      408.17999267578125,
+      257.6600036621094,
+      203.82000732421875
+    ],
+    "ground_truth_xyxy": [
+      0.0,
+      408.17999267578125,
+      257.6600036621094,
+      612.0
+    ],
+    "predicted_xyxy": [
+      279.75,
+      517.0,
+      610.0,
+      612.5
+    ],
+    "score": 0.16817277669906616,
+    "iou": 0.0,
+    "correct_at_0.5": false
+  },
+  {
+    "row_idx": 58,
+    "question_id": "99436",
+    "file_name": "COCO_train2014_000000572949.jpg",
+    "expression": "chair left most",
+    "all_expressions": [
+      "chair left most",
+      "couch with squares",
+      "left couch"
+    ],
+    "bbox_xywh": [
+      0.0,
+      260.32000732421875,
+      256.760009765625,
+      351.67999267578125
+    ],
+    "ground_truth_xyxy": [
+      0.0,
+      260.32000732421875,
+      256.760009765625,
+      612.0
+    ],
+    "predicted_xyxy": [
+      396.75,
+      381.0,
+      612.0,
+      557.5
+    ],
+    "score": 0.23475733399391174,
+    "iou": 0.0,
+    "correct_at_0.5": false
+  },
+  {
+    "row_idx": 59,
+    "question_id": "1709303",
+    "file_name": "COCO_train2014_000000572949.jpg",
+    "expression": "far left guy",
+    "all_expressions": [
+      "far left guy",
+      "man on left",
+      "Left person"
+    ],
+    "bbox_xywh": [
+      0.0,
+      207.6699981689453,
+      166.41000366210938,
+      255.8000030517578
+    ],
+    "ground_truth_xyxy": [
+      0.0,
+      207.6699981689453,
+      166.41000366210938,
+      463.4700012207031
+    ],
+    "predicted_xyxy": [
+      1.12109375,
+      205.25,
+      185.625,
+      464.0
+    ],
+    "score": 0.25109636783599854,
+    "iou": 0.8803539979412284,
+    "correct_at_0.5": true
+  },
+  {
+    "row_idx": 60,
+    "question_id": "1595524",
+    "file_name": "COCO_train2014_000000572949.jpg",
+    "expression": "chair under the guy on the right",
+    "all_expressions": [
+      "chair under the guy on the right",
+      "chair on right next to man in blue shirt"
+    ],
+    "bbox_xywh": [
+      418.0899963378906,
+      390.5799865722656,
+      192.52999877929688,
+      154.02999877929688
+    ],
+    "ground_truth_xyxy": [
+      418.0899963378906,
+      390.5799865722656,
+      610.6199951171875,
+      544.6099853515625
+    ],
+    "predicted_xyxy": [
+      396.75,
+      381.0,
+      612.0,
+      557.5
+    ],
+    "score": 0.31636926531791687,
+    "iou": 0.7805771792323473,
+    "correct_at_0.5": true
+  },
+  {
+    "row_idx": 61,
+    "question_id": "52610",
+    "file_name": "COCO_train2014_000000571671.jpg",
+    "expression": "taleft cat",
+    "all_expressions": [
+      "taleft cat",
+      "black cat on Left",
+      "black cat"
+    ],
+    "bbox_xywh": [
+      0.0,
+      2.109999895095825,
+      95.68000030517578,
+      196.19000244140625
+    ],
+    "ground_truth_xyxy": [
+      0.0,
+      2.109999895095825,
+      95.68000030517578,
+      198.30000233650208
+    ],
+    "predicted_xyxy": [
+      268.5,
+      178.625,
+      513.0,
+      388.25
+    ],
+    "score": 0.11260009557008743,
+    "iou": 0.0,
+    "correct_at_0.5": false
+  },
+  {
+    "row_idx": 62,
+    "question_id": "48543",
+    "file_name": "COCO_train2014_000000571671.jpg",
+    "expression": "brown cat",
+    "all_expressions": [
+      "brown cat",
+      "cat upside down",
+      "cat on chair"
+    ],
+    "bbox_xywh": [
+      273.5,
+      178.88999938964844,
+      248.3800048828125,
+      230.00999450683594
+    ],
+    "ground_truth_xyxy": [
+      273.5,
+      178.88999938964844,
+      521.8800048828125,
+      408.8999938964844
+    ],
+    "predicted_xyxy": [
+      268.5,
+      178.625,
+      513.0,
+      388.25
+    ],
+    "score": 0.1790994256734848,
+    "iou": 0.8609280475908511,
+    "correct_at_0.5": true
+  },
+  {
+    "row_idx": 63,
+    "question_id": "1366234",
+    "file_name": "COCO_train2014_000000571541.jpg",
+    "expression": "yellow and blue vehicle closest to camera",
+    "all_expressions": [
+      "yellow and blue vehicle closest to camera",
+      "yellow and blue truck second from left",
+      "blue and yellow bus, first one"
+    ],
+    "bbox_xywh": [
+      245.02999877929688,
+      147.00999450683594,
+      171.4499969482422,
+      230.2899932861328
+    ],
+    "ground_truth_xyxy": [
+      245.02999877929688,
+      147.00999450683594,
+      416.47999572753906,
+      377.29998779296875
+    ],
+    "predicted_xyxy": [
+      249.375,
+      148.875,
+      445.0,
+      372.25
+    ],
+    "score": 0.16344544291496277,
+    "iou": 0.8140441510312193,
+    "correct_at_0.5": true
+  },
+  {
+    "row_idx": 64,
+    "question_id": "1366141",
+    "file_name": "COCO_train2014_000000571541.jpg",
+    "expression": "red turck close to us",
+    "all_expressions": [
+      "red turck close to us",
+      "red bus",
+      "frontmost vehicle"
+    ],
+    "bbox_xywh": [
+      0.0,
+      39.63999938964844,
+      289.6000061035156,
+      419.5299987792969
+    ],
+    "ground_truth_xyxy": [
+      0.0,
+      39.63999938964844,
+      289.6000061035156,
+      459.1699981689453
+    ],
+    "predicted_xyxy": [
+      492.0,
+      227.0,
+      570.0,
+      318.0
+    ],
+    "score": 0.3298233151435852,
+    "iou": 0.0,
+    "correct_at_0.5": false
+  },
+  {
+    "row_idx": 65,
+    "question_id": "1365791",
+    "file_name": "COCO_train2014_000000571541.jpg",
+    "expression": "white vehicle, 3rd one from us",
+    "all_expressions": [
+      "white vehicle, 3rd one from us",
+      "all white bus",
+      "3rd bus frm left"
+    ],
+    "bbox_xywh": [
+      358.510009765625,
+      194.91000366210938,
+      143.5,
+      156.10000610351562
+    ],
+    "ground_truth_xyxy": [
+      358.510009765625,
+      194.91000366210938,
+      502.010009765625,
+      351.010009765625
+    ],
+    "predicted_xyxy": [
+      4.21875,
+      32.53125,
+      602.0,
+      458.5
+    ],
+    "score": 0.1225232183933258,
+    "iou": 0.08797004067862245,
+    "correct_at_0.5": false
+  },
+  {
+    "row_idx": 66,
+    "question_id": "1710301",
+    "file_name": "COCO_train2014_000000570440.jpg",
+    "expression": "Pitcher",
+    "all_expressions": [
+      "Pitcher",
+      "that was it.... man in the center up front",
+      "man front"
+    ],
+    "bbox_xywh": [
+      152.3300018310547,
+      194.6699981689453,
+      137.72000122070312,
+      394.0199890136719
+    ],
+    "ground_truth_xyxy": [
+      152.3300018310547,
+      194.6699981689453,
+      290.0500030517578,
+      588.6899871826172
+    ],
+    "predicted_xyxy": [
+      161.875,
+      192.25,
+      293.75,
+      590.5
+    ],
+    "score": 0.09334687888622284,
+    "iou": 0.8973594299850313,
+    "correct_at_0.5": true
+  },
+  {
+    "row_idx": 67,
+    "question_id": "531423",
+    "file_name": "COCO_train2014_000000570440.jpg",
+    "expression": "guy in back",
+    "all_expressions": [
+      "guy in back",
+      "back guy",
+      "back player"
+    ],
+    "bbox_xywh": [
+      278.9700012207031,
+      132.63999938964844,
+      94.47000122070312,
+      213.6699981689453
+    ],
+    "ground_truth_xyxy": [
+      278.9700012207031,
+      132.63999938964844,
+      373.44000244140625,
+      346.30999755859375
+    ],
+    "predicted_xyxy": [
+      275.75,
+      125.375,
+      371.0,
+      346.0
+    ],
+    "score": 0.045268092304468155,
+    "iou": 0.9105519445360301,
+    "correct_at_0.5": true
+  },
+  {
+    "row_idx": 68,
+    "question_id": "1059389",
+    "file_name": "COCO_train2014_000000570178.jpg",
+    "expression": "brocvoli right back",
+    "all_expressions": [
+      "brocvoli right back",
+      "bigger broccoli",
+      "top piece of broccoli"
+    ],
+    "bbox_xywh": [
+      367.5799865722656,
+      153.74000549316406,
+      171.91000366210938,
+      163.52999877929688
+    ],
+    "ground_truth_xyxy": [
+      367.5799865722656,
+      153.74000549316406,
+      539.489990234375,
+      317.27000427246094
+    ],
+    "predicted_xyxy": [
+      296.5,
+      242.5,
+      416.25,
+      363.25
+    ],
+    "score": 0.0017073675990104675,
+    "iou": 0.09346925738614394,
+    "correct_at_0.5": false
+  },
+  {
+    "row_idx": 69,
+    "question_id": "1056621",
+    "file_name": "COCO_train2014_000000570178.jpg",
+    "expression": "bottom broccoli",
+    "all_expressions": [
+      "bottom broccoli",
+      "yucky broccoli front most piece",
+      "brocolli bottom"
+    ],
+    "bbox_xywh": [
+      264.489990234375,
+      314.7699890136719,
+      159.69000244140625,
+      167.9600067138672
+    ],
+    "ground_truth_xyxy": [
+      264.489990234375,
+      314.7699890136719,
+      424.17999267578125,
+      482.72999572753906
+    ],
+    "predicted_xyxy": [
+      143.5,
+      405.25,
+      242.75,
+      492.25
+    ],
+    "score": 0.02784845046699047,
+    "iou": 0.0,
+    "correct_at_0.5": false
+  },
+  {
+    "row_idx": 70,
+    "question_id": "582574",
+    "file_name": "COCO_train2014_000000569613.jpg",
+    "expression": "elephant right",
+    "all_expressions": [
+      "elephant right",
+      "right eleph",
+      "right elephant"
+    ],
+    "bbox_xywh": [
+      325.8999938964844,
+      111.48999786376953,
+      296.3500061035156,
+      236.32000732421875
+    ],
+    "ground_truth_xyxy": [
+      325.8999938964844,
+      111.48999786376953,
+      622.25,
+      347.8100051879883
+    ],
+    "predicted_xyxy": [
+      329.0,
+      121.375,
+      616.5,
+      351.75
+    ],
+    "score": 0.27717941999435425,
+    "iou": 0.9147612000739491,
+    "correct_at_0.5": true
+  },
+  {
+    "row_idx": 71,
+    "question_id": "581925",
+    "file_name": "COCO_train2014_000000569613.jpg",
+    "expression": "ele left",
+    "all_expressions": [
+      "ele left",
+      "left",
+      "left ele"
+    ],
+    "bbox_xywh": [
+      73.7699966430664,
+      99.75,
+      278.1700134277344,
+      211.8300018310547
+    ],
+    "ground_truth_xyxy": [
+      73.7699966430664,
+      99.75,
+      351.9400100708008,
+      311.5800018310547
+    ],
+    "predicted_xyxy": [
+      74.875,
+      99.375,
+      625.0,
+      354.25
+    ],
+    "score": 0.006314364727586508,
+    "iou": 0.4178843651780156,
+    "correct_at_0.5": false
+  },
+  {
+    "row_idx": 72,
+    "question_id": "545096",
+    "file_name": "COCO_train2014_000000568873.jpg",
+    "expression": "guy far right",
+    "all_expressions": [
+      "guy far right",
+      "dude who's way too cool to wear a purple t-shirt",
+      "man not in purple"
+    ],
+    "bbox_xywh": [
+      529.760009765625,
+      169.44000244140625,
+      88.61000061035156,
+      249.63999938964844
+    ],
+    "ground_truth_xyxy": [
+      529.760009765625,
+      169.44000244140625,
+      618.3700103759766,
+      419.0800018310547
+    ],
+    "predicted_xyxy": [
+      115.0,
+      185.75,
+      222.75,
+      360.0
+    ],
+    "score": 0.03397199511528015,
+    "iou": 0.0,
+    "correct_at_0.5": false
+  },
+  {
+    "row_idx": 73,
+    "question_id": "536768",
+    "file_name": "COCO_train2014_000000568873.jpg",
+    "expression": "SECOND FROM THE RIGHT",
+    "all_expressions": [
+      "SECOND FROM THE RIGHT",
+      "kid in purple shirt furthest right of the four",
+      "boy in purple wearing dark glasses"
+    ],
+    "bbox_xywh": [
+      386.8399963378906,
+      151.5,
+      104.80999755859375,
+      267.739990234375
+    ],
+    "ground_truth_xyxy": [
+      386.8399963378906,
+      151.5,
+      491.6499938964844,
+      419.239990234375
+    ],
+    "predicted_xyxy": [
+      113.875,
+      186.375,
+      205.25,
+      332.5
+    ],
+    "score": 0.012479699216783047,
+    "iou": 0.0,
+    "correct_at_0.5": false
+  },
+  {
+    "row_idx": 74,
+    "question_id": "528289",
+    "file_name": "COCO_train2014_000000568873.jpg",
+    "expression": "center man with black hair, back to us",
+    "all_expressions": [
+      "center man with black hair, back to us",
+      "black shorts in middle",
+      "center dude"
+    ],
+    "bbox_xywh": [
+      247.3300018310547,
+      141.80999755859375,
+      148.02000427246094,
+      276.94000244140625
+    ],
+    "ground_truth_xyxy": [
+      247.3300018310547,
+      141.80999755859375,
+      395.3500061035156,
+      418.75
+    ],
+    "predicted_xyxy": [
+      422.5,
+      158.625,
+      473.75,
+      207.625
+    ],
+    "score": 0.014785407111048698,
+    "iou": 0.0,
+    "correct_at_0.5": false
+  },
+  {
+    "row_idx": 75,
+    "question_id": "518232",
+    "file_name": "COCO_train2014_000000568873.jpg",
+    "expression": "boy sitting on the bench closest to us.",
+    "all_expressions": [
+      "boy sitting on the bench closest to us.",
+      "boy sitting in front",
+      "guy sitting"
+    ],
+    "bbox_xywh": [
+      101.01000213623047,
+      264.67999267578125,
+      140.27999877929688,
+      159.32000732421875
+    ],
+    "ground_truth_xyxy": [
+      101.01000213623047,
+      264.67999267578125,
+      241.29000091552734,
+      424.0
+    ],
+    "predicted_xyxy": [
+      113.875,
+      186.375,
+      205.25,
+      332.5
+    ],
+    "score": 0.057918086647987366,
+    "iou": 0.2100373518966029,
+    "correct_at_0.5": false
+  },
+  {
+    "row_idx": 76,
+    "question_id": "71254",
+    "file_name": "COCO_train2014_000000568654.jpg",
+    "expression": "mother cow",
+    "all_expressions": [
+      "mother cow",
+      "large cow",
+      "big cow"
+    ],
+    "bbox_xywh": [
+      13.420000076293945,
+      10.319999694824219,
+      545.030029296875,
+      304.5199890136719
+    ],
+    "ground_truth_xyxy": [
+      13.420000076293945,
+      10.319999694824219,
+      558.450029373169,
+      314.8399887084961
+    ],
+    "predicted_xyxy": [
+      25.78125,
+      5.625,
+      556.0,
+      311.0
+    ],
+    "score": 0.12023206055164337,
+    "iou": 0.9463632983774537,
+    "correct_at_0.5": true
+  },
+  {
+    "row_idx": 77,
+    "question_id": "71111",
+    "file_name": "COCO_train2014_000000568654.jpg",
+    "expression": "calf",
+    "all_expressions": [
+      "calf",
+      "baby cow",
+      "small cow"
+    ],
+    "bbox_xywh": [
+      100.12999725341797,
+      98.05999755859375,
+      281.80999755859375,
+      210.58999633789062
+    ],
+    "ground_truth_xyxy": [
+      100.12999725341797,
+      98.05999755859375,
+      381.9399948120117,
+      308.6499938964844
+    ],
+    "predicted_xyxy": [
+      76.125,
+      104.25,
+      384.5,
+      311.0
+    ],
+    "score": 0.18772760033607483,
+    "iou": 0.8794066994201034,
+    "correct_at_0.5": true
+  },
+  {
+    "row_idx": 78,
+    "question_id": "1822289",
+    "file_name": "COCO_train2014_000000568272.jpg",
+    "expression": "ASS",
+    "all_expressions": [
+      "ASS",
+      "big zebra",
+      "bigger zebra"
+    ],
+    "bbox_xywh": [
+      288.6000061035156,
+      16.06999969482422,
+      263.95001220703125,
+      481.7900085449219
+    ],
+    "ground_truth_xyxy": [
+      288.6000061035156,
+      16.06999969482422,
+      552.5500183105469,
+      497.8600082397461
+    ],
+    "predicted_xyxy": [
+      297.25,
+      81.375,
+      497.5,
+      299.0
+    ],
+    "score": 0.0768222063779831,
+    "iou": 0.34269031694964164,
+    "correct_at_0.5": false
+  },
+  {
+    "row_idx": 79,
+    "question_id": "588904",
+    "file_name": "COCO_train2014_000000568272.jpg",
+    "expression": "small zebra facing",
+    "all_expressions": [
+      "small zebra facing",
+      "left zbra",
+      "baby zebra"
+    ],
+    "bbox_xywh": [
+      126.79000091552734,
+      139.05999755859375,
+      230.72000122070312,
+      301.54998779296875
+    ],
+    "ground_truth_xyxy": [
+      126.79000091552734,
+      139.05999755859375,
+      357.51000213623047,
+      440.6099853515625
+    ],
+    "predicted_xyxy": [
+      284.75,
+      16.953125,
+      390.25,
+      125.625
+    ],
+    "score": 0.1790994256734848,
+    "iou": 0.0,
+    "correct_at_0.5": false
+  },
+  {
+    "row_idx": 80,
+    "question_id": "457754",
+    "file_name": "COCO_train2014_000000567964.jpg",
+    "expression": "hand",
+    "all_expressions": [
+      "hand",
+      "hand holding hot dog",
+      "hand holding hot dog"
+    ],
+    "bbox_xywh": [
+      1.440000057220459,
+      296.94000244140625,
+      288.2900085449219,
+      332.9700012207031
+    ],
+    "ground_truth_xyxy": [
+      1.440000057220459,
+      296.94000244140625,
+      289.73000860214233,
+      629.9100036621094
+    ],
+    "predicted_xyxy": [
+      0.703125,
+      283.0,
+      318.25,
+      635.5
+    ],
+    "score": 0.03327393904328346,
+    "iou": 0.8575663555306098,
+    "correct_at_0.5": true
+  },
+  {
+    "row_idx": 81,
+    "question_id": "455753",
+    "file_name": "COCO_train2014_000000567964.jpg",
+    "expression": "white shirt",
+    "all_expressions": [
+      "white shirt",
+      "mans body above hot dog",
+      "person in back in white"
+    ],
+    "bbox_xywh": [
+      53.09000015258789,
+      4.230000019073486,
+      424.760009765625,
+      169.3300018310547
+    ],
+    "ground_truth_xyxy": [
+      53.09000015258789,
+      4.230000019073486,
+      477.8500099182129,
+      173.56000185012817
+    ],
+    "predicted_xyxy": [
+      111.5625,
+      -0.8203125,
+      417.75,
+      125.0
+    ],
+    "score": 0.025035424157977104,
+    "iou": 0.5033045231088561,
+    "correct_at_0.5": true
+  },
+  {
+    "row_idx": 82,
+    "question_id": "1269359",
+    "file_name": "COCO_train2014_000000567199.jpg",
+    "expression": "bitch kid",
+    "all_expressions": [
+      "bitch kid",
+      "little kid in snow and in the front",
+      "little kid"
+    ],
+    "bbox_xywh": [
+      333.6300048828125,
+      253.77999877929688,
+      96.86000061035156,
+      221.6999969482422
+    ],
+    "ground_truth_xyxy": [
+      333.6300048828125,
+      253.77999877929688,
+      430.49000549316406,
+      475.47999572753906
+    ],
+    "predicted_xyxy": [
+      326.0,
+      259.25,
+      436.5,
+      482.0
+    ],
+    "score": 0.404095858335495,
+    "iou": 0.8329735911283973,
+    "correct_at_0.5": true
+  },
+  {
+    "row_idx": 83,
+    "question_id": "1242292",
+    "file_name": "COCO_train2014_000000567199.jpg",
+    "expression": "red shirt",
+    "all_expressions": [
+      "red shirt",
+      "red jacket-dad",
+      "Red"
+    ],
+    "bbox_xywh": [
+      141.3000030517578,
+      144.5399932861328,
+      230.8300018310547,
+      293.3900146484375
+    ],
+    "ground_truth_xyxy": [
+      141.3000030517578,
+      144.5399932861328,
+      372.1300048828125,
+      437.9300079345703
+    ],
+    "predicted_xyxy": [
+      145.625,
+      158.0,
+      374.5,
+      278.25
+    ],
+    "score": 0.2557152211666107,
+    "iou": 0.40049910187094456,
+    "correct_at_0.5": false
+  },
+  {
+    "row_idx": 84,
+    "question_id": "1187527",
+    "file_name": "COCO_train2014_000000567189.jpg",
+    "expression": "left bag",
+    "all_expressions": [
+      "left bag",
+      "luggage left side",
+      "bag on left"
+    ],
+    "bbox_xywh": [
+      22.649999618530273,
+      204.94000244140625,
+      248.08999633789062,
+      197.39999389648438
+    ],
+    "ground_truth_xyxy": [
+      22.649999618530273,
+      204.94000244140625,
+      270.7399959564209,
+      402.3399963378906
+    ],
+    "predicted_xyxy": [
+      26.5625,
+      199.5,
+      286.0,
+      408.0
+    ],
+    "score": 0.29920756816864014,
+    "iou": 0.8785308581833267,
+    "correct_at_0.5": true
+  },
+  {
+    "row_idx": 85,
+    "question_id": "1187071",
+    "file_name": "COCO_train2014_000000567189.jpg",
+    "expression": "large bag",
+    "all_expressions": [
+      "large bag",
+      "big one",
+      "tall suitcase"
+    ],
+    "bbox_xywh": [
+      261.6199951171875,
+      28.110000610351562,
+      289.7300109863281,
+      418.3800048828125
+    ],
+    "ground_truth_xyxy": [
+      261.6199951171875,
+      28.110000610351562,
+      551.3500061035156,
+      446.49000549316406
+    ],
+    "predicted_xyxy": [
+      26.5625,
+      199.5,
+      286.0,
+      408.0
+    ],
+    "score": 0.2751297354698181,
+    "iou": 0.02986153222782322,
+    "correct_at_0.5": false
+  },
+  {
+    "row_idx": 86,
+    "question_id": "2154286",
+    "file_name": "COCO_train2014_000000566798.jpg",
+    "expression": "man on left",
+    "all_expressions": [
+      "man on left",
+      "man",
+      "man on left"
+    ],
+    "bbox_xywh": [
+      75.7699966430664,
+      113.95999908447266,
+      249.08999633789062,
+      263.20001220703125
+    ],
+    "ground_truth_xyxy": [
+      75.7699966430664,
+      113.95999908447266,
+      324.85999298095703,
+      377.1600112915039
+    ],
+    "predicted_xyxy": [
+      70.0,
+      117.3125,
+      329.75,
+      386.25
+    ],
+    "score": 0.05781161040067673,
+    "iou": 0.9156027693787925,
+    "correct_at_0.5": true
+  },
+  {
+    "row_idx": 87,
+    "question_id": "560745",
+    "file_name": "COCO_train2014_000000566798.jpg",
+    "expression": "girl",
+    "all_expressions": [
+      "girl",
+      "woman",
+      "person w/folded arms"
+    ],
+    "bbox_xywh": [
+      260.04998779296875,
+      115.87999725341797,
+      300.1300048828125,
+      329.3900146484375
+    ],
+    "ground_truth_xyxy": [
+      260.04998779296875,
+      115.87999725341797,
+      560.1799926757812,
+      445.27001190185547
+    ],
+    "predicted_xyxy": [
+      271.0,
+      119.625,
+      558.5,
+      445.75
+    ],
+    "score": 0.0697949230670929,
+    "iou": 0.9457070652366433,
+    "correct_at_0.5": true
+  },
+  {
+    "row_idx": 88,
+    "question_id": "1355583",
+    "file_name": "COCO_train2014_000000566395.jpg",
+    "expression": "car next to cab",
+    "all_expressions": [
+      "car next to cab",
+      "silver car on left",
+      "left car"
+    ],
+    "bbox_xywh": [
+      97.30999755859375,
+      313.2699890136719,
+      173.7899932861328,
+      147.19000244140625
+    ],
+    "ground_truth_xyxy": [
+      97.30999755859375,
+      313.2699890136719,
+      271.09999084472656,
+      460.4599914550781
+    ],
+    "predicted_xyxy": [
+      291.75,
+      295.5,
+      590.0,
+      439.75
+    ],
+    "score": 0.22286923229694366,
+    "iou": 0.0,
+    "correct_at_0.5": false
+  },
+  {
+    "row_idx": 89,
+    "question_id": "353550",
+    "file_name": "COCO_train2014_000000566395.jpg",
+    "expression": "yellow cab",
+    "all_expressions": [
+      "yellow cab",
+      "yellow",
+      "taxi"
+    ],
+    "bbox_xywh": [
+      293.989990234375,
+      276.3599853515625,
+      289.80999755859375,
+      161.58999633789062
+    ],
+    "ground_truth_xyxy": [
+      293.989990234375,
+      276.3599853515625,
+      583.7999877929688,
+      437.9499816894531
+    ],
+    "predicted_xyxy": [
+      291.75,
+      295.5,
+      590.0,
+      439.75
+    ],
+    "score": 0.3713645935058594,
+    "iou": 0.8499861695570998,
+    "correct_at_0.5": true
+  },
+  {
+    "row_idx": 90,
+    "question_id": "584077",
+    "file_name": "COCO_train2014_000000565884.jpg",
+    "expression": "right eleohgabt",
+    "all_expressions": [
+      "right eleohgabt",
+      "one on the right",
+      "right ele"
+    ],
+    "bbox_xywh": [
+      296.7799987792969,
+      88.37999725341797,
+      343.2200012207031,
+      283.1600036621094
+    ],
+    "ground_truth_xyxy": [
+      296.7799987792969,
+      88.37999725341797,
+      640.0,
+      371.54000091552734
+    ],
+    "predicted_xyxy": [
+      4.84375,
+      84.125,
+      640.5,
+      381.5
+    ],
+    "score": 0.007785655092447996,
+    "iou": 0.5141356529733874,
+    "correct_at_0.5": true
+  },
+  {
+    "row_idx": 91,
+    "question_id": "581810",
+    "file_name": "COCO_train2014_000000565884.jpg",
+    "expression": "elephant left",
+    "all_expressions": [
+      "elephant left",
+      "left elephant",
+      "far left elephant"
+    ],
+    "bbox_xywh": [
+      0.0,
+      147.89999389648438,
+      356.1300048828125,
+      225.74000549316406
+    ],
+    "ground_truth_xyxy": [
+      0.0,
+      147.89999389648438,
+      356.1300048828125,
+      373.63999938964844
+    ],
+    "predicted_xyxy": [
+      267.25,
+      101.9375,
+      638.5,
+      373.75
+    ],
+    "score": 0.12896329164505005,
+    "iou": 0.12443467234346832,
+    "correct_at_0.5": false
+  },
+  {
+    "row_idx": 92,
+    "question_id": "585116",
+    "file_name": "COCO_train2014_000000565769.jpg",
+    "expression": "right elep",
+    "all_expressions": [
+      "right elep",
+      "elephant on right thats hidden",
+      "right elephant's behind"
+    ],
+    "bbox_xywh": [
+      377.82000732421875,
+      149.74000549316406,
+      122.02999877929688,
+      202.00999450683594
+    ],
+    "ground_truth_xyxy": [
+      377.82000732421875,
+      149.74000549316406,
+      499.8500061035156,
+      351.75
+    ],
+    "predicted_xyxy": [
+      165.625,
+      180.375,
+      344.0,
+      431.25
+    ],
+    "score": 0.010169658809900284,
+    "iou": 0.0,
+    "correct_at_0.5": false
+  },
+  {
+    "row_idx": 93,
+    "question_id": "581605",
+    "file_name": "COCO_train2014_000000565769.jpg",
+    "expression": "dark elephant in back",
+    "all_expressions": [
+      "dark elephant in back",
+      "second elephant from left",
+      "elephant in backleft"
+    ],
+    "bbox_xywh": [
+      83.4800033569336,
+      142.00999450683594,
+      256.20001220703125,
+      172.72000122070312
+    ],
+    "ground_truth_xyxy": [
+      83.4800033569336,
+      142.00999450683594,
+      339.68001556396484,
+      314.72999572753906
+    ],
+    "predicted_xyxy": [
+      85.25,
+      141.75,
+      328.75,
+      311.0
+    ],
+    "score": 0.05665242671966553,
+    "iou": 0.928575704275129,
+    "correct_at_0.5": true
+  },
+  {
+    "row_idx": 94,
+    "question_id": "581006",
+    "file_name": "COCO_train2014_000000565769.jpg",
+    "expression": "front elephant, are you on mtf?",
+    "all_expressions": [
+      "front elephant, are you on mtf?",
+      "front elephant",
+      "far left ele"
+    ],
+    "bbox_xywh": [
+      0.0,
+      169.08999633789062,
+      338.6600036621094,
+      257.9100036621094
+    ],
+    "ground_truth_xyxy": [
+      0.0,
+      169.08999633789062,
+      338.6600036621094,
+      427.0
+    ],
+    "predicted_xyxy": [
+      0.3125,
+      164.25,
+      348.0,
+      427.75
+    ],
+    "score": 0.09807931631803513,
+    "iou": 0.9516550887691586,
+    "correct_at_0.5": true
+  },
+  {
+    "row_idx": 95,
+    "question_id": "1044595",
+    "file_name": "COCO_train2014_000000565476.jpg",
+    "expression": "The banana in the middle with 2 black dots on the stem",
+    "all_expressions": [
+      "The banana in the middle with 2 black dots on the stem",
+      "middle banana",
+      "the banana in the middle at the top of the image"
+    ],
+    "bbox_xywh": [
+      158.5,
+      0.6399999856948853,
+      225.44000244140625,
+      155.4199981689453
+    ],
+    "ground_truth_xyxy": [
+      158.5,
+      0.6399999856948853,
+      383.94000244140625,
+      156.0599981546402
+    ],
+    "predicted_xyxy": [
+      2.685546875,
+      -2.71484375,
+      361.5,
+      149.625
+    ],
+    "score": 0.19915220141410828,
+    "iou": 0.5086807747803411,
+    "correct_at_0.5": true
+  },
+  {
+    "row_idx": 96,
+    "question_id": "1043529",
+    "file_name": "COCO_train2014_000000565476.jpg",
+    "expression": "banana left/middle",
+    "all_expressions": [
+      "banana left/middle",
+      "left banana",
+      "biggest banana"
+    ],
+    "bbox_xywh": [
+      0.0,
+      2.799999952316284,
+      336.57000732421875,
+      151.32000732421875
+    ],
+    "ground_truth_xyxy": [
+      0.0,
+      2.799999952316284,
+      336.57000732421875,
+      154.12000727653503
+    ],
+    "predicted_xyxy": [
+      2.685546875,
+      -2.71484375,
+      361.5,
+      149.625
+    ],
+    "score": 0.3763938844203949,
+    "iou": 0.8665991711068135,
+    "correct_at_0.5": true
+  },
+  {
+    "row_idx": 97,
+    "question_id": "510506",
+    "file_name": "COCO_train2014_000000565243.jpg",
+    "expression": "man",
+    "all_expressions": [
+      "man",
+      "guy",
+      "MAN"
+    ],
+    "bbox_xywh": [
+      289.4800109863281,
+      1.440000057220459,
+      205.8000030517578,
+      408.25
+    ],
+    "ground_truth_xyxy": [
+      289.4800109863281,
+      1.440000057220459,
+      495.28001403808594,
+      409.69000005722046
+    ],
+    "predicted_xyxy": [
+      257.25,
+      1.146484375,
+      509.0,
+      427.5
+    ],
+    "score": 0.15140382945537567,
+    "iou": 0.7827665210806516,
+    "correct_at_0.5": true
+  },
+  {
+    "row_idx": 98,
+    "question_id": "487758",
+    "file_name": "COCO_train2014_000000565243.jpg",
+    "expression": "woman",
+    "all_expressions": [
+      "woman",
+      "girl",
+      "woman"
+    ],
+    "bbox_xywh": [
+      82.70999908447266,
+      59.150001525878906,
+      377.95001220703125,
+      367.8500061035156
+    ],
+    "ground_truth_xyxy": [
+      82.70999908447266,
+      59.150001525878906,
+      460.6600112915039,
+      427.00000762939453
+    ],
+    "predicted_xyxy": [
+      103.875,
+      60.0625,
+      481.25,
+      427.75
+    ],
+    "score": 0.22507576644420624,
+    "iou": 0.8914027027154636,
+    "correct_at_0.5": true
+  },
+  {
+    "row_idx": 99,
+    "question_id": "1068936",
+    "file_name": "COCO_train2014_000000565220.jpg",
+    "expression": "hot dog on top",
+    "all_expressions": [
+      "hot dog on top",
+      "top dog"
+    ],
+    "bbox_xywh": [
+      3.0399999618530273,
+      15.180000305175781,
+      481.6000061035156,
+      224.61000061035156
+    ],
+    "ground_truth_xyxy": [
+      3.0399999618530273,
+      15.180000305175781,
+      484.64000606536865,
+      239.79000091552734
+    ],
+    "predicted_xyxy": [
+      2.9296875,
+      16.21875,
+      474.75,
+      202.625
+    ],
+    "score": 0.2995148003101349,
+    "iou": 0.8127134196736288,
+    "correct_at_0.5": true
+  }
+]

@@ -1,0 +1,24 @@
+{
+  "dataset": "RefCOCO validation mirror (lmms-lab/RefCOCO)",
+  "protocol": "first 100 region rows; first human expression per region; top-1 box",
+  "model_type": "owlvit",
+  "model": "google/owlvit-base-patch32",
+  "device": "cuda",
+  "samples": 100,
+  "accuracy_at_iou_0.5": 0.56,
+  "accuracy_at_iou_0.75": 0.5,
+  "mean_iou": 0.5134902083290688,
+  "median_iou": 0.7805771792323473,
+  "runtime": {
+    "images": 100,
+    "preprocess_seconds": 1.0678449999977602,
+    "inference_seconds": 2.2054394999686338,
+    "postprocess_seconds": 1.07047360001161,
+    "pipeline_seconds": 4.343758099978004,
+    "inference_ms_per_image": 22.054394999686338,
+    "pipeline_ms_per_image": 43.43758099978004,
+    "inference_fps": 45.342436281485945,
+    "pipeline_fps": 23.021539804554582,
+    "peak_gpu_memory_mb": 332.55712890625
+  }
+}
