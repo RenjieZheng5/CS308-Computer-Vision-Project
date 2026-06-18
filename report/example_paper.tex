@@ -1,0 +1,431 @@
+\documentclass{article}
+
+\usepackage[accepted]{icml2025}
+\usepackage{microtype}
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{url}
+\usepackage{hyperref}
+
+% Keep the ICML author/affiliation metadata, but suppress numeric affiliation
+% markers after author names for this course report.
+\makeatletter
+\renewcommand{\@pa}[1]{%
+  \ifcsname the@affil#1\endcsname
+  \else
+    \stepcounter{@affiliationcounter}%
+    \newcounter{@affil#1}%
+    \setcounter{@affil#1}{\value{@affiliationcounter}}%
+  \fi}
+\makeatother
+
+\newcommand{\safeincludegraphics}[2][]{%
+  \IfFileExists{#2}{\includegraphics[#1]{#2}}{%
+    \fbox{\parbox[c][1.35in][c]{0.9\linewidth}{%
+      \centering Missing figure: \texttt{#2}}}}}
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+
+\icmltitlerunning{Open-Vocabulary Detection and Grounding}
+
+\begin{document}
+
+\twocolumn[
+\icmltitle{A Reproducible Comparison of Open-Vocabulary Object Detection\\
+and Visual Grounding Models}
+
+\begin{icmlauthorlist}
+\icmlauthor{Zheng Renjie}{sustech}
+\icmlauthor{Ling Hongyu}{sustech}
+\icmlauthor{He Jiayang}{sustech}
+\icmlauthor{Deng Haotian}{sustech}
+\end{icmlauthorlist}
+
+\icmlaffiliation{sustech}{Southern University of Science and Technology, Shenzhen, China}
+\icmlcorrespondingauthor{Zheng Renjie}{12412840@mail.sustech.edu.cn}
+
+\icmlkeywords{Open-Vocabulary Object Detection, Visual Grounding, OWL-ViT, Grounding DINO, YOLO-World}
+
+\vskip 0.3in
+]
+
+% Force a compact running head; some XeTeX/Tectonic builds mis-measure the
+% ICML template's title box and otherwise replace it with an error message.
+\fancyhead[C]{\small\bf Open-Vocabulary Detection and Grounding}
+
+\begin{abstract}
+Open-vocabulary object detection replaces a detector's fixed label set with
+arbitrary text prompts, while visual grounding localizes an object described by
+a natural-language expression. We reproduce and compare three representative
+pretrained systems: OWL-ViT Base, Grounding DINO Tiny, and YOLO-World v2 Small.
+All models are evaluated without task-specific fine-tuning on the same
+seeded random subset of 500 COCO val2017 images using the 80 category names as
+prompts. Grounding DINO obtains the best COCO AP of 0.452, compared with 0.394
+for YOLO-World and 0.270 for OWL-ViT. YOLO-World is substantially faster,
+reaching 62.0 pipeline frames per second on an RTX 4060 Laptop GPU, versus 11.6
+for OWL-ViT and 1.5 for Grounding DINO. We additionally evaluate genuine
+referring-expression localization on a 100-expression RefCOCO validation
+subset. Grounding DINO, OWL-ViT, and YOLO-World reach top-1
+Accuracy@IoU$\geq0.5$ of 59\%, 56\%, and 46\%, respectively. Threshold and
+non-maximum suppression ablations show that aggressive filtering improves
+visual clarity but reduces recall and quantitative accuracy. The resulting
+codebase provides reproducible data preparation, evaluation, timing, and
+visualization scripts and exposes a clear accuracy--efficiency trade-off among
+the three model families.
+\end{abstract}
+
+\section{Introduction}
+
+Conventional object detectors predict from a category vocabulary fixed during
+training. Adding a new concept generally requires collecting annotations and
+retraining or fine-tuning the model. Open-vocabulary object detection (OVD)
+instead conditions localization on text, enabling prompts such as ``remote
+control,'' ``the red car,'' or concepts not explicitly represented by a fixed
+output head. Visual grounding is closely related but more demanding: the input
+is often a full referring expression whose attributes and spatial relations
+must identify one instance among several candidates.
+
+This project studies how readily available pretrained models behave under a
+common, reproducible protocol. We compare OWL-ViT
+\citep{minderer2022owlvit}, Grounding DINO \citep{liu2024groundingdino}, and
+YOLO-World \citep{cheng2024yoloworld}. These systems span three useful design
+points: a simple vision-transformer transfer approach, a tightly fused
+language-conditioned transformer detector, and a real-time YOLO-style
+detector.
+
+Our work makes four practical contributions:
+\begin{enumerate}
+  \item a unified evaluation on the same fixed random 500-image COCO subset;
+  \item synchronized runtime and peak GPU-memory measurements;
+  \item a separate RefCOCO experiment that tests phrase-level grounding rather
+  than only category-name detection; and
+  \item threshold and NMS ablations that quantify common deployment choices.
+\end{enumerate}
+We do not claim a new detector. The goal is accurate reproduction, controlled
+comparison, and analysis of when each approach works or fails.
+
+\section{Related Work}
+
+\paragraph{Vision-language pretraining.}
+CLIP learns transferable visual representations by matching images and natural
+language at scale \citep{radford2021clip}. Its shared embedding space makes text
+an effective interface for downstream recognition, but image-level alignment
+does not by itself provide object boxes.
+
+\paragraph{Open-vocabulary detection.}
+OWL-ViT transfers a contrastively pretrained vision transformer to
+text-conditioned detection with minimal architectural changes
+\citep{minderer2022owlvit}. It embeds each prompt and scores image tokens
+against the resulting text features. Grounding DINO builds on transformer
+detection ideas, including DETR \citep{carion2020detr}, and introduces
+language-guided query selection plus cross-modal fusion
+\citep{liu2024groundingdino}. YOLO-World targets real-time operation through a
+re-parameterizable vision-language path aggregation network and a
+prompt-then-detect workflow \citep{cheng2024yoloworld}.
+
+\paragraph{Referring-expression comprehension.}
+RefCOCO and related datasets pair COCO objects with expressions intended to
+distinguish a target from other objects in the same image
+\citep{yu2016referring}. Unlike category detection, success may require color,
+position, attributes, or context. The conventional metric counts a prediction
+as correct when its intersection-over-union (IoU) with the target box exceeds
+0.5.
+
+\section{Approach}
+
+\subsection{Unified Text-Conditioned Pipeline}
+
+Given an image $I$ and prompts $T=\{t_1,\ldots,t_K\}$, each model produces
+candidate boxes, text labels, and confidence scores:
+\begin{equation}
+  f_\theta(I,T) = \{(b_i, \hat{t}_i, s_i)\}_{i=1}^{N}.
+\end{equation}
+We preserve each model's official preprocessing and pretrained weights. No
+training or fine-tuning is performed. Boxes are converted to COCO's
+$(x,y,w,h)$ format and evaluated with \texttt{pycocotools}.
+
+\subsubsection*{OWL-ViT Base}
+We use \texttt{google/owlvit-base-patch32}. For COCO, all 80 category names are
+passed as independent text queries. Predictions below 0.01 are removed and the
+top 100 are retained. Extra NMS is disabled in the main experiment because the
+model's dense hypotheses are already ranked and our ablation showed that
+additional suppression reduced AP.
+
+\subsubsection*{Grounding DINO Tiny}
+We use \texttt{IDEA-Research/grounding-dino-tiny}. COCO class names are joined
+into a period-separated caption. Both box and text thresholds are 0.20, and
+the top 100 matched predictions are retained. The model is evaluated in FP32
+because this configuration was stable on the Windows test environment.
+
+\subsubsection*{YOLO-World v2 Small}
+We use \texttt{yolov8s-worldv2.pt} through the Ultralytics interface
+\citep{jocher2023ultralytics}. The 80 COCO class embeddings are computed before
+inference. Images are resized according to the model's 640-pixel input setting,
+with confidence threshold 0.001, internal NMS IoU 0.7, and at most 100 boxes.
+
+\subsection{Evaluation Metrics}
+
+For COCO detection, we report mean average precision over IoU thresholds
+$0.50{:}0.05{:}0.95$ (AP), AP50, AP75, scale-specific AP, and average recall
+with at most 100 detections (AR100) \citep{lin2014coco}. IoU is
+\begin{equation}
+  \operatorname{IoU}(B,\hat B)=
+  \frac{|B\cap\hat B|}{|B\cup\hat B|}.
+\end{equation}
+
+For RefCOCO, one expression is provided at a time and only the
+highest-scoring box is evaluated. We report
+\begin{equation}
+  \operatorname{Acc@}\tau =
+  \frac{1}{M}\sum_{j=1}^{M}
+  \mathbb{1}\left[\operatorname{IoU}(B_j,\hat B_j)\geq\tau\right]
+\end{equation}
+for $\tau\in\{0.5,0.75\}$, together with mean IoU.
+
+\subsection{Runtime Measurement}
+
+Each model receives one warm-up image that is excluded from timing. CUDA is
+synchronized around preprocessing, inference, and postprocessing for OWL-ViT
+and Grounding DINO. YOLO-World's internal stage timings are accumulated.
+File download and disk image loading are excluded. We report pipeline FPS and
+PyTorch's peak allocated GPU memory. These numbers characterize our specific
+hardware and software configuration rather than universal model speed.
+
+\section{Experimental Setup}
+
+\paragraph{Hardware and software.}
+Experiments run on an NVIDIA GeForce RTX 4060 Laptop GPU with 8 GB VRAM.
+The environment uses Python 3.10, PyTorch 2.11.0 with CUDA 12.8,
+Torchvision 0.26.0, Transformers 5.5.3, Ultralytics 8.4.70, and
+pycocotools 2.0.11.
+
+\paragraph{COCO subset.}
+We sample 500 images without replacement from COCO val2017 using Python's
+fixed random seed 308. The sorted selected image IDs are stored with every
+metrics file, so all models see exactly the same images. The 80 COCO categories
+serve as text prompts. This is more representative than selecting the first
+100 image IDs, but it remains a subset rather than a full COCO validation run.
+
+\paragraph{RefCOCO subset.}
+We use the first 100 region rows exposed by the
+\texttt{lmms-lab/RefCOCO} validation mirror, with original COCO train2014
+images and target boxes. Each row contains two to four human expressions. We
+use the first expression per region to avoid repeatedly weighting the same
+target. This experiment is a small reproducible diagnostic and should not be
+compared directly with results on the complete official RefCOCO validation
+split.
+
+\section{Experimental Results}
+
+\subsection{Open-Vocabulary Detection on COCO}
+
+\begin{table*}[t]
+\caption{Zero-shot detection on the fixed random 500-image COCO val2017
+subset. Best values are bold.}
+\label{tab:coco}
+\centering
+\small
+\begin{tabular}{lrrrrrrrr}
+\toprule
+Model & AP & AP50 & AP75 & AP$_S$ & AP$_M$ & AP$_L$ & AR100 \\
+\midrule
+OWL-ViT Base & 0.270 & 0.428 & 0.287 & 0.134 & 0.303 & 0.454 & 0.487 \\
+Grounding DINO Tiny & \textbf{0.452} & \textbf{0.589} & \textbf{0.498} &
+\textbf{0.325} & \textbf{0.497} & 0.549 & 0.548 \\
+YOLO-World v2 Small & 0.394 & 0.549 & 0.427 & 0.234 & 0.452 &
+\textbf{0.556} & \textbf{0.561} \\
+\bottomrule
+\end{tabular}
+\end{table*}
+
+Table~\ref{tab:coco} and Figure~\ref{fig:coco} show a clear ranking in AP.
+Grounding DINO exceeds YOLO-World by 5.8 AP points and OWL-ViT by 18.2 points.
+Its advantage is largest for small objects: AP$_S$ is 0.325 versus 0.234 and
+0.134. This supports the qualitative observation that small or cluttered
+instances are a major weakness of OWL-ViT. YOLO-World has the highest AR100
+and AP$_L$, indicating strong proposal coverage and localization for larger
+objects, although its lower overall AP suggests more ranking or classification
+errors than Grounding DINO.
+
+\begin{figure}[t]
+  \centering
+  \safeincludegraphics[width=\linewidth]{figures/coco_metrics.pdf}
+  \caption{COCO detection accuracy on the shared 500-image subset.}
+  \label{fig:coco}
+\end{figure}
+
+\subsection{Accuracy--Efficiency Trade-off}
+
+\begin{table}[t]
+\caption{Measured efficiency on the same GPU. Pipeline time excludes disk I/O.}
+\label{tab:efficiency}
+\centering
+\small
+\begin{tabular}{lrrr}
+\toprule
+Model & ms/image & FPS & Peak MB \\
+\midrule
+OWL-ViT Base & 86.6 & 11.6 & 351 \\
+Grounding DINO Tiny & 680.5 & 1.5 & 2356 \\
+YOLO-World v2 Small & \textbf{16.1} & \textbf{62.0} & 716 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+YOLO-World is the practical speed winner (Table~\ref{tab:efficiency} and
+Figure~\ref{fig:efficiency}). It is 5.4 times faster than OWL-ViT and over 42
+times faster than Grounding DINO in pipeline FPS. Grounding DINO uses the most
+memory and is the slowest, but provides the highest AP. OWL-ViT uses the least
+allocated GPU memory, although its accuracy is lowest. Thus no model dominates:
+Grounding DINO is preferable when accuracy is primary, YOLO-World when latency
+is constrained, and OWL-ViT when a simple low-memory transformer baseline is
+desired.
+
+\begin{figure}[t]
+  \centering
+  \safeincludegraphics[width=\linewidth]{figures/efficiency.pdf}
+  \caption{Pipeline throughput and peak allocated GPU memory.}
+  \label{fig:efficiency}
+\end{figure}
+
+\subsection{Referring-Expression Grounding}
+
+\begin{table}[t]
+\caption{Top-1 localization on 100 RefCOCO validation expressions.}
+\label{tab:refcoco}
+\centering
+\small
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{lrrr}
+\toprule
+Model & Acc@0.5 & Acc@0.75 & Mean IoU \\
+\midrule
+OWL-ViT Base & 0.56 & 0.50 & 0.513 \\
+Grounding DINO Tiny & \textbf{0.59} & \textbf{0.56} & \textbf{0.591} \\
+YOLO-World v2 Small & 0.46 & 0.41 & 0.468 \\
+\bottomrule
+\end{tabular}
+}
+\end{table}
+
+Grounding DINO remains strongest on phrase-level localization
+(Table~\ref{tab:refcoco}, Figure~\ref{fig:refcoco}), consistent with its
+explicit cross-modal fusion and grounded pretraining. OWL-ViT is only three
+points behind at IoU 0.5 and remains a competitive zero-shot grounding
+baseline. YOLO-World is faster but loses 13 points relative to Grounding DINO,
+suggesting that longer relational descriptions are harder for its
+efficiency-oriented text-conditioned detector.
+
+\begin{figure}[t]
+  \centering
+  \safeincludegraphics[width=\linewidth]{figures/refcoco_grounding.pdf}
+  \caption{RefCOCO top-1 Accuracy@IoU thresholds.}
+  \label{fig:refcoco}
+\end{figure}
+
+\subsection{Threshold Sensitivity and NMS}
+
+The three model APIs expose differently calibrated scores, so a numerical
+threshold of 0.2 does not have the same meaning across models. We therefore
+vary each threshold only within a model, using saved predictions. As shown in
+Figure~\ref{fig:threshold}, AP and AR decrease monotonically as detections are
+removed. For OWL-ViT, increasing the threshold from 0.01 to 0.20 reduces AP
+from 0.270 to 0.211 and AR100 from 0.487 to 0.265. Grounding DINO drops from
+0.452 to 0.400 AP between 0.20 and 0.40. YOLO-World drops from 0.394 to 0.349
+between 0.001 and 0.25. Higher thresholds can still be useful for uncluttered
+visual demonstrations, but they are harmful when recall matters.
+
+\begin{figure}[t]
+  \centering
+  \safeincludegraphics[width=\linewidth]{figures/threshold_sensitivity.pdf}
+  \caption{Within-model score-threshold sensitivity on the COCO subset.}
+  \label{fig:threshold}
+\end{figure}
+
+We also evaluated class-wise NMS for OWL-ViT on the earlier 100-image subset.
+At NMS IoU 0.5, AP decreased from 0.336 to 0.323 and AR100 from 0.520 to
+0.475. NMS visually removes duplicate boxes, but overlapping hypotheses can be
+valid in crowded scenes. We therefore disable additional NMS for the main
+OWL-ViT quantitative comparison and use it only for selected visualizations.
+
+\subsection{Qualitative Analysis}
+
+Figure~\ref{fig:qualitative} compares representative OWL-ViT and Grounding DINO
+outputs. Both models handle common category nouns and multi-word prompts.
+Grounding DINO generally produces tighter boxes and fewer missed small objects.
+Common failure modes include duplicate low-confidence boxes, confusion between
+nearby objects, failure to resolve spatial relations, and missed small
+accessories. Prompt wording also matters: a broad noun can activate several
+instances, while a detailed expression can either disambiguate the target or
+reduce confidence if its phrasing differs from pretraining language.
+
+\begin{figure*}[t]
+  \centering
+  \begin{subfigure}{0.24\textwidth}
+    \safeincludegraphics[width=\linewidth]{figures/owlvit_workspace.jpg}
+    \caption{OWL-ViT: workspace}
+  \end{subfigure}
+  \begin{subfigure}{0.24\textwidth}
+    \safeincludegraphics[width=\linewidth]{figures/grounding_dino_workspace.jpg}
+    \caption{Grounding DINO}
+  \end{subfigure}
+  \begin{subfigure}{0.24\textwidth}
+    \safeincludegraphics[width=\linewidth]{figures/owlvit_traffic.jpg}
+    \caption{OWL-ViT: traffic}
+  \end{subfigure}
+  \begin{subfigure}{0.24\textwidth}
+    \safeincludegraphics[width=\linewidth]{figures/grounding_dino_traffic.jpg}
+    \caption{Grounding DINO}
+  \end{subfigure}
+  \caption{Qualitative open-vocabulary detections. Display thresholds and NMS
+  are chosen for readability and differ from the quantitative protocol.}
+  \label{fig:qualitative}
+\end{figure*}
+
+\section{Limitations}
+
+First, 500 COCO images reduce computation but produce less stable estimates
+than the full 5,000-image validation set. Although fixed random sampling avoids
+the obvious ordering bias of the original first-100 protocol, subset variance
+remains. Second, COCO's 80 names are likely represented in the models'
+large-scale pretraining data. The experiment therefore measures zero-shot
+transfer without COCO-specific fine-tuning, not guaranteed generalization to
+truly unseen concepts.
+
+Third, the RefCOCO experiment uses only 100 mirrored validation rows and one
+expression per target. A full evaluation should use every official split and
+all expressions. Fourth, score calibration differs across architectures;
+threshold sensitivity is meaningful within a model but cannot fully equalize
+precision--recall operating points across models. Finally, runtime depends on
+software versions, input resolution, precision, and hardware. In particular,
+Grounding DINO was kept in FP32 for stability, while OWL-ViT used FP16 on GPU.
+
+\section{Conclusion}
+
+We reproduced three open-vocabulary detection systems and evaluated them under
+a common protocol. Grounding DINO Tiny provides the best detection and
+grounding accuracy, reaching 0.452 COCO AP and 59\% RefCOCO Acc@0.5.
+YOLO-World v2 Small offers the strongest efficiency--accuracy compromise,
+reaching 0.394 AP at 62.0 pipeline FPS. OWL-ViT is compact and simple but
+trails on COCO, especially for small objects. The experiments also show that
+postprocessing choices are not cosmetic: high confidence thresholds and extra
+NMS can make figures cleaner while reducing AP and recall.
+
+Future work should evaluate the full COCO and RefCOCO splits, add LVIS rare
+categories or self-collected non-COCO objects to better test unseen concepts,
+and compare prompt paraphrases systematically. Calibration or per-model
+precision--recall operating-point selection would also improve deployment
+comparisons.
+
+\section*{Team Contributions}
+
+All four members contributed equally (25\% each).
+
+\bibliography{example_paper}
+\bibliographystyle{icml2025}
+
+\end{document}

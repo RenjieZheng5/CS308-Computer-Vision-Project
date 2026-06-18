@@ -1,191 +1,143 @@
-# CS308 Computer Vision Final Project - Task 4 Baseline
+# Open-Vocabulary Object Detection and Visual Grounding
 
-Topic: Open-Vocabulary Object Detection and Visual Grounding.
+CS308 Computer Vision final project comparing three text-conditioned detectors:
 
-This repo contains a reproducible OWL-ViT baseline for open-vocabulary object
-detection. The pipeline accepts arbitrary text prompts, predicts bounding boxes,
-exports JSON predictions, draws visualizations, and evaluates on a COCO val2017
-subset with standard COCO bbox metrics.
+- OWL-ViT Base (`google/owlvit-base-patch32`)
+- Grounding DINO Tiny (`IDEA-Research/grounding-dino-tiny`)
+- YOLO-World v2 Small (`yolov8s-worldv2.pt`)
 
-It also includes a Grounding DINO tiny comparison model.
+The project contains arbitrary-prompt demos, COCO detection evaluation, RefCOCO
+referring-expression evaluation, threshold and NMS ablations, runtime/VRAM
+benchmarking, visualizations, and an ICML-style LaTeX report.
 
 ## Environment
 
-Current local environment:
-
-- GPU: NVIDIA GeForce RTX 4060 Laptop GPU
-- PyTorch: `2.11.0+cu128`
-- Torchvision: `0.26.0+cu128`
-- CUDA available in PyTorch: `True`
-- Transformers: `5.5.3`
-- Models: `google/owlvit-base-patch32`, `IDEA-Research/grounding-dino-tiny`
-
-Verify GPU:
+The reported experiments used Windows, an NVIDIA RTX 4060 Laptop GPU (8 GB),
+CUDA-enabled PyTorch 2.11.0, and Python 3.10.
 
 ```powershell
-python -c "import torch; print(torch.__version__); print(torch.cuda.is_available()); print(torch.cuda.get_device_name(0) if torch.cuda.is_available() else 'CPU')"
+python -m pip install -r requirements.txt
+python -c "import torch; print(torch.__version__, torch.cuda.is_available(), torch.cuda.get_device_name(0))"
 ```
 
-CUDA PyTorch install command used locally:
+Model weights (`*.pt`), Hugging Face caches, and downloaded datasets are ignored.
+Selected result JSON files and qualitative figures under `outputs/` are kept as
+project artifacts; therefore `outputs/` is not globally ignored.
 
-```powershell
-python -m pip install --force-reinstall --no-cache-dir torch==2.11.0+cu128 torchvision==0.26.0+cu128 --index-url https://download.pytorch.org/whl/cu128
-```
-
-## Single Image Demo
-
-OWL-ViT:
+## Single-image demos
 
 ```powershell
 python scripts\owlvit_demo.py `
   --image-url "http://images.cocodataset.org/val2017/000000039769.jpg" `
   --queries "cat, remote control, couch" `
-  --output-dir outputs\owlvit_demo_gpu
-```
+  --output-dir outputs\owlvit_demo
 
-The script writes:
-
-- `predictions.json`
-- `visualization.jpg`
-
-Grounding DINO:
-
-```powershell
 python scripts\grounding_dino_demo.py `
   --image-url "http://images.cocodataset.org/val2017/000000039769.jpg" `
   --queries "cat, remote control, couch" `
-  --output-dir outputs\grounding_dino_demo_default
+  --output-dir outputs\grounding_dino_demo
 ```
 
-For local COCO images, run the COCO subset evaluation once first. That command
-downloads the annotations and selected images into `data/coco`.
+Each demo writes `predictions.json` and `visualization.jpg`.
 
-For cleaner display after the COCO subset has been downloaded, use score
-thresholding and class-wise NMS:
+## COCO 500-image evaluation
+
+All models use the same fixed random subset of COCO val2017:
+
+- 500 images
+- random seed 308
+- all 80 category names as text prompts
+- at most 100 predictions per image
+- standard COCO bbox AP/AR from `pycocotools`
+- one unmeasured warm-up followed by CUDA-synchronized timing
+
+Prepare the shared subset:
 
 ```powershell
-python scripts\owlvit_demo.py `
-  --image-path data\coco\val2017\000000001503.jpg `
-  --queries "laptop, keyboard, mouse, tv" `
-  --score-threshold 0.12 `
-  --nms-threshold 0.5 `
-  --output-dir outputs\qualitative_clean\workspace
+python scripts\prepare_coco_subset.py `
+  --data-dir data\coco --max-images 500 --sampling random --seed 308 --workers 8
 ```
 
-## COCO Subset Evaluation
-
-`data/` is intentionally not committed. The evaluation script automatically
-downloads the COCO val2017 annotation archive, extracts
-`instances_val2017.json`, and downloads only the images required for the selected
-subset.
+Run the models:
 
 ```powershell
 python scripts\evaluate_coco_owlvit.py `
-  --data-dir data\coco `
-  --output-dir outputs\coco_owlvit_eval_100 `
-  --max-images 100 `
-  --top-k 100
-```
+  --data-dir data\coco --output-dir outputs\coco_owlvit_eval_500_random `
+  --max-images 500 --sampling random --seed 308 `
+  --score-threshold 0.01 --nms-threshold -1 --top-k 100
 
-Grounding DINO comparison:
-
-```powershell
 python scripts\evaluate_coco_grounding_dino.py `
-  --data-dir data\coco `
-  --output-dir outputs\coco_grounding_dino_eval_100 `
-  --max-images 100 `
-  --box-threshold 0.2 `
-  --text-threshold 0.2 `
-  --top-k 100
+  --data-dir data\coco --output-dir outputs\coco_grounding_dino_eval_500_random `
+  --max-images 500 --sampling random --seed 308 `
+  --box-threshold 0.20 --text-threshold 0.20 --top-k 100
+
+python scripts\evaluate_coco_yolo_world.py `
+  --data-dir data\coco --output-dir outputs\coco_yolo_world_eval_500_random `
+  --max-images 500 --sampling random --seed 308 `
+  --confidence 0.001 --iou-threshold 0.7 --top-k 100 --image-size 640
 ```
 
-Current 100-image results:
+Results on the RTX 4060 Laptop GPU:
 
-| Model | AP@[IoU=.50:.95] | AP@0.50 | AP@0.75 | AP small | AP medium | AP large | AR@100 |
-| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| OWL-ViT base | 0.336 | 0.510 | 0.353 | 0.178 | 0.368 | 0.563 | 0.520 |
-| Grounding DINO tiny | 0.468 | 0.601 | 0.498 | 0.274 | 0.526 | 0.634 | 0.536 |
+| Model | AP | AP50 | AP75 | AP small | AP medium | AP large | AR100 | Pipeline FPS | Peak VRAM |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| OWL-ViT Base | 0.270 | 0.428 | 0.287 | 0.134 | 0.303 | 0.454 | 0.487 | 11.6 | 351 MB |
+| Grounding DINO Tiny | **0.452** | **0.589** | **0.498** | **0.325** | **0.497** | 0.549 | 0.548 | 1.5 | 2356 MB |
+| YOLO-World v2 Small | 0.394 | 0.549 | 0.427 | 0.234 | 0.452 | **0.556** | **0.561** | **62.0** | 716 MB |
 
-Full metrics:
+Threshold values are model-specific because the three APIs produce differently
+calibrated scores. They should not be interpreted as equivalent confidence
+levels.
 
-- `outputs/coco_owlvit_eval_100/metrics.json`
-- `outputs/coco_owlvit_eval_100/coco_predictions.json`
-- `outputs/coco_grounding_dino_eval_100/metrics.json`
-- `outputs/coco_grounding_dino_eval_100/coco_predictions.json`
+## RefCOCO grounding evaluation
 
-These output files are also intentionally not committed. Re-run the command
-above to regenerate them.
-
-NMS ablation:
+The grounding experiment uses the first 100 region rows exposed by the
+`lmms-lab/RefCOCO` validation mirror. For each target region, the first human
+referring expression is used as the prompt. The highest-scoring predicted box is
+correct when IoU with the target box is at least 0.5.
 
 ```powershell
-python scripts\evaluate_coco_owlvit.py `
-  --data-dir data\coco `
-  --output-dir outputs\coco_owlvit_eval_100_nms `
-  --max-images 100 `
-  --top-k 100 `
-  --nms-threshold 0.5
+python scripts\evaluate_refcoco.py --model-type owlvit `
+  --output-dir outputs\refcoco_owlvit_eval_100
+python scripts\evaluate_refcoco.py --model-type grounding-dino `
+  --output-dir outputs\refcoco_grounding_dino_eval_100
+python scripts\evaluate_refcoco.py --model-type yolo-world `
+  --output-dir outputs\refcoco_yolo_world_eval_100
 ```
 
-NMS made visualizations cleaner, but on the 100-image subset AP decreased from
-`0.336` to `0.323`, and AR@100 decreased from `0.520` to `0.475`.
+| Model | Accuracy@0.5 | Accuracy@0.75 | Mean IoU |
+| --- | ---: | ---: | ---: |
+| OWL-ViT Base | 0.56 | 0.50 | 0.513 |
+| Grounding DINO Tiny | **0.59** | **0.56** | **0.591** |
+| YOLO-World v2 Small | 0.46 | 0.41 | 0.468 |
 
-## Generated Qualitative Results
+This is a reproducible small-subset diagnostic, not a full RefCOCO leaderboard
+evaluation.
 
-The existing local run generated these clean visualizations for report or
-slides:
+## Ablations and report
 
-- `outputs/qualitative_clean/workspace/visualization.jpg`
-- `outputs/qualitative_clean/traffic/visualization.jpg`
-- `outputs/qualitative_clean/tennis/visualization.jpg`
-- `outputs/qualitative_clean/cat_keyboard/visualization.jpg`
-
-Grounding DINO comparison visualizations:
-
-- `outputs/grounding_dino_qualitative/workspace/visualization.jpg`
-- `outputs/grounding_dino_qualitative/traffic/visualization.jpg`
-- `outputs/grounding_dino_qualitative/tennis/visualization.jpg`
-- `outputs/grounding_dino_qualitative/cat_keyboard/visualization.jpg`
-
-Full 100-image visualized outputs:
-
-- `outputs/coco_owlvit_eval_100_visualized/`
-- `outputs/coco_grounding_dino_eval_100_visualized/`
-
-Regenerate them with:
+Re-evaluate saved detections under different score thresholds:
 
 ```powershell
-python scripts\visualize_coco_predictions.py `
+python scripts\evaluate_threshold_sensitivity.py `
   --annotation-file data\coco\annotations\instances_val2017.json `
-  --image-dir data\coco\val2017 `
-  --predictions outputs\coco_owlvit_eval_100\coco_predictions.json `
-  --output-dir outputs\coco_owlvit_eval_100_visualized `
-  --max-images 100 `
-  --score-threshold 0.20 `
-  --top-k 20
-
-python scripts\visualize_coco_predictions.py `
-  --annotation-file data\coco\annotations\instances_val2017.json `
-  --image-dir data\coco\val2017 `
-  --predictions outputs\coco_grounding_dino_eval_100\coco_predictions.json `
-  --output-dir outputs\coco_grounding_dino_eval_100_visualized `
-  --max-images 100 `
-  --score-threshold 0.20 `
-  --top-k 20
+  --predictions outputs\coco_owlvit_eval_500_random\coco_predictions.json `
+  --metrics outputs\coco_owlvit_eval_500_random\metrics.json `
+  --thresholds 0.01,0.03,0.05,0.10,0.20 `
+  --output outputs\threshold_sensitivity\owlvit.json
 ```
 
-Lower-threshold visualizations for failure analysis:
+The earlier 100-image OWL-ViT NMS ablation is retained under
+`outputs/coco_owlvit_eval_100_nms`: class-wise NMS at IoU 0.5 reduced AP from
+0.336 to 0.323 and AR100 from 0.520 to 0.475.
 
-- `outputs/qualitative_nms/workspace/visualization.jpg`
-- `outputs/qualitative_nms/traffic/visualization.jpg`
-- `outputs/qualitative_nms/tennis/visualization.jpg`
-- `outputs/qualitative_nms/cat_keyboard/visualization.jpg`
+Regenerate report charts and compile the paper:
 
-Report notes are summarized in:
-
-- `report_notes.md`
-
-Because `outputs/` may be ignored in some workflows, regenerate the
-visualizations locally with `scripts/owlvit_demo.py` or
-`scripts/grounding_dino_demo.py` before preparing the final report package. For
-full COCO-subset visualizations, use `scripts/visualize_coco_predictions.py`.
+```powershell
+python scripts\generate_report_figures.py
+cd report
+pdflatex example_paper.tex
+bibtex example_paper
+pdflatex example_paper.tex
+pdflatex example_paper.tex
+```
