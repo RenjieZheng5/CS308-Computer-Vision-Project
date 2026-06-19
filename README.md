@@ -12,17 +12,68 @@ benchmarking, visualizations, and an ICML-style LaTeX report.
 
 ## Environment
 
-The reported experiments used Windows, an NVIDIA RTX 4060 Laptop GPU (8 GB),
-CUDA-enabled PyTorch 2.11.0, and Python 3.10.
+The initial local experiments used Windows, an NVIDIA RTX 4060 Laptop GPU
+(8 GB), CUDA-enabled PyTorch 2.11.0, and Python 3.10.
 
 ```powershell
 python -m pip install -r requirements.txt
 python -c "import torch; print(torch.__version__, torch.cuda.is_available(), torch.cuda.get_device_name(0))"
 ```
 
+For the 4 x TITAN RTX server with NVIDIA driver 550.120 and `nvidia-smi`
+reporting CUDA 12.4, install the CUDA 12.4 PyTorch profile instead:
+
+```bash
+python3.10 -m venv .venv
+source .venv/bin/activate
+python -m pip install --upgrade pip setuptools wheel
+python -m pip install -r requirements-cu124.txt
+python -c "import torch; print(torch.__version__, torch.version.cuda, torch.cuda.is_available(), torch.cuda.device_count(), torch.cuda.get_device_name(0))"
+```
+
+The server should use `requirements-cu124.txt`, not the default `cu128`
+requirements. PyTorch wheels bundle the CUDA runtime, so the local CUDA Toolkit
+is not required for these evaluation scripts as long as the NVIDIA driver is
+compatible.
+
 Model weights (`*.pt`), Hugging Face caches, and downloaded datasets are ignored.
 Selected result JSON files and qualitative figures under `outputs/` are kept as
 project artifacts; therefore `outputs/` is not globally ignored.
+
+## Server rerun variables
+
+Use one shared configuration block when rerunning the full suite on a server:
+
+```bash
+export DATA_ROOT=data
+export OUTPUT_ROOT=outputs/server_2026_06
+export COCO_MAX_IMAGES=500
+export COCO_SAMPLING=random
+export COCO_SEED=308
+export COCO_TOP_K=100
+export REFCOCO_SPLIT=val
+export REFCOCO_MAX_ROWS=0
+export REFCOCO_EXPRESSION_MODE=all
+export IMAGE_SIZE=640
+```
+
+`REFCOCO_MAX_ROWS=0` means the full split. Set it to a small number only for
+smoke tests.
+
+You can run the whole suite with:
+
+```bash
+bash scripts/run_full_suite_server.sh
+```
+
+On the 4-GPU server, the three RefCOCO evaluations can also be run in parallel
+after the COCO runs finish:
+
+```bash
+CUDA_VISIBLE_DEVICES=0 python scripts/evaluate_refcoco.py --model-type grounding-dino --split val --expression-mode all --max-rows 0 --data-dir data/refcoco --refresh-manifest --output-dir outputs/server_2026_06/refcoco_grounding_dino_eval_val_full_all
+CUDA_VISIBLE_DEVICES=1 python scripts/evaluate_refcoco.py --model-type owlvit --split val --expression-mode all --max-rows 0 --data-dir data/refcoco --output-dir outputs/server_2026_06/refcoco_owlvit_eval_val_full_all
+CUDA_VISIBLE_DEVICES=2 python scripts/evaluate_refcoco.py --model-type yolo-world --split val --expression-mode all --max-rows 0 --data-dir data/refcoco --image-size 640 --output-dir outputs/server_2026_06/refcoco_yolo_world_eval_val_full_all
+```
 
 ## Single-image demos
 
@@ -91,28 +142,30 @@ levels.
 
 ## RefCOCO grounding evaluation
 
-The grounding experiment uses the first 100 region rows exposed by the
-`lmms-lab/RefCOCO` validation mirror. For each target region, the first human
-referring expression is used as the prompt. The highest-scoring predicted box is
-correct when IoU with the target box is at least 0.5.
+The grounding experiment now defaults to the full `lmms-lab/RefCOCO` `val`
+split and evaluates all referring expressions attached to each region row. The
+highest-scoring predicted box is correct when IoU with the target box is at
+least 0.5.
 
 ```powershell
 python scripts\evaluate_refcoco.py --model-type owlvit `
-  --output-dir outputs\refcoco_owlvit_eval_100
+  --split val --expression-mode all `
+  --output-dir outputs\refcoco_owlvit_eval_val_full_all
 python scripts\evaluate_refcoco.py --model-type grounding-dino `
-  --output-dir outputs\refcoco_grounding_dino_eval_100
+  --split val --expression-mode all `
+  --output-dir outputs\refcoco_grounding_dino_eval_val_full_all
 python scripts\evaluate_refcoco.py --model-type yolo-world `
-  --output-dir outputs\refcoco_yolo_world_eval_100
+  --split val --expression-mode all `
+  --output-dir outputs\refcoco_yolo_world_eval_val_full_all
 ```
 
-| Model | Accuracy@0.5 | Accuracy@0.75 | Mean IoU |
-| --- | ---: | ---: | ---: |
-| OWL-ViT Base | 0.56 | 0.50 | 0.513 |
-| Grounding DINO Tiny | **0.59** | **0.56** | **0.591** |
-| YOLO-World v2 Small | 0.46 | 0.41 | 0.468 |
+Use `--max-rows 100` for a quick debug run if you do not want to wait for the
+full split.
 
-This is a reproducible small-subset diagnostic, not a full RefCOCO leaderboard
-evaluation.
+The refreshed full-split results will be written to
+`outputs/refcoco_*_eval_val_full_all/metrics.json` and should replace the
+earlier 100-row diagnostic numbers in the report once the server rerun
+finishes.
 
 ## Ablations and report
 

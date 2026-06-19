@@ -1,7 +1,6 @@
 import argparse
 import json
 import re
-import subprocess
 import time
 from pathlib import Path
 
@@ -19,10 +18,9 @@ from ultralytics import YOLOWorld
 from coco_eval_utils import RuntimeTracker
 
 
-REFCOCO_ROWS_URL = (
-    "https://datasets-server.huggingface.co/first-rows"
-    "?dataset=lmms-lab%2FRefCOCO&config=default&split=val"
-)
+REFCOCO_DATASET = "lmms-lab/RefCOCO"
+REFCOCO_CONFIG = "default"
+REFCOCO_ROWS_URL = "https://datasets-server.huggingface.co/rows"
 OWL_MODEL = "google/owlvit-base-patch32"
 GROUNDING_DINO_MODEL = "IDEA-Research/grounding-dino-tiny"
 YOLO_WORLD_MODEL = "yolov8s-worldv2.pt"
@@ -32,10 +30,13 @@ def download_file(url: str, target: Path, retries: int = 5) -> None:
     target.parent.mkdir(parents=True, exist_ok=True)
     if target.exists():
         return
+
     temporary = target.with_suffix(target.suffix + ".tmp")
     last_error = None
     for attempt in range(1, retries + 1):
         try:
+            if temporary.exists():
+                temporary.unlink()
             with requests.get(url, stream=True, timeout=60) as response:
                 response.raise_for_status()
                 with temporary.open("wb") as handle:
@@ -46,29 +47,68 @@ def download_file(url: str, target: Path, retries: int = 5) -> None:
             return
         except requests.RequestException as error:
             last_error = error
-            temporary.unlink(missing_ok=True)
-            time.sleep(2 * attempt)
+            if attempt < retries:
+                time.sleep(2 * attempt)
     raise RuntimeError(f"Failed to download {url}") from last_error
 
 
-def ensure_manifest(path: Path) -> Path:
-    if path.exists():
+def fetch_rows_page(split: str, offset: int, length: int, retries: int = 5) -> list[dict]:
+    last_error = None
+    for attempt in range(1, retries + 1):
+        try:
+            response = requests.get(
+                REFCOCO_ROWS_URL,
+                params={
+                    "dataset": REFCOCO_DATASET,
+                    "config": REFCOCO_CONFIG,
+                    "split": split,
+                    "offset": offset,
+                    "length": length,
+                },
+                timeout=60,
+            )
+            response.raise_for_status()
+            payload = response.json()
+            return payload.get("rows", [])
+        except (requests.RequestException, ValueError) as error:
+            last_error = error
+            if attempt < retries:
+                time.sleep(2 * attempt)
+    raise RuntimeError(
+        f"Failed to fetch RefCOCO rows for split '{split}' at offset {offset}"
+    ) from last_error
+
+
+def ensure_manifest(path: Path, split: str, page_size: int, refresh: bool = False) -> Path:
+    if path.exists() and not refresh:
         return path
+
     path.parent.mkdir(parents=True, exist_ok=True)
-    command = [
-        "curl.exe",
-        "--http1.1",
-        "-L",
-        "--retry",
-        "10",
-        "--retry-all-errors",
-        "--retry-delay",
-        "2",
-        REFCOCO_ROWS_URL,
-        "-o",
-        str(path),
-    ]
-    subprocess.run(command, check=True)
+    rows: list[dict] = []
+    offset = 0
+
+    while True:
+        page_rows = fetch_rows_page(split=split, offset=offset, length=page_size)
+        if not page_rows:
+            break
+        rows.extend(page_rows)
+        if len(page_rows) < page_size:
+            break
+        offset += len(page_rows)
+
+    if not rows:
+        raise RuntimeError(
+            f"No RefCOCO rows were fetched for split '{split}'. Check network access."
+        )
+
+    manifest = {
+        "dataset": REFCOCO_DATASET,
+        "config": REFCOCO_CONFIG,
+        "split": split,
+        "row_count": len(rows),
+        "rows": rows,
+    }
+    path.write_text(json.dumps(manifest, indent=2), encoding="utf-8")
     return path
 
 
@@ -79,24 +119,71 @@ def coco_file_name(refcoco_name: str) -> str:
     return f"COCO_train2014_{match.group(1)}.jpg"
 
 
-def load_samples(manifest_path: Path, max_samples: int) -> list[dict]:
+def normalize_expressions(raw_expression) -> list[str]:
+    if raw_expression is None:
+        return []
+    if isinstance(raw_expression, str):
+        values = [raw_expression]
+    else:
+        values = list(raw_expression)
+    expressions = []
+    for value in values:
+        text = str(value).strip()
+        if text:
+            expressions.append(text)
+    return expressions
+
+
+def load_samples(
+    manifest_path: Path, max_rows: int, expression_mode: str
+) -> tuple[list[dict], dict]:
     payload = json.loads(manifest_path.read_text(encoding="utf-8"))
-    rows = payload["rows"][:max_samples]
-    samples = []
+    rows = payload["rows"]
+    if max_rows > 0:
+        rows = rows[:max_rows]
+
+    samples: list[dict] = []
+    total_expressions = 0
+    skipped_rows = 0
+
     for item in rows:
         row = item["row"]
         file_name = coco_file_name(row["file_name"])
-        samples.append(
-            {
-                "row_idx": item["row_idx"],
-                "question_id": row["question_id"],
-                "file_name": file_name,
-                "expression": row["answer"][0],
-                "all_expressions": row["answer"],
-                "bbox_xywh": [float(value) for value in row["bbox"]],
-            }
+        expressions = normalize_expressions(
+            row.get("answer")
+            or row.get("answers")
+            or row.get("expressions")
+            or row.get("sentences")
         )
-    return samples
+        if expression_mode == "first":
+            expressions = expressions[:1]
+        if not expressions:
+            skipped_rows += 1
+            continue
+
+        total_expressions += len(expressions)
+        bbox_xywh = [float(value) for value in row["bbox"]]
+        for expression_idx, expression in enumerate(expressions):
+            samples.append(
+                {
+                    "row_idx": item["row_idx"],
+                    "question_id": row["question_id"],
+                    "expression_idx": expression_idx,
+                    "expression": expression,
+                    "all_expressions": expressions,
+                    "file_name": file_name,
+                    "bbox_xywh": bbox_xywh,
+                }
+            )
+
+    metadata = {
+        "row_count": len(rows),
+        "sample_count": len(samples),
+        "expression_mode": expression_mode,
+        "rows_skipped_without_expressions": skipped_rows,
+        "mean_expressions_per_row": total_expressions / max(len(rows) - skipped_rows, 1),
+    }
+    return samples, metadata
 
 
 def ensure_image(sample: dict, image_dir: Path) -> Path:
@@ -132,10 +219,7 @@ def top_owlvit_box(processor, model, image, expression, device, tracker):
             ).items()
         },
     )
-    outputs = tracker.measure(
-        "inference",
-        lambda: model(**inputs),
-    )
+    outputs = tracker.measure("inference", lambda: model(**inputs))
 
     def postprocess():
         target_sizes = torch.tensor([image.size[::-1]], device=device)
@@ -224,7 +308,7 @@ def top_yolo_world_box(model, image, expression, device, image_size):
 
 def main() -> None:
     parser = argparse.ArgumentParser(
-        description="Evaluate top-1 referring-expression localization on 100 RefCOCO val regions."
+        description="Evaluate referring-expression localization on a RefCOCO split."
     )
     parser.add_argument(
         "--model-type",
@@ -234,7 +318,32 @@ def main() -> None:
     parser.add_argument("--model")
     parser.add_argument("--data-dir", default="data/refcoco")
     parser.add_argument("--output-dir")
-    parser.add_argument("--max-samples", type=int, default=100)
+    parser.add_argument("--split", default="val")
+    parser.add_argument(
+        "--max-rows",
+        "--max-samples",
+        dest="max_rows",
+        type=int,
+        default=0,
+        help="Limit the number of RefCOCO region rows. 0 means the full split.",
+    )
+    parser.add_argument(
+        "--expression-mode",
+        choices=["all", "first"],
+        default="all",
+        help="Evaluate all referring expressions per row, or only the first one.",
+    )
+    parser.add_argument(
+        "--manifest-path",
+        help="Optional cache path for the downloaded RefCOCO rows manifest.",
+    )
+    parser.add_argument(
+        "--page-size",
+        type=int,
+        default=1000,
+        help="Number of rows to fetch per datasets-server request.",
+    )
+    parser.add_argument("--refresh-manifest", action="store_true")
     parser.add_argument("--image-size", type=int, default=640)
     args = parser.parse_args()
 
@@ -246,14 +355,32 @@ def main() -> None:
     model_name = args.model or defaults[args.model_type]
     data_dir = Path(args.data_dir)
     image_dir = data_dir / "train2014"
+    manifest_path = Path(
+        args.manifest_path or data_dir / f"refcoco_{args.split}_rows.json"
+    )
+    row_tag = "full" if args.max_rows <= 0 else f"rows{args.max_rows}"
     output_dir = Path(
-        args.output_dir or f"outputs/refcoco_{args.model_type}_eval_100"
+        args.output_dir
+        or f"outputs/refcoco_{args.model_type}_eval_{args.split}_{row_tag}_{args.expression_mode}"
     )
     image_dir.mkdir(parents=True, exist_ok=True)
     output_dir.mkdir(parents=True, exist_ok=True)
 
-    manifest_path = ensure_manifest(data_dir / "refcoco_val_first_rows.json")
-    samples = load_samples(manifest_path, args.max_samples)
+    ensure_manifest(
+        manifest_path,
+        split=args.split,
+        page_size=args.page_size,
+        refresh=args.refresh_manifest,
+    )
+    samples, sample_metadata = load_samples(
+        manifest_path, args.max_rows, args.expression_mode
+    )
+    if not samples:
+        raise RuntimeError(
+            "No RefCOCO evaluation samples were loaded. "
+            "Check the split and expression parsing."
+        )
+
     for sample in tqdm(samples, desc="downloading RefCOCO images"):
         ensure_image(sample, image_dir)
 
@@ -328,18 +455,27 @@ def main() -> None:
 
     ious = [item["iou"] for item in predictions]
     metrics = {
-        "dataset": "RefCOCO validation mirror (lmms-lab/RefCOCO)",
-        "protocol": "first 100 region rows; first human expression per region; top-1 box",
+        "dataset": f"RefCOCO {args.split} split ({REFCOCO_DATASET})",
+        "protocol": (
+            "all region rows" if args.max_rows <= 0 else f"first {args.max_rows} region rows"
+        )
+        + f"; expression mode={args.expression_mode}; top-1 box",
         "model_type": args.model_type,
         "model": model_name,
         "device": device,
         "samples": len(predictions),
+        "rows": sample_metadata["row_count"],
+        "mean_expressions_per_row": sample_metadata["mean_expressions_per_row"],
+        "rows_skipped_without_expressions": sample_metadata[
+            "rows_skipped_without_expressions"
+        ],
         "accuracy_at_iou_0.5": sum(iou >= 0.5 for iou in ious) / len(ious),
         "accuracy_at_iou_0.75": sum(iou >= 0.75 for iou in ious) / len(ious),
         "mean_iou": sum(ious) / len(ious),
         "median_iou": sorted(ious)[len(ious) // 2],
         "runtime": tracker.summary(),
     }
+
     (output_dir / "predictions.json").write_text(
         json.dumps(predictions, indent=2), encoding="utf-8"
     )

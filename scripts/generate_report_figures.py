@@ -1,4 +1,5 @@
 import json
+import os
 from pathlib import Path
 
 import matplotlib.pyplot as plt
@@ -6,14 +7,27 @@ import numpy as np
 
 
 ROOT = Path(__file__).resolve().parents[1]
-OUTPUT = ROOT / "outputs"
+OUTPUT = Path(os.environ.get("OUTPUT_ROOT", ROOT / "outputs"))
 FIGURES = ROOT / "report" / "figures"
 COLORS = ["#4C78A8", "#F58518", "#54A24B"]
 MODELS = ["OWL-ViT", "Grounding DINO", "YOLO-World"]
+COCO_MAX_IMAGES = os.environ.get("COCO_MAX_IMAGES", "500")
+COCO_SAMPLING = os.environ.get("COCO_SAMPLING", "random")
+COCO_SEED = os.environ.get("COCO_SEED")
+REFCOCO_SPLIT = os.environ.get("REFCOCO_SPLIT", "val")
+REFCOCO_MAX_ROWS = os.environ.get("REFCOCO_MAX_ROWS", "0")
+REFCOCO_EXPRESSION_MODE = os.environ.get("REFCOCO_EXPRESSION_MODE", "all")
 
 
 def load(path: Path) -> dict:
     return json.loads(path.read_text(encoding="utf-8"))
+
+
+def first_existing(paths: list[Path]) -> Path:
+    for path in paths:
+        if path.exists():
+            return path
+    return paths[0]
 
 
 def save(figure, name: str) -> None:
@@ -36,10 +50,24 @@ def add_labels(axis, bars, fmt="{:.3f}") -> None:
 
 
 def main() -> None:
+    coco_base = f"{COCO_MAX_IMAGES}_{COCO_SAMPLING}"
+    coco_tags = [coco_base]
+    if COCO_SEED:
+        coco_tags.insert(0, f"{coco_base}_seed{COCO_SEED}")
+
+    ref_row_tag = "full" if int(REFCOCO_MAX_ROWS) <= 0 else f"rows{REFCOCO_MAX_ROWS}"
+    refcoco_tag = f"{REFCOCO_SPLIT}_{ref_row_tag}_{REFCOCO_EXPRESSION_MODE}"
+
     coco_paths = [
-        OUTPUT / "coco_owlvit_eval_500_random" / "metrics.json",
-        OUTPUT / "coco_grounding_dino_eval_500_random" / "metrics.json",
-        OUTPUT / "coco_yolo_world_eval_500_random" / "metrics.json",
+        first_existing(
+            [OUTPUT / f"coco_owlvit_eval_{tag}" / "metrics.json" for tag in coco_tags]
+        ),
+        first_existing(
+            [OUTPUT / f"coco_grounding_dino_eval_{tag}" / "metrics.json" for tag in coco_tags]
+        ),
+        first_existing(
+            [OUTPUT / f"coco_yolo_world_eval_{tag}" / "metrics.json" for tag in coco_tags]
+        ),
     ]
     coco = [load(path) for path in coco_paths]
 
@@ -76,9 +104,9 @@ def main() -> None:
     save(figure, "efficiency")
 
     grounding_paths = [
-        OUTPUT / "refcoco_owlvit_eval_100" / "metrics.json",
-        OUTPUT / "refcoco_grounding_dino_eval_100" / "metrics.json",
-        OUTPUT / "refcoco_yolo_world_eval_100" / "metrics.json",
+        OUTPUT / f"refcoco_owlvit_eval_{refcoco_tag}" / "metrics.json",
+        OUTPUT / f"refcoco_grounding_dino_eval_{refcoco_tag}" / "metrics.json",
+        OUTPUT / f"refcoco_yolo_world_eval_{refcoco_tag}" / "metrics.json",
     ]
     grounding = [load(path) for path in grounding_paths]
     x = np.arange(3)
