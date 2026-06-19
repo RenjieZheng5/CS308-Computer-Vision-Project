@@ -48,9 +48,9 @@ else
   REF_ROWS_TAG="rows${REFCOCO_MAX_ROWS}"
 fi
 REFCOCO_TAG="${REFCOCO_SPLIT}_${REF_ROWS_TAG}_${REFCOCO_EXPRESSION_MODE}"
-REFCOCO_REFRESH_FLAG=()
+REFCOCO_REFRESH_ARG=""
 if [[ "${REFCOCO_REFRESH_MANIFEST}" -ne 0 ]]; then
-  REFCOCO_REFRESH_FLAG+=(--refresh-manifest)
+  REFCOCO_REFRESH_ARG="--refresh-manifest"
 fi
 
 mkdir -p "${OUTPUT_ROOT}" "${LOG_ROOT}" "${OUTPUT_ROOT}/threshold_sensitivity"
@@ -150,7 +150,7 @@ run_gpu_job_if_missing 3 "refcoco_grounding_dino_${REFCOCO_TAG}" \
     --split "${REFCOCO_SPLIT}" \
     --max-rows "${REFCOCO_MAX_ROWS}" \
     --expression-mode "${REFCOCO_EXPRESSION_MODE}" \
-    "${REFCOCO_REFRESH_FLAG[@]}" \
+    ${REFCOCO_REFRESH_ARG} \
     --output-dir "${OUTPUT_ROOT}/refcoco_grounding_dino_eval_${REFCOCO_TAG}"
 
 wait_for_jobs

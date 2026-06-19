@@ -89,9 +89,9 @@ python scripts/evaluate_coco_yolo_world.py \
   --image-size "${IMAGE_SIZE}"
 
 echo "Running full RefCOCO evaluations..."
-REFCOCO_REFRESH_FLAG=()
+REFCOCO_REFRESH_ARG=""
 if [[ "${REFCOCO_REFRESH_MANIFEST}" -ne 0 ]]; then
-  REFCOCO_REFRESH_FLAG+=(--refresh-manifest)
+  REFCOCO_REFRESH_ARG="--refresh-manifest"
 fi
 python scripts/evaluate_refcoco.py \
   --model-type owlvit \
@@ -99,7 +99,7 @@ python scripts/evaluate_refcoco.py \
   --split "${REFCOCO_SPLIT}" \
   --max-rows "${REFCOCO_MAX_ROWS}" \
   --expression-mode "${REFCOCO_EXPRESSION_MODE}" \
-  "${REFCOCO_REFRESH_FLAG[@]}" \
+  ${REFCOCO_REFRESH_ARG} \
   --output-dir "${OUTPUT_ROOT}/refcoco_owlvit_eval_${REFCOCO_TAG}"
 
 python scripts/evaluate_refcoco.py \

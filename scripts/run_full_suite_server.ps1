@@ -62,6 +62,7 @@ $env:IMAGE_SIZE = "$ImageSize"
 $env:REFCOCO_SPLIT = $RefCocoSplit
 $env:REFCOCO_MAX_ROWS = "$RefCocoMaxRows"
 $env:REFCOCO_EXPRESSION_MODE = $RefCocoExpressionMode
+$env:REFCOCO_REFRESH_MANIFEST = "0"
 
 Write-Host "Preparing COCO images..."
 Invoke-Python @(
@@ -121,7 +122,6 @@ Invoke-Python @(
     "--split", $RefCocoSplit,
     "--max-rows", "$RefCocoMaxRows",
     "--expression-mode", $RefCocoExpressionMode,
-    $(if ($env:REFCOCO_REFRESH_MANIFEST -ne "0") { "--refresh-manifest" } else { $null }),
     "--output-dir", (Join-Path $OutputRoot ("refcoco_owlvit_eval_{0}" -f $RefCocoTag))
 )
 Invoke-Python @(
