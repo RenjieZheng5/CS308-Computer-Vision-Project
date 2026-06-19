@@ -54,6 +54,9 @@ def download_file(url: str, target: Path, retries: int = 5) -> None:
 
 def fetch_rows_page(split: str, offset: int, length: int, retries: int = 5) -> list[dict]:
     last_error = None
+    last_url = ""
+    last_status = ""
+    last_body = ""
     for attempt in range(1, retries + 1):
         try:
             response = requests.get(
@@ -67,6 +70,9 @@ def fetch_rows_page(split: str, offset: int, length: int, retries: int = 5) -> l
                 },
                 timeout=60,
             )
+            last_url = response.url
+            last_status = str(response.status_code)
+            last_body = response.text[:500]
             response.raise_for_status()
             payload = response.json()
             return payload.get("rows", [])
@@ -75,7 +81,9 @@ def fetch_rows_page(split: str, offset: int, length: int, retries: int = 5) -> l
             if attempt < retries:
                 time.sleep(2 * attempt)
     raise RuntimeError(
-        f"Failed to fetch RefCOCO rows for split '{split}' at offset {offset}"
+        "Failed to fetch RefCOCO rows "
+        f"for split '{split}' at offset {offset}, length {length}. "
+        f"Last status={last_status}, url={last_url}, body={last_body}"
     ) from last_error
 
 
@@ -340,7 +348,7 @@ def main() -> None:
     parser.add_argument(
         "--page-size",
         type=int,
-        default=1000,
+        default=100,
         help="Number of rows to fetch per datasets-server request.",
     )
     parser.add_argument("--refresh-manifest", action="store_true")

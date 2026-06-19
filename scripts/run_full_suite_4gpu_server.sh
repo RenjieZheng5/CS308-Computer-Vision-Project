@@ -59,6 +59,18 @@ run_gpu_job() {
   echo "$! ${name}" >>"${LOG_ROOT}/pids.txt"
 }
 
+run_gpu_job_if_missing() {
+  local gpu="$1"
+  local name="$2"
+  local done_path="$3"
+  shift 3
+  if [[ -s "${done_path}" ]]; then
+    echo "Skipping ${name}; found ${done_path}"
+    return
+  fi
+  run_gpu_job "${gpu}" "${name}" "$@"
+}
+
 wait_for_jobs() {
   local status=0
   while read -r pid name; do
@@ -87,7 +99,8 @@ python scripts/prepare_coco_subset.py \
   --workers "${SUBSET_WORKERS}"
 
 echo "Batch 1: full COCO evaluations plus RefCOCO Grounding DINO."
-run_gpu_job 0 "coco_grounding_dino_${COCO_TAG}" \
+run_gpu_job_if_missing 0 "coco_grounding_dino_${COCO_TAG}" \
+  "${OUTPUT_ROOT}/coco_grounding_dino_eval_${COCO_TAG}/metrics.json" \
   python scripts/evaluate_coco_grounding_dino.py \
     --data-dir "${COCO_DATA_DIR}" \
     --output-dir "${OUTPUT_ROOT}/coco_grounding_dino_eval_${COCO_TAG}" \
@@ -98,7 +111,8 @@ run_gpu_job 0 "coco_grounding_dino_${COCO_TAG}" \
     --text-threshold "${GROUNDING_TEXT_THRESHOLD}" \
     --top-k "${COCO_TOP_K}"
 
-run_gpu_job 1 "coco_owlvit_${COCO_TAG}" \
+run_gpu_job_if_missing 1 "coco_owlvit_${COCO_TAG}" \
+  "${OUTPUT_ROOT}/coco_owlvit_eval_${COCO_TAG}/metrics.json" \
   python scripts/evaluate_coco_owlvit.py \
     --data-dir "${COCO_DATA_DIR}" \
     --output-dir "${OUTPUT_ROOT}/coco_owlvit_eval_${COCO_TAG}" \
@@ -109,7 +123,8 @@ run_gpu_job 1 "coco_owlvit_${COCO_TAG}" \
     --nms-threshold "${OWL_NMS_THRESHOLD}" \
     --top-k "${COCO_TOP_K}"
 
-run_gpu_job 2 "coco_yolo_world_${COCO_TAG}" \
+run_gpu_job_if_missing 2 "coco_yolo_world_${COCO_TAG}" \
+  "${OUTPUT_ROOT}/coco_yolo_world_eval_${COCO_TAG}/metrics.json" \
   python scripts/evaluate_coco_yolo_world.py \
     --data-dir "${COCO_DATA_DIR}" \
     --output-dir "${OUTPUT_ROOT}/coco_yolo_world_eval_${COCO_TAG}" \
@@ -121,7 +136,8 @@ run_gpu_job 2 "coco_yolo_world_${COCO_TAG}" \
     --top-k "${COCO_TOP_K}" \
     --image-size "${IMAGE_SIZE}"
 
-run_gpu_job 3 "refcoco_grounding_dino_${REFCOCO_TAG}" \
+run_gpu_job_if_missing 3 "refcoco_grounding_dino_${REFCOCO_TAG}" \
+  "${OUTPUT_ROOT}/refcoco_grounding_dino_eval_${REFCOCO_TAG}/metrics.json" \
   python scripts/evaluate_refcoco.py \
     --model-type grounding-dino \
     --data-dir "${REFCOCO_DATA_DIR}" \
@@ -134,7 +150,8 @@ run_gpu_job 3 "refcoco_grounding_dino_${REFCOCO_TAG}" \
 wait_for_jobs
 
 echo "Batch 2: remaining RefCOCO evaluations and OWL-ViT NMS ablation."
-run_gpu_job 0 "refcoco_owlvit_${REFCOCO_TAG}" \
+run_gpu_job_if_missing 0 "refcoco_owlvit_${REFCOCO_TAG}" \
+  "${OUTPUT_ROOT}/refcoco_owlvit_eval_${REFCOCO_TAG}/metrics.json" \
   python scripts/evaluate_refcoco.py \
     --model-type owlvit \
     --data-dir "${REFCOCO_DATA_DIR}" \
@@ -143,7 +160,8 @@ run_gpu_job 0 "refcoco_owlvit_${REFCOCO_TAG}" \
     --expression-mode "${REFCOCO_EXPRESSION_MODE}" \
     --output-dir "${OUTPUT_ROOT}/refcoco_owlvit_eval_${REFCOCO_TAG}"
 
-run_gpu_job 1 "refcoco_yolo_world_${REFCOCO_TAG}" \
+run_gpu_job_if_missing 1 "refcoco_yolo_world_${REFCOCO_TAG}" \
+  "${OUTPUT_ROOT}/refcoco_yolo_world_eval_${REFCOCO_TAG}/metrics.json" \
   python scripts/evaluate_refcoco.py \
     --model-type yolo-world \
     --data-dir "${REFCOCO_DATA_DIR}" \
@@ -153,7 +171,8 @@ run_gpu_job 1 "refcoco_yolo_world_${REFCOCO_TAG}" \
     --image-size "${IMAGE_SIZE}" \
     --output-dir "${OUTPUT_ROOT}/refcoco_yolo_world_eval_${REFCOCO_TAG}"
 
-run_gpu_job 2 "coco_owlvit_100_nms" \
+run_gpu_job_if_missing 2 "coco_owlvit_100_nms" \
+  "${OUTPUT_ROOT}/coco_owlvit_eval_100_nms/metrics.json" \
   python scripts/evaluate_coco_owlvit.py \
     --data-dir "${COCO_DATA_DIR}" \
     --output-dir "${OUTPUT_ROOT}/coco_owlvit_eval_100_nms" \
