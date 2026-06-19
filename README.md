@@ -47,7 +47,7 @@ Use one shared configuration block when rerunning the full suite on a server:
 ```bash
 export DATA_ROOT=data
 export OUTPUT_ROOT=outputs/server_2026_06
-export COCO_MAX_IMAGES=500
+export COCO_MAX_IMAGES=0
 export COCO_SAMPLING=random
 export COCO_SEED=308
 export COCO_TOP_K=100
@@ -57,22 +57,27 @@ export REFCOCO_EXPRESSION_MODE=all
 export IMAGE_SIZE=640
 ```
 
+`COCO_MAX_IMAGES=0` means the full COCO val2017 split. Set it to `500` only
+when reproducing the earlier diagnostic subset.
+
 `REFCOCO_MAX_ROWS=0` means the full split. Set it to a small number only for
 smoke tests.
 
-You can run the whole suite with:
+On the 4-GPU server, run the formal full-suite rerun with:
+
+```bash
+bash scripts/run_full_suite_4gpu_server.sh
+```
+
+The script schedules full COCO val2017 detection for all three models, full
+RefCOCO val grounding for all three models, threshold sensitivity, the OWL-ViT
+NMS ablation, and report figure generation. Logs are written under
+`logs/server_2026_06`.
+
+You can also run the same suite serially with:
 
 ```bash
 bash scripts/run_full_suite_server.sh
-```
-
-On the 4-GPU server, the three RefCOCO evaluations can also be run in parallel
-after the COCO runs finish:
-
-```bash
-CUDA_VISIBLE_DEVICES=0 python scripts/evaluate_refcoco.py --model-type grounding-dino --split val --expression-mode all --max-rows 0 --data-dir data/refcoco --refresh-manifest --output-dir outputs/server_2026_06/refcoco_grounding_dino_eval_val_full_all
-CUDA_VISIBLE_DEVICES=1 python scripts/evaluate_refcoco.py --model-type owlvit --split val --expression-mode all --max-rows 0 --data-dir data/refcoco --output-dir outputs/server_2026_06/refcoco_owlvit_eval_val_full_all
-CUDA_VISIBLE_DEVICES=2 python scripts/evaluate_refcoco.py --model-type yolo-world --split val --expression-mode all --max-rows 0 --data-dir data/refcoco --image-size 640 --output-dir outputs/server_2026_06/refcoco_yolo_world_eval_val_full_all
 ```
 
 ## Single-image demos
@@ -91,44 +96,44 @@ python scripts\grounding_dino_demo.py `
 
 Each demo writes `predictions.json` and `visualization.jpg`.
 
-## COCO 500-image evaluation
+## COCO evaluation
 
-All models use the same fixed random subset of COCO val2017:
+The formal server rerun evaluates all models on the full COCO val2017 split:
 
-- 500 images
-- random seed 308
+- all 5000 val2017 images
 - all 80 category names as text prompts
 - at most 100 predictions per image
 - standard COCO bbox AP/AR from `pycocotools`
 - one unmeasured warm-up followed by CUDA-synchronized timing
 
-Prepare the shared subset:
+Prepare the full split:
 
 ```powershell
 python scripts\prepare_coco_subset.py `
-  --data-dir data\coco --max-images 500 --sampling random --seed 308 --workers 8
+  --data-dir data\coco --max-images 0 --sampling random --seed 308 --workers 16
 ```
 
 Run the models:
 
 ```powershell
 python scripts\evaluate_coco_owlvit.py `
-  --data-dir data\coco --output-dir outputs\coco_owlvit_eval_500_random `
-  --max-images 500 --sampling random --seed 308 `
+  --data-dir data\coco --output-dir outputs\coco_owlvit_eval_full_val2017 `
+  --max-images 0 --sampling random --seed 308 `
   --score-threshold 0.01 --nms-threshold -1 --top-k 100
 
 python scripts\evaluate_coco_grounding_dino.py `
-  --data-dir data\coco --output-dir outputs\coco_grounding_dino_eval_500_random `
-  --max-images 500 --sampling random --seed 308 `
+  --data-dir data\coco --output-dir outputs\coco_grounding_dino_eval_full_val2017 `
+  --max-images 0 --sampling random --seed 308 `
   --box-threshold 0.20 --text-threshold 0.20 --top-k 100
 
 python scripts\evaluate_coco_yolo_world.py `
-  --data-dir data\coco --output-dir outputs\coco_yolo_world_eval_500_random `
-  --max-images 500 --sampling random --seed 308 `
+  --data-dir data\coco --output-dir outputs\coco_yolo_world_eval_full_val2017 `
+  --max-images 0 --sampling random --seed 308 `
   --confidence 0.001 --iou-threshold 0.7 --top-k 100 --image-size 640
 ```
 
-Results on the RTX 4060 Laptop GPU:
+Earlier diagnostic results on the RTX 4060 Laptop GPU used a 500-image random
+subset:
 
 | Model | AP | AP50 | AP75 | AP small | AP medium | AP large | AR100 | Pipeline FPS | Peak VRAM |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
@@ -174,10 +179,10 @@ Re-evaluate saved detections under different score thresholds:
 ```powershell
 python scripts\evaluate_threshold_sensitivity.py `
   --annotation-file data\coco\annotations\instances_val2017.json `
-  --predictions outputs\coco_owlvit_eval_500_random\coco_predictions.json `
-  --metrics outputs\coco_owlvit_eval_500_random\metrics.json `
+  --predictions outputs\server_2026_06\coco_owlvit_eval_full_val2017\coco_predictions.json `
+  --metrics outputs\server_2026_06\coco_owlvit_eval_full_val2017\metrics.json `
   --thresholds 0.01,0.03,0.05,0.10,0.20 `
-  --output outputs\threshold_sensitivity\owlvit.json
+  --output outputs\server_2026_06\threshold_sensitivity\owlvit.json
 ```
 
 The earlier 100-image OWL-ViT NMS ablation is retained under

@@ -1,7 +1,7 @@
 param(
     [string]$DataRoot = "data",
     [string]$OutputRoot = "outputs/server_2026_06",
-    [int]$CocoMaxImages = 500,
+    [int]$CocoMaxImages = 0,
     [string]$CocoSampling = "random",
     [int]$CocoSeed = 308,
     [int]$CocoTopK = 100,
@@ -38,7 +38,12 @@ function Invoke-Python {
 
 $CocoDataDir = Join-Path $DataRoot "coco"
 $RefCocoDataDir = Join-Path $DataRoot "refcoco"
-$CocoTag = "{0}_{1}_seed{2}" -f $CocoMaxImages, $CocoSampling, $CocoSeed
+if ($CocoMaxImages -le 0) {
+    $CocoTag = "full_val2017"
+}
+else {
+    $CocoTag = "{0}_{1}_seed{2}" -f $CocoMaxImages, $CocoSampling, $CocoSeed
+}
 $RefCocoTag = "{0}_{1}_{2}" -f $RefCocoSplit, ($(if ($RefCocoMaxRows -le 0) { "full" } else { "rows$RefCocoMaxRows" })), $RefCocoExpressionMode
 
 $env:DATA_ROOT = $DataRoot
@@ -58,7 +63,7 @@ $env:REFCOCO_SPLIT = $RefCocoSplit
 $env:REFCOCO_MAX_ROWS = "$RefCocoMaxRows"
 $env:REFCOCO_EXPRESSION_MODE = $RefCocoExpressionMode
 
-Write-Host "Preparing COCO subset..."
+Write-Host "Preparing COCO images..."
 Invoke-Python @(
     "scripts\prepare_coco_subset.py",
     "--data-dir", $CocoDataDir,

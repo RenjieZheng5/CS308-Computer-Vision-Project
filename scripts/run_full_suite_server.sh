@@ -5,7 +5,7 @@ cd "$(dirname "$0")/.."
 
 DATA_ROOT="${DATA_ROOT:-data}"
 OUTPUT_ROOT="${OUTPUT_ROOT:-outputs/server_2026_06}"
-COCO_MAX_IMAGES="${COCO_MAX_IMAGES:-500}"
+COCO_MAX_IMAGES="${COCO_MAX_IMAGES:-0}"
 COCO_SAMPLING="${COCO_SAMPLING:-random}"
 COCO_SEED="${COCO_SEED:-308}"
 COCO_TOP_K="${COCO_TOP_K:-100}"
@@ -34,7 +34,11 @@ export REFCOCO_EXPRESSION_MODE
 
 COCO_DATA_DIR="${DATA_ROOT}/coco"
 REFCOCO_DATA_DIR="${DATA_ROOT}/refcoco"
-COCO_TAG="${COCO_MAX_IMAGES}_${COCO_SAMPLING}_seed${COCO_SEED}"
+if [[ "${COCO_MAX_IMAGES}" -le 0 ]]; then
+  COCO_TAG="full_val2017"
+else
+  COCO_TAG="${COCO_MAX_IMAGES}_${COCO_SAMPLING}_seed${COCO_SEED}"
+fi
 if [[ "${REFCOCO_MAX_ROWS}" -le 0 ]]; then
   REF_ROWS_TAG="full"
 else
@@ -42,7 +46,7 @@ else
 fi
 REFCOCO_TAG="${REFCOCO_SPLIT}_${REF_ROWS_TAG}_${REFCOCO_EXPRESSION_MODE}"
 
-echo "Preparing COCO subset..."
+echo "Preparing COCO images..."
 python scripts/prepare_coco_subset.py \
   --data-dir "${COCO_DATA_DIR}" \
   --max-images "${COCO_MAX_IMAGES}" \

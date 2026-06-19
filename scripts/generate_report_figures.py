@@ -11,7 +11,7 @@ OUTPUT = Path(os.environ.get("OUTPUT_ROOT", ROOT / "outputs"))
 FIGURES = ROOT / "report" / "figures"
 COLORS = ["#4C78A8", "#F58518", "#54A24B"]
 MODELS = ["OWL-ViT", "Grounding DINO", "YOLO-World"]
-COCO_MAX_IMAGES = os.environ.get("COCO_MAX_IMAGES", "500")
+COCO_MAX_IMAGES = os.environ.get("COCO_MAX_IMAGES", "0")
 COCO_SAMPLING = os.environ.get("COCO_SAMPLING", "random")
 COCO_SEED = os.environ.get("COCO_SEED")
 REFCOCO_SPLIT = os.environ.get("REFCOCO_SPLIT", "val")
@@ -50,10 +50,13 @@ def add_labels(axis, bars, fmt="{:.3f}") -> None:
 
 
 def main() -> None:
-    coco_base = f"{COCO_MAX_IMAGES}_{COCO_SAMPLING}"
-    coco_tags = [coco_base]
-    if COCO_SEED:
-        coco_tags.insert(0, f"{coco_base}_seed{COCO_SEED}")
+    if int(COCO_MAX_IMAGES) <= 0:
+        coco_tags = ["full_val2017"]
+    else:
+        coco_base = f"{COCO_MAX_IMAGES}_{COCO_SAMPLING}"
+        coco_tags = [coco_base]
+        if COCO_SEED:
+            coco_tags.insert(0, f"{coco_base}_seed{COCO_SEED}")
 
     ref_row_tag = "full" if int(REFCOCO_MAX_ROWS) <= 0 else f"rows{REFCOCO_MAX_ROWS}"
     refcoco_tag = f"{REFCOCO_SPLIT}_{ref_row_tag}_{REFCOCO_EXPRESSION_MODE}"
