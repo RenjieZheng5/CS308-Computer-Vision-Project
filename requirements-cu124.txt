@@ -14,5 +14,6 @@ tokenizers==0.22.2
 tqdm==4.65.0
 pycocotools==2.0.11
 scipy==1.15.3
+pyarrow==20.0.0
 ultralytics==8.4.70
 clip @ git+https://github.com/ultralytics/CLIP.git@577b3cfa75f072c20a3f02b44ffde111d93eb3be

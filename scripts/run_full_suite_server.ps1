@@ -121,7 +121,7 @@ Invoke-Python @(
     "--split", $RefCocoSplit,
     "--max-rows", "$RefCocoMaxRows",
     "--expression-mode", $RefCocoExpressionMode,
-    "--refresh-manifest",
+    $(if ($env:REFCOCO_REFRESH_MANIFEST -ne "0") { "--refresh-manifest" } else { $null }),
     "--output-dir", (Join-Path $OutputRoot ("refcoco_owlvit_eval_{0}" -f $RefCocoTag))
 )
 Invoke-Python @(

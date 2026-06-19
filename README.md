@@ -36,6 +36,17 @@ requirements. PyTorch wheels bundle the CUDA runtime, so the local CUDA Toolkit
 is not required for these evaluation scripts as long as the NVIDIA driver is
 compatible.
 
+RefCOCO evaluation prefers a local Hugging Face parquet snapshot and only falls
+back to the datasets-server rows API if parquet files are not available. If the
+server cannot reach `huggingface.co` at all, the RefCOCO manifest must be
+downloaded once and placed under `data/refcoco/` before rerunning.
+
+If you need to prefetch the dataset on a machine with network access:
+
+```bash
+python -c "from huggingface_hub import snapshot_download; snapshot_download(repo_id='lmms-lab/RefCOCO', repo_type='dataset', local_dir='data/refcoco/hf_snapshot', local_dir_use_symlinks=False, allow_patterns=['*.parquet', '**/*.parquet'])"
+```
+
 Model weights (`*.pt`), Hugging Face caches, and downloaded datasets are ignored.
 Selected result JSON files and qualitative figures under `outputs/` are kept as
 project artifacts; therefore `outputs/` is not globally ignored.
@@ -54,6 +65,7 @@ export COCO_TOP_K=100
 export REFCOCO_SPLIT=val
 export REFCOCO_MAX_ROWS=0
 export REFCOCO_EXPRESSION_MODE=all
+export REFCOCO_REFRESH_MANIFEST=0
 export IMAGE_SIZE=640
 ```
 
@@ -62,6 +74,10 @@ when reproducing the earlier diagnostic subset.
 
 `REFCOCO_MAX_ROWS=0` means the full split. Set it to a small number only for
 smoke tests.
+
+`REFCOCO_REFRESH_MANIFEST=0` keeps the cached RefCOCO rows manifest if it
+already exists locally. Set it to `1` only when the server can reach the
+Hugging Face datasets service.
 
 On the 4-GPU server, run the formal full-suite rerun with:
 

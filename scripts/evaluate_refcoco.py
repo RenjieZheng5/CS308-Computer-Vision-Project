@@ -8,6 +8,7 @@ import requests
 import torch
 from PIL import Image
 from tqdm import tqdm
+from huggingface_hub import snapshot_download
 from transformers import (
     AutoProcessor,
     GroundingDinoForObjectDetection,
@@ -21,6 +22,7 @@ from coco_eval_utils import RuntimeTracker
 REFCOCO_DATASET = "lmms-lab/RefCOCO"
 REFCOCO_CONFIG = "default"
 REFCOCO_ROWS_URL = "https://datasets-server.huggingface.co/rows"
+REFCOCO_PARQUET_PATTERNS = ["*.parquet", "**/*.parquet"]
 OWL_MODEL = "google/owlvit-base-patch32"
 GROUNDING_DINO_MODEL = "IDEA-Research/grounding-dino-tiny"
 YOLO_WORLD_MODEL = "yolov8s-worldv2.pt"
@@ -87,26 +89,88 @@ def fetch_rows_page(split: str, offset: int, length: int, retries: int = 5) -> l
     ) from last_error
 
 
+def fetch_rows_from_parquet(split: str, cache_dir: Path) -> list[dict]:
+    try:
+        import pyarrow.parquet as pq
+    except ImportError as error:
+        raise RuntimeError(
+            "pyarrow is required to read RefCOCO parquet files. "
+            "Install requirements-cu124.txt on the server."
+        ) from error
+
+    snapshot_root = cache_dir / "hf_snapshot"
+    parquet_paths = sorted(snapshot_root.rglob("*.parquet"))
+    if not parquet_paths:
+        snapshot_dir = Path(
+            snapshot_download(
+                repo_id=REFCOCO_DATASET,
+                repo_type="dataset",
+                local_dir=str(snapshot_root),
+                local_dir_use_symlinks=False,
+                allow_patterns=REFCOCO_PARQUET_PATTERNS,
+            )
+        )
+        parquet_paths = sorted(snapshot_dir.rglob("*.parquet"))
+    parquet_paths = [path for path in parquet_paths if split in path.as_posix()]
+    if not parquet_paths:
+        parquet_paths = sorted(snapshot_root.rglob("*.parquet"))
+    if not parquet_paths:
+        raise RuntimeError(f"No RefCOCO parquet files were found under {snapshot_root}")
+
+    rows: list[dict] = []
+    columns = [
+        "question_id",
+        "question",
+        "answer",
+        "segmentation",
+        "bbox",
+        "iscrowd",
+        "file_name",
+    ]
+    for parquet_path in parquet_paths:
+        table = pq.read_table(parquet_path, columns=columns)
+        for row in table.to_pylist():
+            rows.append({"row_idx": len(rows), "row": row})
+    return rows
+
+
 def ensure_manifest(path: Path, split: str, page_size: int, refresh: bool = False) -> Path:
     if path.exists() and not refresh:
         return path
 
     path.parent.mkdir(parents=True, exist_ok=True)
     rows: list[dict] = []
-    offset = 0
+    source = ""
+    errors: list[str] = []
 
-    while True:
-        page_rows = fetch_rows_page(split=split, offset=offset, length=page_size)
-        if not page_rows:
-            break
-        rows.extend(page_rows)
-        if len(page_rows) < page_size:
-            break
-        offset += len(page_rows)
+    try:
+        rows = fetch_rows_from_parquet(split=split, cache_dir=path.parent)
+        source = "huggingface-parquet"
+    except Exception as error:
+        errors.append(f"hf parquet: {error}")
+
+    if not rows:
+        offset = 0
+        while True:
+            try:
+                page_rows = fetch_rows_page(split=split, offset=offset, length=page_size)
+            except RuntimeError as error:
+                errors.append(f"datasets-server: {error}")
+                break
+            if not page_rows:
+                break
+            rows.extend(page_rows)
+            if len(page_rows) < page_size:
+                break
+            offset += len(page_rows)
+        if rows:
+            source = "datasets-server"
 
     if not rows:
         raise RuntimeError(
-            f"No RefCOCO rows were fetched for split '{split}'. Check network access."
+            f"No RefCOCO rows were fetched for split '{split}'. "
+            f"Tried huggingface parquet and datasets-server. "
+            + " | ".join(errors)
         )
 
     manifest = {
@@ -114,6 +178,7 @@ def ensure_manifest(path: Path, split: str, page_size: int, refresh: bool = Fals
         "config": REFCOCO_CONFIG,
         "split": split,
         "row_count": len(rows),
+        "source": source,
         "rows": rows,
     }
     path.write_text(json.dumps(manifest, indent=2), encoding="utf-8")

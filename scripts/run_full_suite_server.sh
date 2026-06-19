@@ -19,6 +19,7 @@ IMAGE_SIZE="${IMAGE_SIZE:-640}"
 REFCOCO_SPLIT="${REFCOCO_SPLIT:-val}"
 REFCOCO_MAX_ROWS="${REFCOCO_MAX_ROWS:-0}"
 REFCOCO_EXPRESSION_MODE="${REFCOCO_EXPRESSION_MODE:-all}"
+REFCOCO_REFRESH_MANIFEST="${REFCOCO_REFRESH_MANIFEST:-0}"
 SUBSET_WORKERS="${SUBSET_WORKERS:-8}"
 OWL_THRESHOLDS="${OWL_THRESHOLDS:-0.01,0.03,0.05,0.10,0.20}"
 GROUNDING_THRESHOLDS="${GROUNDING_THRESHOLDS:-0.20,0.25,0.30,0.35,0.40}"
@@ -31,6 +32,7 @@ export COCO_SEED
 export REFCOCO_SPLIT
 export REFCOCO_MAX_ROWS
 export REFCOCO_EXPRESSION_MODE
+export REFCOCO_REFRESH_MANIFEST
 
 COCO_DATA_DIR="${DATA_ROOT}/coco"
 REFCOCO_DATA_DIR="${DATA_ROOT}/refcoco"
@@ -87,13 +89,17 @@ python scripts/evaluate_coco_yolo_world.py \
   --image-size "${IMAGE_SIZE}"
 
 echo "Running full RefCOCO evaluations..."
+REFCOCO_REFRESH_FLAG=()
+if [[ "${REFCOCO_REFRESH_MANIFEST}" -ne 0 ]]; then
+  REFCOCO_REFRESH_FLAG+=(--refresh-manifest)
+fi
 python scripts/evaluate_refcoco.py \
   --model-type owlvit \
   --data-dir "${REFCOCO_DATA_DIR}" \
   --split "${REFCOCO_SPLIT}" \
   --max-rows "${REFCOCO_MAX_ROWS}" \
   --expression-mode "${REFCOCO_EXPRESSION_MODE}" \
-  --refresh-manifest \
+  "${REFCOCO_REFRESH_FLAG[@]}" \
   --output-dir "${OUTPUT_ROOT}/refcoco_owlvit_eval_${REFCOCO_TAG}"
 
 python scripts/evaluate_refcoco.py \
