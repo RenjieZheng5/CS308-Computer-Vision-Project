@@ -14,8 +14,7 @@ benchmarking, visualizations, and an IEEE-style LaTeX report.
 
 - Report source: `report/example_paper.tex`
 - Compiled report: `report/example_paper.pdf`
-- Blackboard report copy: `groupid_final.pdf`. Rename `groupid` to the real
-  group id before final Blackboard submission if the course system provides one.
+- Blackboard report copy for Group 8: `8_final.pdf`
 - Defense slides: `presentation/cv_final_project_presentation.pdf`
 - Defense slide source: `presentation/cv_final_project_presentation.tex`
 
