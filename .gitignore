@@ -14,5 +14,6 @@ data/
 *.out
 *.snm
 *.toc
+Report Template.pdf
 outputs/protocol_smoke_*/
 outputs/refcoco_smoke_*/

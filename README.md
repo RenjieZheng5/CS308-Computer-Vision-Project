@@ -10,6 +10,20 @@ The project contains arbitrary-prompt demos, COCO detection evaluation, RefCOCO
 referring-expression evaluation, threshold and NMS ablations, runtime/VRAM
 benchmarking, visualizations, and an IEEE-style LaTeX report.
 
+## Final deliverables
+
+- Report source: `report/example_paper.tex`
+- Compiled report: `report/example_paper.pdf`
+- Blackboard report copy: `groupid_final.pdf`. Rename `groupid` to the real
+  group id before final Blackboard submission if the course system provides one.
+- Defense slides: `presentation/cv_final_project_presentation.pdf`
+- Defense slide source: `presentation/cv_final_project_presentation.tex`
+
+The report follows the course template requirements while keeping the final
+IEEE conference format: topic/challenge, related work, method, datasets,
+implementation details, metrics, experimental design/results, conclusion,
+references, and per-member contributions are all included.
+
 ## Environment
 
 The initial local experiments used Windows, an NVIDIA RTX 4060 Laptop GPU

@@ -28,10 +28,10 @@ and Visual Grounding Models}
 \author{
 \IEEEauthorblockN{Zheng Renjie \quad Lin Hongyu \quad He Jiayang \quad Deng Haotian}
 \IEEEauthorblockA{Southern University of Science and Technology, Shenzhen, China\\
-Zheng Renjie: 12412840@mail.sustech.edu.cn \quad
-Lin Hongyu: 12313216@mail.sustech.edu.cn\\
-He Jiayang: 12213023@mail.sustech.edu.cn \quad
-Deng Haotian: 12313204@mail.sustech.edu.cn}
+Zheng Renjie (SID: 12412840): 12412840@mail.sustech.edu.cn\\
+Lin Hongyu (SID: 12313216): 12313216@mail.sustech.edu.cn\\
+He Jiayang (SID: 12213023): 12213023@mail.sustech.edu.cn\\
+Deng Haotian (SID: 12313204): 12313204@mail.sustech.edu.cn}
 }
 
 \begin{document}
@@ -266,13 +266,7 @@ qualitative demos.
 
 \section{Experimental Setup}
 
-\paragraph{Hardware and software.}
-Development started on an NVIDIA GeForce RTX 4060 Laptop GPU with 8 GB VRAM,
-but the final full-split rerun and all headline numbers in this report were
-collected on a 4 x TITAN RTX server with NVIDIA driver 550.120 and CUDA 12.4.
-The environment uses Python 3.10, PyTorch 2.6.0+cu124, Torchvision 0.21.0+cu124,
-Transformers 5.5.3, Ultralytics 8.4.70, and
-pycocotools 2.0.11.
+\subsection{Datasets and Splits}
 
 \paragraph{COCO full validation.}
 The final reported COCO results use all 5,000 images from COCO val2017 with the
@@ -287,6 +281,16 @@ and target boxes. We evaluate all referring expressions attached to each region
 row, yielding 8,811 rows and 25,080 expressions in the final run. Earlier
 100-row runs are retained only as debugging diagnostics.
 
+\subsection{Implementation Details}
+
+\paragraph{Hardware and software.}
+Development started on an NVIDIA GeForce RTX 4060 Laptop GPU with 8 GB VRAM,
+but the final full-split rerun and all headline numbers in this report were
+collected on a 4 x TITAN RTX server with NVIDIA driver 550.120 and CUDA 12.4.
+The environment uses Python 3.10, PyTorch 2.6.0+cu124, Torchvision 0.21.0+cu124,
+Transformers 5.5.3, Ultralytics 8.4.70, and
+pycocotools 2.0.11.
+
 \paragraph{Reproducibility controls.}
 The server rerun uses one shared configuration block for all experiments.
 COCO and RefCOCO are both configured for full-split evaluation, and RefCOCO is
@@ -295,6 +299,20 @@ Hugging Face parquet snapshot when available, so the evaluation does not depend
 on the availability of the online datasets-server API. The COCO image manifest
 and RefCOCO row manifest are cached and reused, ensuring that reruns do not
 silently change the evaluated data.
+
+\subsection{Experimental Design}
+
+Following the report-template requirement to describe the experimental design,
+we separate the study into four controlled comparisons. First, the three
+pretrained models are evaluated on the same COCO images, prompts, and maximum
+prediction budget to compare open-vocabulary detection accuracy. Second, the
+same models are evaluated on every RefCOCO validation expression to compare
+instance-level grounding. Third, pipeline FPS and peak CUDA memory are measured
+from the same runs to expose deployment trade-offs. Fourth, saved COCO
+predictions are re-scored under multiple confidence thresholds, and an OWL-ViT
+NMS diagnostic is retained, to test whether cleaner visualizations correspond
+to better quantitative performance. This design keeps model weights fixed and
+varies only the evaluated model or post-processing choice in each comparison.
 
 \section{Experimental Results}
 
@@ -573,7 +591,14 @@ operating-point selection would also improve deployment comparisons.
 
 \section*{Team Contributions}
 
-All four members contributed equally (25\% each).
+All four members contributed equally (25\% each). In the final deliverable,
+Zheng Renjie (SID: 12412840) contributed to model reproduction, COCO
+evaluation, and report writing; Lin Hongyu (SID: 12313216) contributed to the
+RefCOCO full-split evaluation, server reruns, and result verification; He
+Jiayang (SID: 12213023) contributed to visualization, ablation analysis, and
+figure generation; Deng Haotian (SID: 12313204) contributed to environment
+setup, documentation, and presentation preparation. All members reviewed the
+final report, slides, and reported metrics.
 
 \bibliography{example_paper}
 \bibliographystyle{IEEEtran}
