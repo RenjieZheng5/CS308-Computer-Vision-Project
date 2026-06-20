@@ -288,7 +288,11 @@ def top_owlvit_box(processor, model, image, expression, device, tracker):
         lambda: {
             key: value.to(device)
             for key, value in processor(
-                text=[[expression]], images=image, return_tensors="pt"
+                text=[[expression]],
+                images=image,
+                return_tensors="pt",
+                truncation=True,
+                max_length=16,
             ).items()
         },
     )
