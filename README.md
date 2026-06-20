@@ -8,7 +8,7 @@ CS308 Computer Vision final project comparing three text-conditioned detectors:
 
 The project contains arbitrary-prompt demos, COCO detection evaluation, RefCOCO
 referring-expression evaluation, threshold and NMS ablations, runtime/VRAM
-benchmarking, visualizations, and an ICML-style LaTeX report.
+benchmarking, visualizations, and an IEEE-style LaTeX report.
 
 ## Environment
 
@@ -148,8 +148,16 @@ python scripts\evaluate_coco_yolo_world.py `
   --confidence 0.001 --iou-threshold 0.7 --top-k 100 --image-size 640
 ```
 
-Earlier diagnostic results on the RTX 4060 Laptop GPU used a 500-image random
-subset:
+Final full-split results in `outputs/server_2026_06/`:
+
+| Model | AP | AP50 | AR100 | Pipeline FPS | Peak VRAM |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| OWL-ViT Base | 0.237 | 0.385 | 0.469 | 24.3 | 350 MB |
+| Grounding DINO Tiny | **0.421** | **0.557** | 0.536 | 4.5 | 2357 MB |
+| YOLO-World v2 Small | 0.366 | 0.510 | **0.547** | **84.6** | 715 MB |
+
+Historical diagnostic results on the RTX 4060 Laptop GPU used a 500-image
+random subset:
 
 | Model | AP | AP50 | AP75 | AP small | AP medium | AP large | AR100 | Pipeline FPS | Peak VRAM |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
@@ -183,10 +191,18 @@ python scripts\evaluate_refcoco.py --model-type yolo-world `
 Use `--max-rows 100` for a quick debug run if you do not want to wait for the
 full split.
 
-The refreshed full-split results will be written to
-`outputs/refcoco_*_eval_val_full_all/metrics.json` and should replace the
-earlier 100-row diagnostic numbers in the report once the server rerun
-finishes.
+Final full-split results in `outputs/server_2026_06/`:
+
+| Model | Acc@0.5 | Acc@0.75 | Mean IoU | Pipeline FPS | Peak VRAM |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| OWL-ViT Base | 0.425 | 0.342 | 0.423 | 29.9 | 332 MB |
+| Grounding DINO Tiny | **0.511** | **0.456** | **0.514** | 3.1 | 2041 MB |
+| YOLO-World v2 Small | 0.414 | 0.362 | 0.422 | **115.1** | 713 MB |
+
+The final full-split results are written under
+`outputs/server_2026_06/refcoco_*_eval_val_full_all/metrics.json` and are the
+numbers used in the report. The earlier 100-row diagnostic numbers are retained
+only for debugging.
 
 ## Ablations and report
 
