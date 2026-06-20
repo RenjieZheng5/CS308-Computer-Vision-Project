@@ -1,0 +1,27 @@
+{
+  "dataset": "RefCOCO val split (lmms-lab/RefCOCO)",
+  "protocol": "all region rows; expression mode=all; top-1 box",
+  "model_type": "grounding-dino",
+  "model": "IDEA-Research/grounding-dino-tiny",
+  "device": "cuda",
+  "samples": 25080,
+  "rows": 8811,
+  "mean_expressions_per_row": 2.846441947565543,
+  "rows_skipped_without_expressions": 0,
+  "accuracy_at_iou_0.5": 0.5114433811802233,
+  "accuracy_at_iou_0.75": 0.45598086124401915,
+  "mean_iou": 0.514312539122068,
+  "median_iou": 0.5612057732636639,
+  "runtime": {
+    "images": 25080,
+    "preprocess_seconds": 339.4700368475169,
+    "inference_seconds": 4253.3460575882345,
+    "postprocess_seconds": 3430.2489424478263,
+    "pipeline_seconds": 8023.065036883578,
+    "inference_ms_per_image": 169.59115062154046,
+    "pipeline_ms_per_image": 319.8989249156131,
+    "inference_fps": 5.89653408409027,
+    "pipeline_fps": 3.125987373242321,
+    "peak_gpu_memory_mb": 2041.31982421875
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "dataset": "RefCOCO val split (lmms-lab/RefCOCO)",
+  "protocol": "all region rows; expression mode=all; top-1 box",
+  "model_type": "owlvit",
+  "model": "google/owlvit-base-patch32",
+  "device": "cuda",
+  "samples": 25080,
+  "rows": 8811,
+  "mean_expressions_per_row": 2.846441947565543,
+  "rows_skipped_without_expressions": 0,
+  "accuracy_at_iou_0.5": 0.4246810207336523,
+  "accuracy_at_iou_0.75": 0.34182615629984053,
+  "mean_iou": 0.42266760588065994,
+  "median_iou": 0.3210315361628192,
+  "runtime": {
+    "images": 25080,
+    "preprocess_seconds": 245.22924183681607,
+    "inference_seconds": 404.2991515342146,
+    "postprocess_seconds": 189.66258305683732,
+    "pipeline_seconds": 839.190976427868,
+    "inference_ms_per_image": 16.120380842672034,
+    "pipeline_ms_per_image": 33.460565248320094,
+    "inference_fps": 62.033273888475016,
+    "pipeline_fps": 29.885926689484286,
+    "peak_gpu_memory_mb": 331.55712890625
+  }
+}
