@@ -469,7 +469,6 @@ same diagnostic subset.
 \end{figure}
 
 \FloatBarrier
-\newpage
 \subsection{Qualitative Analysis}
 
 Figure~\ref{fig:qualitative} compares representative OWL-ViT and Grounding DINO
@@ -480,6 +479,24 @@ nearby objects, failure to resolve spatial relations, and missed small
 accessories. Prompt wording also matters: a broad noun can activate several
 instances, while a detailed expression can either disambiguate the target or
 reduce confidence if its phrasing differs from pretraining language.
+
+In the workspace example, both methods detect prominent objects, but Grounding
+DINO tends to produce tighter boxes around the intended object extent. In the
+traffic example, small or partially occluded objects are more fragile: low
+thresholds recover more candidates but also introduce duplicate boxes and
+visually noisy predictions. These examples support the quantitative threshold
+study: cleaner visualization settings are not necessarily the best evaluation
+settings. For a deployed system, the appropriate operating point would depend
+on whether missing an object or showing a false positive is more costly.
+
+The examples also separate three types of error that are easy to mix together
+in a single AP score. The first is localization error, where the correct object
+is found but the box is too loose or too tight. The second is semantic error,
+where a visually related but wrong category is selected. The third is grounding
+error, where the category is correct but the instance specified by color,
+position, or context is not selected. RefCOCO exposes the third case more
+clearly than COCO, which is why we treat it as a necessary part of the final
+evaluation rather than an optional supplement.
 
 \begin{figure*}[!t]
   \centering
@@ -500,24 +517,6 @@ reduce confidence if its phrasing differs from pretraining language.
   \label{fig:qualitative}
 \end{figure*}
 \FloatBarrier
-
-In the workspace example, both methods detect prominent objects, but Grounding
-DINO tends to produce tighter boxes around the intended object extent. In the
-traffic example, small or partially occluded objects are more fragile: low
-thresholds recover more candidates but also introduce duplicate boxes and
-visually noisy predictions. These examples support the quantitative threshold
-study: cleaner visualization settings are not necessarily the best evaluation
-settings. For a deployed system, the appropriate operating point would depend
-on whether missing an object or showing a false positive is more costly.
-
-The examples also separate three types of error that are easy to mix together
-in a single AP score. The first is localization error, where the correct object
-is found but the box is too loose or too tight. The second is semantic error,
-where a visually related but wrong category is selected. The third is grounding
-error, where the category is correct but the instance specified by color,
-position, or context is not selected. RefCOCO exposes the third case more
-clearly than COCO, which is why we treat it as a necessary part of the final
-evaluation rather than an optional supplement.
 
 \section{Discussion}
 
