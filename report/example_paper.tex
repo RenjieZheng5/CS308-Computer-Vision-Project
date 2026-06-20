@@ -446,9 +446,9 @@ from 0.237 to 0.184 and AR100 from 0.469 to 0.255. Grounding DINO drops from
 between 0.001 and 0.25. Higher thresholds can still be useful for uncluttered
 visual demonstrations, but they are harmful when recall matters.
 
-\begin{figure}[t]
+\begin{figure}[!t]
   \centering
-  \safeincludegraphics[width=\linewidth]{figures/threshold_sensitivity.pdf}
+  \safeincludegraphics[width=0.98\columnwidth]{figures/threshold_sensitivity.pdf}
   \caption{Within-model score-threshold sensitivity on the full COCO val2017 split.}
   \label{fig:threshold}
 \end{figure}
@@ -458,7 +458,15 @@ the earlier 100-image subset. At NMS IoU 0.5, AP decreased from 0.336 to 0.323
 and AR100 from 0.520 to 0.475. NMS visually removes duplicate boxes, but
 overlapping hypotheses can be valid in crowded scenes. We therefore disable
 additional NMS for the main OWL-ViT quantitative comparison and use it only for
-selected visualizations.
+selected visualizations. Figure~\ref{fig:nms} shows the effect directly on the
+same diagnostic subset.
+
+\begin{figure}[!t]
+  \centering
+  \safeincludegraphics[width=0.98\columnwidth]{figures/owlvit_nms.pdf}
+  \caption{OWL-ViT on the 100-image diagnostic subset before and after class-wise NMS.}
+  \label{fig:nms}
+\end{figure}
 
 \FloatBarrier
 \newpage
@@ -473,24 +481,24 @@ accessories. Prompt wording also matters: a broad noun can activate several
 instances, while a detailed expression can either disambiguate the target or
 reduce confidence if its phrasing differs from pretraining language.
 
-\begin{figure}[H]
+\begin{figure*}[!t]
   \centering
   \subfloat[OWL workspace]{%
-    \qualimage{figures/owlvit_workspace.jpg}
-  }
+    \safeincludegraphics[width=0.23\textwidth,height=0.12\textheight,keepaspectratio]{figures/owlvit_workspace.jpg}
+  }\hfill
   \subfloat[DINO workspace]{%
-    \qualimage{figures/grounding_dino_workspace.jpg}
-  }\\[-0.4em]
+    \safeincludegraphics[width=0.23\textwidth,height=0.12\textheight,keepaspectratio]{figures/grounding_dino_workspace.jpg}
+  }\hfill
   \subfloat[OWL traffic]{%
-    \qualimage{figures/owlvit_traffic.jpg}
-  }
+    \safeincludegraphics[width=0.23\textwidth,height=0.12\textheight,keepaspectratio]{figures/owlvit_traffic.jpg}
+  }\hfill
   \subfloat[DINO traffic]{%
-    \qualimage{figures/grounding_dino_traffic.jpg}
+    \safeincludegraphics[width=0.23\textwidth,height=0.12\textheight,keepaspectratio]{figures/grounding_dino_traffic.jpg}
   }
   \caption{Qualitative open-vocabulary detections. Display thresholds and NMS
   are chosen for readability and differ from the quantitative protocol.}
   \label{fig:qualitative}
-\end{figure}
+\end{figure*}
 \FloatBarrier
 
 In the workspace example, both methods detect prominent objects, but Grounding
