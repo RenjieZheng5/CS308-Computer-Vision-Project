@@ -1,0 +1,27 @@
+{
+  "dataset": "RefCOCO val split (lmms-lab/RefCOCO)",
+  "protocol": "all region rows; expression mode=all; top-1 box",
+  "model_type": "yolo-world",
+  "model": "yolov8s-worldv2.pt",
+  "device": "cuda",
+  "samples": 25080,
+  "rows": 8811,
+  "mean_expressions_per_row": 2.846441947565543,
+  "rows_skipped_without_expressions": 0,
+  "accuracy_at_iou_0.5": 0.41383572567783095,
+  "accuracy_at_iou_0.75": 0.3616427432216906,
+  "mean_iou": 0.4220576331504947,
+  "median_iou": 0.23519094639488516,
+  "runtime": {
+    "images": 25080,
+    "preprocess_seconds": 23.33746861293912,
+    "inference_seconds": 175.72932204790413,
+    "postprocess_seconds": 18.88540624268353,
+    "pipeline_seconds": 217.95219690352678,
+    "inference_ms_per_image": 7.006751277827118,
+    "pipeline_ms_per_image": 8.69027898339421,
+    "inference_fps": 142.71949443453238,
+    "pipeline_fps": 115.07110438121107,
+    "peak_gpu_memory_mb": 713.02294921875
+  }
+}

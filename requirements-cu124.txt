@@ -1,0 +1,19 @@
+# Server profile for NVIDIA driver 550.x / CUDA 12.4.
+# Use this on the TITAN RTX server instead of requirements.txt.
+--extra-index-url https://download.pytorch.org/whl/cu124
+
+pillow==11.3.0
+requests==2.31.0
+numpy==2.2.6
+matplotlib==3.10.8
+torch==2.6.0+cu124
+torchvision==0.21.0+cu124
+transformers==5.5.3
+huggingface_hub==1.9.0
+tokenizers==0.22.2
+tqdm==4.65.0
+pycocotools==2.0.11
+scipy==1.15.3
+pyarrow==20.0.0
+ultralytics==8.4.70
+clip @ git+https://github.com/ultralytics/CLIP.git@577b3cfa75f072c20a3f02b44ffde111d93eb3be
