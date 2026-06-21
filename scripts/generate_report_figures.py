@@ -2,12 +2,16 @@ import json
 import os
 from pathlib import Path
 
+import matplotlib
+
+matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import numpy as np
 
 
 ROOT = Path(__file__).resolve().parents[1]
-OUTPUT = Path(os.environ.get("OUTPUT_ROOT", ROOT / "outputs"))
+DEFAULT_OUTPUT_ROOT = ROOT / "outputs" / "server_2026_06"
+OUTPUT = Path(os.environ.get("OUTPUT_ROOT", DEFAULT_OUTPUT_ROOT if DEFAULT_OUTPUT_ROOT.exists() else ROOT / "outputs"))
 FIGURES = ROOT / "report" / "figures"
 COLORS = ["#4C78A8", "#F58518", "#54A24B"]
 MODELS = ["OWL-ViT", "Grounding DINO", "YOLO-World"]
@@ -74,18 +78,18 @@ def main() -> None:
     ]
     coco = [load(path) for path in coco_paths]
 
-    metric_keys = ["AP@[IoU=.50:.95]", "AP@0.50", "AR maxDets=100"]
-    metric_labels = ["AP", "AP50", "AR100"]
+    metric_keys = ["AP@[IoU=.50:.95]", "AP@0.50", "AP@0.75", "AR maxDets=100"]
+    metric_labels = ["AP", "AP50", "AP75", "AR100"]
     x = np.arange(len(metric_keys))
-    width = 0.24
-    figure, axis = plt.subplots(figsize=(7.2, 3.8))
+    width = 0.2
+    figure, axis = plt.subplots(figsize=(7.6, 3.8))
     for index, (name, result, color) in enumerate(zip(MODELS, coco, COLORS)):
         values = [result["metrics"][key] for key in metric_keys]
         bars = axis.bar(x + (index - 1) * width, values, width, label=name, color=color)
         add_labels(axis, bars)
     axis.set_xticks(x, metric_labels)
     axis.set_ylabel("COCO metric")
-    axis.set_ylim(0, 0.68)
+    axis.set_ylim(0, 0.7)
     axis.grid(axis="y", alpha=0.25)
     axis.legend(ncol=3, loc="upper center", frameon=False)
     save(figure, "coco_metrics")
@@ -113,16 +117,19 @@ def main() -> None:
     ]
     grounding = [load(path) for path in grounding_paths]
     x = np.arange(3)
-    figure, axis = plt.subplots(figsize=(7.2, 3.7))
+    figure, axis = plt.subplots(figsize=(7.8, 3.8))
     acc50 = [result["accuracy_at_iou_0.5"] for result in grounding]
     acc75 = [result["accuracy_at_iou_0.75"] for result in grounding]
-    bars1 = axis.bar(x - 0.18, acc50, 0.36, label="Acc@0.5", color="#4C78A8")
-    bars2 = axis.bar(x + 0.18, acc75, 0.36, label="Acc@0.75", color="#E45756")
+    miou = [result["mean_iou"] for result in grounding]
+    bars1 = axis.bar(x - 0.24, acc50, 0.24, label="Acc@0.5", color="#4C78A8")
+    bars2 = axis.bar(x, acc75, 0.24, label="Acc@0.75", color="#E45756")
+    bars3 = axis.bar(x + 0.24, miou, 0.24, label="Mean IoU", color="#54A24B")
     add_labels(axis, bars1)
     add_labels(axis, bars2)
+    add_labels(axis, bars3)
     axis.set_xticks(x, MODELS)
     axis.set_ylim(0, 0.72)
-    axis.set_ylabel("Top-1 grounding accuracy")
+    axis.set_ylabel("Grounding metric")
     axis.grid(axis="y", alpha=0.25)
     axis.legend(frameon=False)
     save(figure, "refcoco_grounding")
@@ -147,6 +154,27 @@ def main() -> None:
     axes[-1].legend(frameon=False, fontsize=8)
     figure.tight_layout()
     save(figure, "threshold_sensitivity")
+
+    nms_base = load(ROOT / "outputs" / "coco_owlvit_eval_100" / "metrics.json")
+    nms_post = load(ROOT / "outputs" / "coco_owlvit_eval_100_nms" / "metrics.json")
+    metric_keys = ["AP@[IoU=.50:.95]", "AP@0.50", "AP@0.75", "AR maxDets=100"]
+    metric_labels = ["AP", "AP50", "AP75", "AR100"]
+    x = np.arange(len(metric_keys))
+    figure, axis = plt.subplots(figsize=(7.6, 3.6))
+    width = 0.34
+    baseline = [nms_base["metrics"][key] for key in metric_keys]
+    nms = [nms_post["metrics"][key] for key in metric_keys]
+    bars1 = axis.bar(x - width / 2, baseline, width, label="Baseline", color=COLORS[0])
+    bars2 = axis.bar(x + width / 2, nms, width, label="Class-wise NMS", color="#777777")
+    add_labels(axis, bars1)
+    add_labels(axis, bars2)
+    axis.set_xticks(x, metric_labels)
+    axis.set_ylabel("COCO metric")
+    axis.set_ylim(0, 0.7)
+    axis.grid(axis="y", alpha=0.25)
+    axis.legend(frameon=False, loc="upper center", ncol=2)
+    figure.tight_layout()
+    save(figure, "owlvit_nms")
 
 
 if __name__ == "__main__":

@@ -312,38 +312,43 @@
     \begin{block}{Key numbers}
       \small
       \begin{itemize}
-        \item Grounding DINO: AP 0.421, best across all AP variants.
-        \item YOLO-World: AP 0.366, best AR100 0.547.
-        \item OWL-ViT: AP 0.237, compact baseline but weakest accuracy.
+        \item Grounding DINO: AP 0.421, AP50 0.557, AP75 0.457, AR100 0.536.
+        \item YOLO-World: AP 0.366, AP50 0.510, AP75 0.398, AR100 0.547.
+        \item OWL-ViT: AP 0.237, AP50 0.385, AP75 0.249, AR100 0.469.
       \end{itemize}
     \end{block}
 
     \begin{block}{Interpretation}
       \small
-      Grounding DINO is the strongest accuracy-first choice.
-      YOLO-World is the best recall-efficiency compromise.
+      Grounding DINO leads on AP, AP50, and AP75.
+      YOLO-World leads on AR100 and speed.
     \end{block}
   \end{columns}
 \end{frame}
 
 \begin{frame}{Efficiency and Deployment Trade-off}
   \begin{columns}[T,onlytextwidth]
-    \column{0.62\textwidth}
-    \fig{../report/figures/efficiency.png}
+    \column{0.63\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{../report/figures/efficiency.png}
 
-    \column{0.36\textwidth}
+    \column{0.33\textwidth}
     \begin{block}{Pipeline timing}
-      \small
-      \begin{itemize}
-        \item OWL-ViT: 24.3 FPS, 350 MB
-        \item Grounding DINO: 4.5 FPS, 2357 MB
-        \item YOLO-World: 84.6 FPS, 715 MB
-      \end{itemize}
+      \footnotesize
+      \setlength{\tabcolsep}{4pt}
+      \begin{tabular}{@{}lrr@{}}
+        \toprule
+        Model & FPS & MB \\
+        \midrule
+        OWL-ViT & 24.3 & 350 \\
+        Grounding DINO & 4.5 & 2357 \\
+        YOLO-World & 84.6 & 715 \\
+        \bottomrule
+      \end{tabular}
     \end{block}
 
     \begin{alertblock}{Takeaway}
-      Higher accuracy does not mean higher throughput.
-      The right model depends on the deployment budget.
+      Accuracy and throughput do not rise together. Pick the model by deployment budget.
     \end{alertblock}
   \end{columns}
 \end{frame}
@@ -368,6 +373,11 @@
         \item YOLO-World: 41.4\% / 36.2\% / 0.422
       \end{itemize}
     \end{block}
+
+    \begin{alertblock}{Meaning}
+      \small
+      RefCOCO is stricter than COCO because it asks for the exact referred instance.
+    \end{alertblock}
   \end{columns}
 \end{frame}
 
@@ -382,12 +392,20 @@
       Thresholds are model-specific. Cleaner visualizations usually mean lower recall, not better AP.
     \end{block}
 
-    \begin{block}{Metric trend}
-      \begin{itemize}
-        \item OWL-ViT AP: 0.237 \textrightarrow{} 0.184.
-        \item Grounding DINO AP: 0.421 \textrightarrow{} 0.362.
-        \item YOLO-World AP: 0.366 \textrightarrow{} 0.322.
-      \end{itemize}
+    \begin{block}{AP drop}
+      \setlength{\tabcolsep}{4pt}
+      \begin{tabular}{@{}lr@{}}
+        \toprule
+        OWL-ViT & 0.237 $\rightarrow$ 0.184 \\
+        Grounding DINO & 0.421 $\rightarrow$ 0.362 \\
+        YOLO-World & 0.366 $\rightarrow$ 0.322 \\
+        \bottomrule
+      \end{tabular}
+    \end{block}
+
+    \begin{block}{NMS diagnostic}
+      \scriptsize
+      OWL-ViT 100-image subset: AP 0.336 $\rightarrow$ 0.323; AR100 0.520 $\rightarrow$ 0.475.
     \end{block}
 
   \end{columns}
@@ -455,10 +473,10 @@
     \begin{block}{Final takeaways}
       \small
       \begin{itemize}
-        \item Grounding DINO: best accuracy on both COCO and RefCOCO.
-        \item YOLO-World: best speed / efficiency trade-off.
-        \item OWL-ViT: simplest baseline and low-memory reference.
-        \item The project is fully reproducible and based on full-split results.
+      \item Grounding DINO: best accuracy on both COCO and RefCOCO.
+      \item YOLO-World: best speed / efficiency trade-off.
+      \item OWL-ViT: simplest baseline and low-memory reference.
+      \item The project is fully reproducible and based on full-split results.
       \end{itemize}
     \end{block}
 

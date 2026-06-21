@@ -13,13 +13,23 @@
 \usepackage{url}
 \usepackage[hidelinks]{hyperref}
 \usepackage{placeins}
+\usepackage{balance}
+\flushbottom
+
+\setlength{\textfloatsep}{8pt plus 2pt minus 2pt}
+\setlength{\dbltextfloatsep}{8pt plus 2pt minus 2pt}
+\setlength{\floatsep}{6pt plus 2pt minus 2pt}
+\setlength{\dblfloatsep}{6pt plus 2pt minus 2pt}
+\setlength{\intextsep}{6pt plus 2pt minus 2pt}
+\setlength{\abovecaptionskip}{3pt plus 1pt minus 1pt}
+\setlength{\belowcaptionskip}{0pt}
 
 \newcommand{\safeincludegraphics}[2][]{%
   \IfFileExists{#2}{\includegraphics[#1]{#2}}{%
     \fbox{\parbox[c][1.35in][c]{0.9\linewidth}{%
       \centering Missing figure: \texttt{#2}}}}}
-\newcommand{\qualimage}[1]{%
-  \safeincludegraphics[width=0.48\linewidth,height=1.00in,keepaspectratio]{#1}}
+\newcommand{\qualimage}[2][]{%
+  \makebox[0.465\columnwidth][c]{\safeincludegraphics[#1]{#2}}}
 \newcolumntype{Y}{>{\raggedright\arraybackslash}X}
 
 \title{A Reproducible Comparison of Open-Vocabulary Object Detection\\
@@ -446,9 +456,9 @@ from 0.237 to 0.184 and AR100 from 0.469 to 0.255. Grounding DINO drops from
 between 0.001 and 0.25. Higher thresholds can still be useful for uncluttered
 visual demonstrations, but they are harmful when recall matters.
 
-\begin{figure}[t]
+\begin{figure}[!t]
   \centering
-  \safeincludegraphics[width=\linewidth]{figures/threshold_sensitivity.pdf}
+  \safeincludegraphics[width=0.98\columnwidth]{figures/threshold_sensitivity.pdf}
   \caption{Within-model score-threshold sensitivity on the full COCO val2017 split.}
   \label{fig:threshold}
 \end{figure}
@@ -458,10 +468,17 @@ the earlier 100-image subset. At NMS IoU 0.5, AP decreased from 0.336 to 0.323
 and AR100 from 0.520 to 0.475. NMS visually removes duplicate boxes, but
 overlapping hypotheses can be valid in crowded scenes. We therefore disable
 additional NMS for the main OWL-ViT quantitative comparison and use it only for
-selected visualizations.
+selected visualizations. Figure~\ref{fig:nms} shows the effect directly on the
+same diagnostic subset.
+
+\begin{figure}[!t]
+  \centering
+  \safeincludegraphics[width=0.98\columnwidth]{figures/owlvit_nms.pdf}
+  \caption{OWL-ViT on the 100-image diagnostic subset before and after class-wise NMS.}
+  \label{fig:nms}
+\end{figure}
 
 \FloatBarrier
-\newpage
 \subsection{Qualitative Analysis}
 
 Figure~\ref{fig:qualitative} compares representative OWL-ViT and Grounding DINO
@@ -472,26 +489,6 @@ nearby objects, failure to resolve spatial relations, and missed small
 accessories. Prompt wording also matters: a broad noun can activate several
 instances, while a detailed expression can either disambiguate the target or
 reduce confidence if its phrasing differs from pretraining language.
-
-\begin{figure}[H]
-  \centering
-  \subfloat[OWL workspace]{%
-    \qualimage{figures/owlvit_workspace.jpg}
-  }
-  \subfloat[DINO workspace]{%
-    \qualimage{figures/grounding_dino_workspace.jpg}
-  }\\[-0.4em]
-  \subfloat[OWL traffic]{%
-    \qualimage{figures/owlvit_traffic.jpg}
-  }
-  \subfloat[DINO traffic]{%
-    \qualimage{figures/grounding_dino_traffic.jpg}
-  }
-  \caption{Qualitative open-vocabulary detections. Display thresholds and NMS
-  are chosen for readability and differ from the quantitative protocol.}
-  \label{fig:qualitative}
-\end{figure}
-\FloatBarrier
 
 In the workspace example, both methods detect prominent objects, but Grounding
 DINO tends to produce tighter boxes around the intended object extent. In the
@@ -510,6 +507,72 @@ error, where the category is correct but the instance specified by color,
 position, or context is not selected. RefCOCO exposes the third case more
 clearly than COCO, which is why we treat it as a necessary part of the final
 evaluation rather than an optional supplement.
+
+\begin{figure}[!t]
+  \centering
+  \subfloat[OWL workspace]{%
+    \qualimage[width=0.455\columnwidth]{figures/owlvit_workspace.jpg}
+  }\hfill
+  \subfloat[DINO workspace]{%
+    \qualimage[width=0.455\columnwidth]{figures/grounding_dino_workspace.jpg}
+  }\\[-0.3ex]
+  \subfloat[OWL traffic]{%
+    \qualimage[height=0.95in]{figures/owlvit_traffic.jpg}
+  }\hfill
+  \subfloat[DINO traffic]{%
+    \qualimage[height=0.95in]{figures/grounding_dino_traffic.jpg}
+  }
+  \caption{Qualitative open-vocabulary detections. Display thresholds and NMS
+  are chosen for readability and differ from the quantitative protocol.}
+  \label{fig:qualitative}
+\end{figure}
+
+Additional detail is useful because the full-split report should explain not
+only which model is stronger, but also why the ranking changes when the prompt
+becomes more descriptive. Across the saved prediction files, the most common
+failure is not a complete miss but a ranking mistake. The correct object often
+appears among the top several boxes, yet a visually similar neighbor receives
+the highest score after prompt matching. This is especially visible in crowded
+scenes with repeated objects such as bottles, monitors, or people, where the
+model must choose one instance from several plausible candidates.
+
+Prompt granularity changes the difficulty substantially. A short category noun
+mainly checks whether the model can bind a class label to a region, while a
+long referring expression forces the system to combine identity, attribute,
+and relation. In our runs, Grounding DINO benefits most from the extra context,
+whereas OWL-ViT and YOLO-World become more sensitive to threshold choice
+because the correct box is often only slightly below the top score. This is
+why RefCOCO is a stronger grounding benchmark than COCO detection, even when
+both tasks reuse the same image backbone.
+
+The figures in this section should therefore be read as an operating-point
+illustration rather than a final metric table. We intentionally use display
+thresholds that make duplicate hypotheses and small-object misses visible to
+the eye, even though those settings are not optimal for AP. The earlier 100-
+row and 500-image runs were useful for debugging prompt formatting and data
+loading, but the headline results in this report come only from the full
+splits, where every expression or validation image is evaluated. Because all
+runs are re-executable from saved manifests and logs, the qualitative examples
+are tied to the same code path as the quantitative tables rather than to a
+separate ad hoc demo script.
+
+Model behavior is also distinct in how it fails: OWL-ViT tends to produce more
+duplicates, Grounding DINO usually boxes tighter but runs slower, and
+YOLO-World offers the best throughput while being more threshold-sensitive.
+These differences are precisely what the full-split tables quantify, and the
+qualitative examples are meant to make the trade-off visible without replacing
+the metrics.
+
+One subtle difference between COCO and RefCOCO is that the latter rewards
+instance selection under paraphrase variation. The same target box can be
+described by several expressions, and those expressions can emphasize color,
+spatial relation, or object part. A model that is slightly overconfident on
+broad nouns can still look good on COCO while failing on RefCOCO because it
+picks the wrong member of a visually similar group. This is why keeping the
+manifests, image lists, and saved predictions fixed across reruns matters: it
+lets us attribute changes to the model wrapper or post-processing rather than
+to accidental changes in the evaluation data.
+\FloatBarrier
 
 \section{Discussion}
 
@@ -551,6 +614,24 @@ useful: prompts such as ``bike,'' ``bicycle,'' and ``a person riding a
 bicycle'' can change both confidence and localization. These extensions would
 move the comparison from zero-shot model selection toward a broader study of
 prompt robustness.
+
+A final practical point is that the full protocol itself matters as much as the
+choice of model. The 100-image and 500-image subsets are useful for checking
+whether prompts, manifests, and GPU scheduling behave correctly, but they are
+only diagnostics. The full COCO and RefCOCO runs are heavier, yet they make the
+ranking more trustworthy because every saved prediction is evaluated on the
+same images or expressions. In a course project setting, that distinction is
+important: a polished demo can look convincing even when it only covers an
+easy subset, while a smaller amount of carefully reproduced full-split
+evidence is much stronger.
+
+That separation also explains the code structure. Our scripts keep data
+acquisition, inference, post-processing, metric computation, and visualization
+independent so that each stage can be rerun in isolation. If a result changes,
+we can identify whether the cause was a manifest, a prompt list, a score
+threshold, NMS, or the model wrapper itself. The report therefore documents
+not only the final numbers, but also the path from raw inputs to the tables and
+figures, which is what makes the comparison auditable.
 
 \section{Limitations}
 
@@ -600,6 +681,7 @@ figure generation; Deng Haotian (SID: 12313204) contributed to environment
 setup, documentation, and presentation preparation. All members reviewed the
 final report, slides, and reported metrics.
 
+\balance
 \bibliography{example_paper}
 \bibliographystyle{IEEEtran}
 
